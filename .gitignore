@@ -39,4 +39,4 @@ yarn-error.log*
 *.swo
 
 # Modelo (comenta esta línea si quieres incluir el modelo en el repositorio)
-*.joblib
+#*.joblib
