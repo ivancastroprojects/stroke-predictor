@@ -1,211 +1,114 @@
-import React, { useState } from "react";
-import "./App.css"; // Import the CSS file
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import "./App.css";
 
-function App() {
-  const [formData, setFormData] = useState({
-    gender: "",
-    age: "",
-    hypertension: "",
-    heart_disease: "",
-    ever_married: "",
-    work_type: "",
-    Residence_type: "",
-    avg_glucose_level: "",
-    bmi: "",
-    smoking_status: "",
-  });
+// Componentes
+import RiskFactors from './components/RiskFactors';
+import InfoSection from './components/InfoSection';
+import PredictionForm from './components/PredictionForm';
+import PredictionResults from './components/PredictionResults';
+import PredictionHistory from './components/PredictionHistory';
+import BackgroundRays from './components/BackgroundRays';
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+// Predicciones de ejemplo
+const examplePredictions = [
+  {
+    gender: "Male",
+    age: "70",
+    hypertension: "1",
+    heart_disease: "1",
+    ever_married: "Yes",
+    work_type: "Private",
+    Residence_type: "Urban",
+    avg_glucose_level: "150",
+    bmi: "30",
+    smoking_status: "formerly smoked",
+    prediction: 1,
+    timestamp: new Date(2025, 0, 5, 1, 28, 1) // 5/1/2025, 1:28:01
+  },
+  {
+    gender: "Female",
+    age: "45",
+    hypertension: "0",
+    heart_disease: "0",
+    ever_married: "No",
+    work_type: "Self-employed",
+    Residence_type: "Rural",
+    avg_glucose_level: "90",
+    bmi: "22",
+    smoking_status: "never smoked",
+    prediction: 0,
+    timestamp: new Date(2025, 0, 5, 1, 28, 1) // 5/1/2025, 1:28:01
+  }
+];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+function AppContent() {
+  const [history, setHistory] = useState([]);
+  const navigate = useNavigate();
+
+  // Cargar predicciones de ejemplo al iniciar
+  useEffect(() => {
+    setHistory(examplePredictions);
+  }, []);
+
+  const handlePrediction = async (formData) => {
     try {
-      console.log("Sending data:", formData);
+      const response = await axios.post('http://localhost:5000/predict', formData);
+      const prediction = response.data.prediction;
       
-      const response = await axios.post("http://localhost:5000/predict", formData);
-      console.log("Response:", response.data);
-
-      alert(`Predicted Stroke Risk: ${response.data.prediction === 1 ? 'High' : 'Low'}`);
+      setHistory(prev => [...prev, { 
+        ...formData, 
+        prediction, 
+        timestamp: new Date() 
+      }]);
+      
+      navigate('/results', { 
+        state: { 
+          prediction, 
+          formData 
+        } 
+      });
+      
     } catch (error) {
-      console.error("Error:", error);
-      alert(`Error: ${error.message}. Please make sure the backend server is running.`);
+      console.error('Error:', error);
+      alert('Error al procesar la predicción. Por favor, intente nuevamente.');
     }
   };
 
   return (
-    <div className="app-container">
-      <h1 className="title">
-        <span>Stroke Prediction</span>
-      </h1>
-
-      <span className="run run-left" style={{ animationDelay: "0s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "0.2s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "0.4s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "0.6s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "0.8s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "1s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "1.2s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "1.4s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "1.6s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "1.8s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "2s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "2.2s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "2.4s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "2.6s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "2.8s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "3s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "3.2s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "3.4s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "3.6s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "3.8s" }}></span>
-      <span className="run run-left" style={{ animationDelay: "4s" }}></span>
-      <span className="run run-right" style={{ animationDelay: "4.2s" }}></span>
-
-      <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        {/* Gender */}
-        <div className="form-group">
-          <label>
-            Gender:
-            <select name="gender" onChange={handleChange} required>
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </label>
+    <>
+      <BackgroundRays />
+      <div className="app-container">
+        <div className="risk-factors-panel">
+          <RiskFactors />
         </div>
 
-        {/* Age */}
-        <div className="form-group">
-          <label>
-            Age:
-            <input
-              type="number"
-              name="age"
-              onChange={handleChange}
-              placeholder="Age"
-              required
-            />
-          </label>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <InfoSection />
+                <PredictionForm onSubmit={handlePrediction} />
+              </>
+            } />
+            <Route path="/results" element={<PredictionResults />} />
+          </Routes>
         </div>
 
-        {/* Hypertension */}
-        <div className="form-group">
-          <label>
-            Hypertension:
-            <select name="hypertension" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="0">No</option>
-              <option value="1">Yes</option>
-            </select>
-          </label>
+        <div className="history-panel">
+          <PredictionHistory history={history} />
         </div>
-
-        {/* Heart Disease */}
-        <div className="form-group">
-          <label>
-            Heart Disease:
-            <select name="heart_disease" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="0">No</option>
-              <option value="1">Yes</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Ever Married */}
-        <div className="form-group">
-          <label>
-            Ever Married:
-            <select name="ever_married" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="No">No</option>
-              <option value="Yes">Yes</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Work Type */}
-        <div className="form-group">
-          <label>
-            Work Type:
-            <select name="work_type" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="Private">Private</option>
-              <option value="Self-employed">Self-employed</option>
-              <option value="Govt_job">Govt_job</option>
-              <option value="Children">Children</option>
-              <option value="Never_worked">Never worked</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Residence Type */}
-        <div className="form-group">
-          <label>
-            Residence Type:
-            <select name="Residence_type" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="Urban">Urban</option>
-              <option value="Rural">Rural</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Average Glucose Level */}
-        <div className="form-group">
-          <label>
-            Avg Glucose Level:
-            <input
-              type="number"
-              name="avg_glucose_level"
-              onChange={handleChange}
-              placeholder="Average Glucose Level"
-              step="0.01"
-              required
-            />
-          </label>
-        </div>
-
-        {/* BMI */}
-        <div className="form-group">
-          <label>
-            BMI:
-            <input
-              type="number"
-              name="bmi"
-              onChange={handleChange}
-              placeholder="BMI"
-              step="0.1"
-              required
-            />
-          </label>
-        </div>
-
-        {/* Smoking Status */}
-        <div className="form-group">
-          <label>
-            Smoking Status:
-            <select name="smoking_status" onChange={handleChange} required>
-              <option value="">Select</option>
-              <option value="formerly smoked">Formerly Smoked</option>
-              <option value="never smoked">Never Smoked</option>
-              <option value="smokes">Smokes</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Submit Button */}
-        <button type="submit">Predict Stroke</button>
-      </form>
       </div>
+    </>
+  );
+}
 
-    </div>
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

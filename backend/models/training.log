@@ -1,0 +1,155 @@
+2025-01-03 09:07:25,055 - INFO - Iniciando entrenamiento
+2025-01-03 09:07:25,217 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:07:25,223 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:07:25,351 - ERROR - Error durante el entrenamiento: Could not interpret value `age_group` for `x`. An entry with this name does not appear in `data`.
+2025-01-03 09:09:41,476 - INFO - Iniciando entrenamiento
+2025-01-03 09:09:41,639 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:09:41,644 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:09:41,796 - ERROR - Error durante el entrenamiento: Could not interpret value `age_group` for `x`. An entry with this name does not appear in `data`.
+2025-01-03 09:10:53,228 - INFO - Iniciando entrenamiento
+2025-01-03 09:10:53,239 - ERROR - Error durante el entrenamiento: 'seaborn' is not a valid package style, path of style file, URL of style file, or library style name (library styles are listed in `style.available`)
+2025-01-03 09:11:44,639 - INFO - Iniciando entrenamiento
+2025-01-03 09:11:44,812 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:44,817 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:45,567 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:45,572 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:45,646 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:45,651 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:11:46,048 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-03 09:11:46,049 - INFO - Visualizaciones EDA generadas
+2025-01-03 09:11:46,057 - INFO - Dataset cargado: (5110, 10)
+2025-01-03 09:16:14,290 - INFO - Mejor modelo: Gradient Boosting
+2025-01-03 09:16:14,290 - INFO - Test ROC AUC: 0.853
+2025-01-03 09:16:14,292 - ERROR - Error durante el entrenamiento: 'GradientBoostingClassifier' object has no attribute 'coef_'
+2025-01-03 09:17:43,348 - INFO - Iniciando entrenamiento
+2025-01-03 09:17:43,514 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:43,519 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:44,165 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:44,168 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:44,238 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:44,242 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-03 09:17:44,619 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-03 09:17:44,620 - INFO - Visualizaciones EDA generadas
+2025-01-03 09:17:44,628 - INFO - Dataset cargado: (5110, 10)
+2025-01-03 09:22:10,954 - INFO - Mejor modelo: Gradient Boosting
+2025-01-03 09:22:10,954 - INFO - Test ROC AUC: 0.853
+2025-01-03 09:22:11,386 - INFO - Análisis del mejor modelo completado
+2025-01-03 09:22:11,640 - INFO - Entrenamiento completado en 0:04:28.290974
+2025-01-04 22:53:51,503 - INFO - Iniciando entrenamiento
+2025-01-04 22:53:51,815 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:51,823 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:52,545 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:52,550 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:52,622 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:52,626 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:53:53,036 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-04 22:53:53,036 - INFO - Visualizaciones EDA generadas
+2025-01-04 22:53:53,045 - INFO - Dataset cargado: (5110, 10)
+2025-01-04 22:56:59,148 - INFO - Iniciando entrenamiento
+2025-01-04 22:56:59,315 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:56:59,320 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:57:00,019 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:57:00,023 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:57:00,096 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:57:00,102 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 22:57:00,512 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-04 22:57:00,512 - INFO - Visualizaciones EDA generadas
+2025-01-04 22:57:00,521 - INFO - Dataset cargado: (5110, 10)
+2025-01-04 22:59:17,618 - INFO - Iniciando entrenamiento
+2025-01-04 22:59:17,621 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
+2025-01-04 22:59:55,418 - INFO - Iniciando entrenamiento
+2025-01-04 23:00:04,491 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:04,504 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:05,900 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:05,910 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:06,040 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:06,051 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:07,006 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-04 23:00:07,006 - INFO - Visualizaciones EDA generadas
+2025-01-04 23:00:10,512 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
+2025-01-04 23:00:35,281 - INFO - Iniciando entrenamiento
+2025-01-04 23:00:40,172 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:40,187 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:41,648 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:41,659 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:41,788 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:41,800 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-04 23:00:42,778 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-04 23:00:42,779 - INFO - Visualizaciones EDA generadas
+2025-01-04 23:00:42,799 - INFO - Dataset cargado: (5110, 10)
+2025-01-04 23:06:28,712 - INFO - Mejor modelo: Gradient Boosting
+2025-01-04 23:06:28,713 - INFO - Test ROC AUC: 0.853
+2025-01-04 23:06:29,780 - INFO - Análisis del mejor modelo completado
+2025-01-04 23:06:30,268 - INFO - Entrenamiento completado en 0:05:54.985518
+2025-01-05 00:11:47,847 - INFO - Iniciando entrenamiento
+2025-01-05 00:11:47,852 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './backend/healthcare-dataset-stroke-data.csv'
+2025-01-05 00:12:09,846 - INFO - Iniciando entrenamiento
+2025-01-05 00:12:09,848 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './backend/healthcare-dataset-stroke-data.csv'
+2025-01-05 00:13:01,541 - INFO - Iniciando entrenamiento
+2025-01-05 00:13:01,701 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:01,706 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:02,347 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:02,351 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:02,421 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:02,425 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:13:02,849 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-05 00:13:02,849 - INFO - Visualizaciones EDA generadas
+2025-01-05 00:13:02,850 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './backend/healthcare-dataset-stroke-data.csv'
+2025-01-05 00:14:27,255 - INFO - Iniciando entrenamiento
+2025-01-05 00:14:27,424 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:27,429 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:28,161 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:28,167 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:28,244 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:28,250 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:14:28,668 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-05 00:14:28,668 - INFO - Visualizaciones EDA generadas
+2025-01-05 00:14:28,677 - INFO - Dataset cargado: (5110, 10)
+2025-01-05 00:14:28,679 - ERROR - Error durante el entrenamiento: create_base_pipeline() takes 2 positional arguments but 3 were given
+2025-01-05 00:18:27,399 - INFO - Iniciando entrenamiento
+2025-01-05 00:18:27,552 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:27,557 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:28,199 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:28,204 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:28,275 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:28,280 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:18:28,679 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-05 00:18:28,679 - INFO - Visualizaciones EDA generadas
+2025-01-05 00:18:28,687 - INFO - Dataset cargado: (5110, 10)
+2025-01-05 00:18:28,689 - ERROR - Error durante el entrenamiento: create_base_pipeline() takes 2 positional arguments but 3 were given
+2025-01-05 00:22:32,080 - INFO - Iniciando entrenamiento
+2025-01-05 00:22:32,249 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:32,254 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:32,949 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:32,954 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:33,023 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:33,028 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:22:33,430 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-05 00:22:33,430 - INFO - Visualizaciones EDA generadas
+2025-01-05 00:22:33,439 - INFO - Dataset cargado: (5110, 10)
+2025-01-05 00:22:38,066 - ERROR - Error durante el entrenamiento: Invalid parameter 'model' for estimator ColumnTransformer(transformers=[('num',
+                                 Pipeline(steps=[('imputer', SimpleImputer()),
+                                                 ('scaler', StandardScaler())]),
+                                 ['avg_glucose_level', 'bmi', 'age']),
+                                ('cat',
+                                 Pipeline(steps=[('imputer',
+                                                  SimpleImputer(strategy='most_frequent')),
+                                                 ('onehot',
+                                                  OneHotEncoder(handle_unknown='ignore'))]),
+                                 ['gender', 'hypertension', 'heart_disease',
+                                  'ever_married', 'work_type', 'Residence_type',
+                                  'smoking_status'])]). Valid parameters are: ['force_int_remainder_cols', 'n_jobs', 'remainder', 'sparse_threshold', 'transformer_weights', 'transformers', 'verbose', 'verbose_feature_names_out'].
+2025-01-05 00:39:39,006 - INFO - Iniciando entrenamiento
+2025-01-05 00:39:39,175 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:39,180 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:39,897 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:39,901 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:39,972 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:39,977 - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-01-05 00:39:40,378 - INFO - Visualizaciones EDA completadas exitosamente
+2025-01-05 00:39:40,378 - INFO - Visualizaciones EDA generadas
+2025-01-05 00:39:40,386 - INFO - Dataset cargado: (5110, 10)
+2025-01-05 00:44:26,367 - INFO - Mejor modelo: SVM
+2025-01-05 00:44:26,368 - INFO - Test ROC AUC: 0.854
+2025-01-05 00:44:27,142 - INFO - Análisis del mejor modelo completado
+2025-01-05 00:44:27,434 - INFO - Entrenamiento completado en 0:04:48.427924

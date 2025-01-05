@@ -1,0 +1,72 @@
+.history-container {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: white;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: transform 0.2s;
+  border: 1px solid rgba(124, 0, 255, 0.2);
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.risk-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.risk-badge.high {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff4444;
+}
+
+.risk-badge.low {
+  background: rgba(0, 255, 0, 0.2);
+  color: #44ff44;
+}
+
+.history-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+}
+
+details summary {
+  cursor: pointer;
+  color: #2575fc;
+  font-weight: bold;
+}
+
+details summary:hover {
+  color: #6a11cb;
+} 

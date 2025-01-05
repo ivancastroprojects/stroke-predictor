@@ -1,0 +1,8 @@
+2025-01-05 00:16:32,977 - INFO - Iniciando entrenamiento
+2025-01-05 00:16:32,982 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
+2025-01-05 00:16:48,380 - INFO - Iniciando entrenamiento
+2025-01-05 00:16:48,383 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
+2025-01-05 00:17:11,223 - INFO - Iniciando entrenamiento
+2025-01-05 00:17:11,227 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
+2025-01-05 00:17:53,999 - INFO - Iniciando entrenamiento
+2025-01-05 00:17:54,001 - ERROR - Error durante el entrenamiento: [Errno 2] No such file or directory: './healthcare-dataset-stroke-data.csv'
