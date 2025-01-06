@@ -233,36 +233,43 @@ def analyze_feature_importance(model, X, numerical):
             return None
         
         # Normalizar las importancias individuales
-        total = np.sum(importances)
-        if total > 0:
-            importances = importances / total
-        
-        # Crear diccionario de importancias individuales
+        total = np.sum(np.abs(importances))
         for idx, feature in enumerate(feature_names):
-            feature_importance[feature] = importances[idx]
+            importance = (np.abs(importances[idx]) / total) * 100
+            feature_importance[feature] = importance
         
         # Agrupar características similares
         grouped_importance = {
-            'Edad': feature_importance.get('age', 0),
-            'Hipertensión': sum(v for k, v in feature_importance.items() if 'hypertension' in str(k).lower()),
-            'Nivel de Glucosa': sum(v for k, v in feature_importance.items() if 'glucose' in str(k).lower()),
-            'IMC': sum(v for k, v in feature_importance.items() if 'bmi' in str(k).lower()),
-            'Enf. Cardíacas': sum(v for k, v in feature_importance.items() if 'heart' in str(k).lower()),
-            'Estado Civil': sum(v for k, v in feature_importance.items() if 'married' in str(k).lower()),
-            'Tabaquismo': sum(v for k, v in feature_importance.items() if 'smoking' in str(k).lower()),
+            'Edad': sum(v for k, v in feature_importance.items() if 'age' in str(k).lower()),
             'Tipo de Trabajo': sum(v for k, v in feature_importance.items() if 'work_type' in str(k).lower()),
-            'Residencia': sum(v for k, v in feature_importance.items() if 'residence' in str(k).lower())
+            'Nivel de Glucosa': sum(v for k, v in feature_importance.items() if 'glucose' in str(k).lower()),
+            'Tabaquismo': sum(v for k, v in feature_importance.items() if 'smoking' in str(k).lower()),
+            'Hipertensión': sum(v for k, v in feature_importance.items() if 'hypertension' in str(k).lower()),
+            'Estado Civil': sum(v for k, v in feature_importance.items() if 'married' in str(k).lower()),
+            'Residencia': sum(v for k, v in feature_importance.items() if 'residence' in str(k).lower()),
+            'IMC': sum(v for k, v in feature_importance.items() if 'bmi' in str(k).lower()),
+            'Enf. Cardíacas': sum(v for k, v in feature_importance.items() if 'heart' in str(k).lower())
         }
         
-        # Normalizar los porcentajes agrupados (una sola vez)
-        total = sum(grouped_importance.values())
-        if total > 0:
-            grouped_importance = {k: (v/total)*100 for k, v in grouped_importance.items()}
+        # Normalizar los porcentajes agrupados para que sumen exactamente 100%
+        total_importance = sum(grouped_importance.values())
+        if total_importance > 0:
+            # Multiplicar por 100 después de la normalización para obtener porcentajes
+            grouped_importance = {k: (v/total_importance) * 100 
+                                for k, v in grouped_importance.items()}
             
-            # Ordenar por importancia
-            grouped_importance = dict(sorted(grouped_importance.items(), 
-                                          key=lambda x: x[1], 
-                                          reverse=True))
+            # Ordenar por importancia de mayor a menor
+            grouped_importance = dict(sorted(
+                grouped_importance.items(), 
+                key=lambda x: x[1], 
+                reverse=True
+            ))
+            
+            # Verificar que la suma sea 100%
+            total = sum(grouped_importance.values())
+            if abs(total - 100) > 0.01:  # Si hay una diferencia mayor a 0.01%
+                factor = 100 / total
+                grouped_importance = {k: v * factor for k, v in grouped_importance.items()}
             
             return grouped_importance
         else:
@@ -319,21 +326,21 @@ def evaluate_multiple_models(X, y, categorical, numerical):
         logging.info(f"\nEntrenando {name}...")
         
         # Crear pipeline para el modelo actual
-        transformer = ColumnTransformer(transformers=[
-            ('imp', SimpleImputer(strategy='median'), numerical),
+transformer = ColumnTransformer(transformers=[
+    ('imp', SimpleImputer(strategy='median'), numerical),
             ('o', OneHotEncoder(handle_unknown='ignore'), categorical)
-        ])
-        
-        pipeline = Pipeline(steps=[
-            ('t', transformer),
-            ('p', PowerTransformer(method='yeo-johnson', standardize=True)),
-            ('over', SMOTE()),
+])
+
+pipeline = Pipeline(steps=[
+    ('t', transformer),
+    ('p', PowerTransformer(method='yeo-johnson', standardize=True)),
+    ('over', SMOTE()),
             ('m', config['model'])
-        ])
-        
+])
+
         # Evaluar modelo
         try:
-            scores = evaluate_model(X, y, pipeline)
+scores = evaluate_model(X, y, pipeline)
             
             results[name] = {
                 'pipeline': pipeline,

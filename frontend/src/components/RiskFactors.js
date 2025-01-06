@@ -60,15 +60,15 @@ export default function RiskFactors() {
           <div className="factor-label">
             {factor.name}
             <span className="factor-percentage">
-              {(factor.weight * 100).toFixed(1)}%
+              {factor.weight.toFixed(1)}%
             </span>
           </div>
           <div className="factor-bar">
             <div 
               className="factor-fill"
               style={{ 
-                '--width': `${factor.weight * 100}%`,
-                width: `${factor.weight * 100}%`
+                '--width': `${factor.weight}%`,
+                width: `${factor.weight}%`
               }}
             />
           </div>
