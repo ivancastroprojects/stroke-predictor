@@ -14,8 +14,7 @@ import os
 import logging
 from datetime import datetime
 from sklearn.metrics import roc_curve, confusion_matrix
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
 # Configuración global de visualización
 plt.style.use('default')
@@ -93,7 +92,7 @@ def load_data():
     numerical = ['avg_glucose_level', 'bmi', 'age']
     y = df['stroke']
     X = df.drop('stroke', axis=1)
-    return df,X, y, categorical, numerical
+    return df, X, y, categorical, numerical
 
 def evaluate_model(X, y, model):
     cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=42)
@@ -326,21 +325,21 @@ def evaluate_multiple_models(X, y, categorical, numerical):
         logging.info(f"\nEntrenando {name}...")
         
         # Crear pipeline para el modelo actual
-transformer = ColumnTransformer(transformers=[
-    ('imp', SimpleImputer(strategy='median'), numerical),
+        transformer = ColumnTransformer(transformers=[
+            ('imp', SimpleImputer(strategy='median'), numerical),
             ('o', OneHotEncoder(handle_unknown='ignore'), categorical)
-])
-
-pipeline = Pipeline(steps=[
-    ('t', transformer),
-    ('p', PowerTransformer(method='yeo-johnson', standardize=True)),
-    ('over', SMOTE()),
+        ])
+        
+        pipeline = Pipeline(steps=[
+            ('t', transformer),
+            ('p', PowerTransformer(method='yeo-johnson', standardize=True)),
+            ('over', SMOTE()),
             ('m', config['model'])
-])
-
+        ])
+        
         # Evaluar modelo
         try:
-scores = evaluate_model(X, y, pipeline)
+            scores = evaluate_model(X, y, pipeline)
             
             results[name] = {
                 'pipeline': pipeline,
