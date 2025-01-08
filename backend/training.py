@@ -142,25 +142,19 @@ def create_interaction_features(X):
     return X
 
 def load_data():
+    """Carga y preprocesa los datos"""
     df = pd.read_csv('./healthcare-dataset-stroke-data.csv')
     df = df.drop('id', axis=1)
     
     # Manejo de outliers
     df = handle_outliers(df)
     
-    # Crear características de interacción
-    df = create_interaction_features(df)
+    # Definir variables categóricas y numéricas base
+    categorical = ['gender', 'hypertension', 'heart_disease', 'ever_married', 
+                  'work_type', 'Residence_type', 'smoking_status']
+    numerical = ['age', 'avg_glucose_level', 'bmi']
     
-    # Definir variables categóricas y numéricas
-    categorical = ['hypertension', 'heart_disease', 'ever_married', 'work_type', 
-                  'Residence_type', 'smoking_status', 'age_group', 'bmi_category', 
-                  'glucose_category']
-    
-    numerical = ['avg_glucose_level', 'bmi', 'age', 'age_hypertension', 
-                'age_heart_disease', 'log_glucose', 'log_bmi', 'age_glucose', 
-                'age_squared']
-    
-    # Definir orden para variables ordinales basado en riesgo
+    # Definir orden para variables ordinales
     smoking_order = ['never smoked', 'Unknown', 'formerly smoked', 'smokes']
     work_type_order = ['children', 'Never_worked', 'Private', 'Self-employed', 'Govt_job']
     
@@ -402,72 +396,73 @@ def analyze_model_performance(model, X_test, y_test):
 def analyze_feature_importance(model, X, numerical):
     """Analiza la importancia de características para diferentes tipos de modelos"""
     try:
-        feature_importance = {}
+        # Mapeo de características base a nombres amigables
+        feature_mapping = {
+            'age': 'Edad',
+            'avg_glucose_level': 'Nivel de Glucosa',
+            'bmi': 'IMC',
+            'hypertension': 'Hipertensión',
+            'heart_disease': 'Enf. Cardíacas',
+            'smoking_status': 'Tabaquismo',
+            'work_type': 'Tipo de Trabajo',
+            'ever_married': 'Estado Civil',
+            'Residence_type': 'Residencia'
+        }
         
-        # Obtener el modelo base
+        feature_importance = {}
         base_model = model.named_steps['m']
         
         # Obtener nombres de características después de la transformación
         feature_names = []
         for name, transformer in model.named_steps['t'].named_transformers_.items():
-            if name == 'o' and hasattr(transformer, 'get_feature_names_out'):
-                # Para características categóricas one-hot encoded
+            if name == 'cat' and hasattr(transformer, 'get_feature_names_out'):
                 feature_names.extend(transformer.get_feature_names_out())
-            elif name == 'imp':
-                # Para características numéricas
+            elif name == 'num':
                 feature_names.extend(numerical)
+            elif name == 'smoke':
+                feature_names.append('smoking_status')
+            elif name == 'work':
+                feature_names.append('work_type')
         
         # Obtener importancias según el tipo de modelo
-        if hasattr(base_model, 'coef_'):  # Para modelos lineales (LDA)
+        if hasattr(base_model, 'coef_'):
             importances = np.abs(base_model.coef_[0])
-        elif hasattr(base_model, 'feature_importances_'):  # Para árboles y bosques
+        elif hasattr(base_model, 'feature_importances_'):
             importances = base_model.feature_importances_
         else:
             importances = np.ones(len(feature_names))
         
-        # Verificar que tengamos el mismo número de nombres e importancias
         if len(feature_names) != len(importances):
             logging.warning(f"Desajuste en características: {len(feature_names)} nombres vs {len(importances)} importancias")
             return None
         
-        # Normalizar las importancias individuales
+        # Normalizar importancias individuales
         total = np.sum(np.abs(importances))
         for idx, feature in enumerate(feature_names):
             importance = (np.abs(importances[idx]) / total) * 100
             feature_importance[feature] = importance
         
-        # Agrupar características similares
-        grouped_importance = {
-            'Edad': sum(v for k, v in feature_importance.items() if 'age' in str(k).lower()),
-            'Tipo de Trabajo': sum(v for k, v in feature_importance.items() if 'work_type' in str(k).lower()),
-            'Nivel de Glucosa': sum(v for k, v in feature_importance.items() if 'glucose' in str(k).lower()),
-            'Tabaquismo': sum(v for k, v in feature_importance.items() if 'smoking' in str(k).lower()),
-            'Hipertensión': sum(v for k, v in feature_importance.items() if 'hypertension' in str(k).lower()),
-            'Estado Civil': sum(v for k, v in feature_importance.items() if 'married' in str(k).lower()),
-            'Residencia': sum(v for k, v in feature_importance.items() if 'residence' in str(k).lower()),
-            'IMC': sum(v for k, v in feature_importance.items() if 'bmi' in str(k).lower()),
-            'Enf. Cardíacas': sum(v for k, v in feature_importance.items() if 'heart' in str(k).lower())
-        }
+        # Agrupar por características base
+        grouped_importance = {}
+        for base_feature, display_name in feature_mapping.items():
+            # Suma todas las importancias relacionadas con esta característica base
+            importance = sum(v for k, v in feature_importance.items() 
+                           if base_feature.lower() in k.lower())
+            if importance > 0:
+                grouped_importance[display_name] = importance
         
-        # Normalizar los porcentajes agrupados para que sumen exactamente 100%
-        total_importance = sum(grouped_importance.values())
-        if total_importance > 0:
-            # Multiplicar por 100 después de la normalización para obtener porcentajes
-            grouped_importance = {k: (v/total_importance) * 100 
+        # Normalizar a 100%
+        total = sum(grouped_importance.values())
+        if total > 0:
+            grouped_importance = {k: (v/total) * 100 
                                 for k, v in grouped_importance.items()}
             
-            # Ordenar por importancia de mayor a menor
+            # Ordenar por importancia
             grouped_importance = dict(sorted(
-                grouped_importance.items(), 
-                key=lambda x: x[1], 
+                grouped_importance.items(),
+                key=lambda x: x[1],
                 reverse=True
             ))
-            
-            # Verificar que la suma sea 100%
-            total = sum(grouped_importance.values())
-            if abs(total - 100) > 0.01:  # Si hay una diferencia mayor a 0.01%
-                factor = 100 / total
-                grouped_importance = {k: v * factor for k, v in grouped_importance.items()}
             
             return grouped_importance
         else:

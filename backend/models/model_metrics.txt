@@ -1,18 +1,26 @@
 === Métricas del Modelo ===
 
 Validación Cruzada:
-ROC AUC: 0.845 (±0.017)
-Precision: 0.106 (±0.003)
-Recall: 0.896 (±0.038)
-F1: 0.189 (±0.005)
+ROC AUC: 0.835 (±0.016)
+Precision: 0.099 (±0.003)
+Recall: 0.933 (±0.033)
+F1: 0.178 (±0.006)
 
 Rendimiento en Conjunto de Prueba:
-Precision: 0.101
-Recall: 0.840
-Especificidad: 0.614
-Average Precision: 0.229
+Precision: 0.097
+Recall: 0.860
+Especificidad: 0.587
+Average Precision: 0.259
 
-Timestamp: 2025-01-06 14:43:54
+Timestamp: 2025-01-06 17:55:41
 
-
-No se pudo calcular la importancia de las características
+Importancia de Características:
+Edad: 58.50%
+Hipertensión: 11.42%
+Residencia: 6.70%
+Tabaquismo: 5.69%
+Nivel de Glucosa: 5.09%
+Enf. Cardíacas: 4.60%
+Tipo de Trabajo: 3.40%
+IMC: 2.69%
+Estado Civil: 1.90%
