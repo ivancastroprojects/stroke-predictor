@@ -116,15 +116,15 @@ input::placeholder {
 
 .submit-button {
   grid-column: 1 / -1;
-  width: 80%;
-  height: 60%;
+  width: 70%;
+  height: 50%;
   margin: 1rem auto;
   padding: 0rem;
   border: none;
   border-radius: 0.6rem;
   background: linear-gradient(145deg, #02a4e4e6, rgba(0, 88, 126, 0.9));
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
