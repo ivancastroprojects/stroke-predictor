@@ -9,13 +9,13 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "frontend/build"
+        "distDir": "build"
       }
     }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/backend/app.py" },
-    { "source": "/(.*)", "destination": "/frontend/build/index.html" }
+    { "source": "/(.*)", "destination": "/build/index.html" }
   ],
   "headers": [
     {
