@@ -2,17 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": { 
-        "distDir": "build"
-      }
-    },
-    {
       "src": "backend/app.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "50mb"
+      }
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
       }
     }
   ],
@@ -28,11 +28,5 @@
       "src": "/(.*)",
       "dest": "frontend/build/index.html"
     }
-  ],
-  "functions": {
-    "backend/app.py": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  ]
 } 
