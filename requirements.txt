@@ -1,13 +1,11 @@
-# Scientific computing (base)
-numpy==1.19.5
-
-# Machine Learning
-scikit-learn==0.24.2
-joblib==1.0.1
-
 # Web Framework
 flask==2.0.1
 flask-cors==3.0.10
 
+# Scientific computing (minimal)
+numpy==1.19.2
+scikit-learn==0.24.1
+joblib==0.17.0
+
 # Deployment
-requests==2.26.0 
+requests==2.25.1 
