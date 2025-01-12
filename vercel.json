@@ -5,31 +5,34 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "build",
-        "maxLambdaSize": "10mb"
+        "distDir": "build"
       }
     },
     {
       "src": "backend/app.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "10mb",
-        "runtime": "python3.9"
+        "maxLambdaSize": "50mb"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/app.py"
+      "dest": "backend/app.py"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "frontend/build/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "backend/app.py": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 } 
