@@ -5,14 +5,16 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "build"
+        "distDir": "build",
+        "maxLambdaSize": "10mb"
       }
     },
     {
       "src": "backend/app.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "15mb"
+        "maxLambdaSize": "10mb",
+        "runtime": "python3.9"
       }
     }
   ],
@@ -24,14 +26,6 @@
     {
       "src": "/static/(.*)",
       "dest": "/static/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/manifest.json"
     },
     {
       "src": "/(.*)",
