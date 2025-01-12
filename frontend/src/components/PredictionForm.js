@@ -92,32 +92,28 @@ function PredictionForm({ onNewPrediction }) {
       <h2 className="form-title">Stroke Risk Assessment</h2>
       <form className="prediction-form" onSubmit={handleSubmit}>
         <div className="form-section">
-          <div className="form-group age">
-            <label htmlFor="age">
-              Age
-              <span className="required">*</span>
+          <div className="form-group">
+            <label>
+              Age <span className="required">*</span>
             </label>
             <input
               type="number"
-              id="age"
               name="age"
               value={formData.age}
               onChange={handleChange}
+              placeholder="Enter your age"
+              min="18"
+              max="100"
               required
-              min="0"
-              max="120"
-              placeholder="Enter age"
             />
-            <span className="field-info">Between 0 and 120 years</span>
+            <div className="field-info">Must be between 18 and 100 years</div>
           </div>
 
-          <div className="form-group gender">
-            <label htmlFor="gender">
-              Gender
-              <span className="required">*</span>
+          <div className="form-group">
+            <label>
+              Gender <span className="required">*</span>
             </label>
             <select
-              id="gender"
               name="gender"
               value={formData.gender}
               onChange={handleChange}
@@ -130,146 +126,105 @@ function PredictionForm({ onNewPrediction }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="residence_type">Residence Type</label>
-            <select
-              id="residence_type"
-              name="residence_type"
-              value={formData.residence_type}
-              onChange={handleChange}
-            >
-              <option value="Urban">Urban</option>
-              <option value="Rural">Rural</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="hypertension">
-              Hypertension
-              <span className="required">*</span>
+            <label>
+              Hypertension <span className="required">*</span>
             </label>
             <select
-              id="hypertension"
               name="hypertension"
               value={formData.hypertension}
               onChange={handleChange}
               required
             >
-              <option value="0">No</option>
+              <option value="">Select option</option>
               <option value="1">Yes</option>
+              <option value="0">No</option>
             </select>
-            <span className="field-info">Have you been diagnosed with hypertension?</span>
+            <div className="field-info">History of high blood pressure</div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="heart_disease">
-              Heart Disease
-              <span className="required">*</span>
+            <label>
+              Heart Disease <span className="required">*</span>
             </label>
             <select
-              id="heart_disease"
               name="heart_disease"
               value={formData.heart_disease}
               onChange={handleChange}
               required
             >
-              <option value="0">No</option>
+              <option value="">Select option</option>
               <option value="1">Yes</option>
+              <option value="0">No</option>
             </select>
-            <span className="field-info">Have you been diagnosed with any heart disease?</span>
+            <div className="field-info">History of heart conditions</div>
           </div>
 
-          <div className="form-group glucose">
-            <label htmlFor="avg_glucose_level">Average Glucose Level (mg/dL)</label>
+          <div className="form-group">
+            <label>
+              Average Glucose Level <span className="required">*</span>
+            </label>
             <input
               type="number"
-              id="avg_glucose_level"
               name="avg_glucose_level"
-              className="form-control"
               value={formData.avg_glucose_level}
               onChange={handleChange}
-              placeholder={`Average: ${GLUCOSE_RANGES.average} mg/dL`}
+              placeholder="Enter glucose level"
+              step="0.1"
+              min="50"
+              max="300"
               required
             />
             <div className="range-info">
-              <div className="range-item low">
+              <span className="range-item low">
                 <span className="range-dot low"></span>
-                <span>Low: {GLUCOSE_RANGES.low}</span>
-              </div>
-              <div className="range-item normal">
+                Low: &lt;70
+              </span>
+              <span className="range-item normal">
                 <span className="range-dot normal"></span>
-                <span>Normal: {GLUCOSE_RANGES.normal}</span>
-              </div>
-              <div className="range-item high">
+                Normal: 70-140
+              </span>
+              <span className="range-item high">
                 <span className="range-dot high"></span>
-                <span>High: {GLUCOSE_RANGES.high}</span>
-              </div>
+                High: &gt;140
+              </span>
             </div>
+            <div className="field-info">Measured in mg/dL</div>
           </div>
 
-          <div className="form-group bmi">
-            <label htmlFor="bmi">Body Mass Index (BMI)</label>
+          <div className="form-group">
+            <label>
+              BMI <span className="required">*</span>
+            </label>
             <input
               type="number"
-              id="bmi"
               name="bmi"
-              className="form-control"
               value={formData.bmi}
               onChange={handleChange}
-              placeholder={`Average: ${BMI_RANGES.average}`}
+              placeholder="Enter BMI"
+              step="0.1"
+              min="15"
+              max="50"
               required
             />
             <div className="range-info">
-              <div className="range-item low">
+              <span className="range-item low">
                 <span className="range-dot low"></span>
-                <span>Underweight: {BMI_RANGES.underweight}</span>
-              </div>
-              <div className="range-item normal">
+                Underweight: &lt;18.5
+              </span>
+              <span className="range-item normal">
                 <span className="range-dot normal"></span>
-                <span>Normal: {BMI_RANGES.normal}</span>
-              </div>
-              <div className="range-item high">
+                Normal: 18.5-24.9
+              </span>
+              <span className="range-item high">
                 <span className="range-dot high"></span>
-                <span>Overweight: {BMI_RANGES.overweight}</span>
-              </div>
+                Overweight: &gt;25
+              </span>
             </div>
-            <div className="helper-text">
-              BMI = weight(kg) / height²(m)
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="work_type">Work Type</label>
-            <select
-              id="work_type"
-              name="work_type"
-              value={formData.work_type}
-              onChange={handleChange}
-            >
-              <option value="Private">Private</option>
-              <option value="Self-employed">Self-employed</option>
-              <option value="Govt_job">Government</option>
-              <option value="children">Child</option>
-              <option value="Never_worked">Never worked</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="smoking_status">Smoking Status</label>
-            <select
-              id="smoking_status"
-              name="smoking_status"
-              value={formData.smoking_status}
-              onChange={handleChange}
-            >
-              <option value="never smoked">Never smoked</option>
-              <option value="formerly smoked">Former smoker</option>
-              <option value="smokes">Current smoker</option>
-              <option value="Unknown">Unknown</option>
-            </select>
+            <div className="field-info">Body Mass Index (kg/m²)</div>
           </div>
 
           <button type="submit" className="submit-button">
-            Make Prediction
+            Calculate Risk
           </button>
         </div>
       </form>

@@ -21,11 +21,11 @@ export default function PredictionResults() {
   const navigate = useNavigate();
   const { prediction, formData, featureContributions, riskFactors, featureImportance } = location.state || {};
   
-  const riskLevel = prediction > 0.7 ? 'Alto' : prediction > 0.3 ? 'Moderado' : 'Bajo';
+  const riskLevel = prediction > 0.7 ? 'High' : prediction > 0.3 ? 'Moderate' : 'Low';
   const riskColor = {
-    'Alto': '#ff4d4d',
-    'Moderado': '#ffd700',
-    'Bajo': '#4caf50'
+    'High': '#ff4d4d',
+    'Moderate': '#ffd700',
+    'Low': '#4caf50'
   }[riskLevel];
 
   // Datos para el gráfico radial de riesgo
@@ -53,15 +53,15 @@ export default function PredictionResults() {
     <div className="results-container">
       <div className="results-header">
         <button className="back-button" onClick={handleBack}>
-          ← Volver
+          ← Back
         </button>
-        <h1 className="results-title">Resultados del Análisis</h1>
+        <h1 className="results-title">Analysis Results</h1>
       </div>
 
       <div className="results-grid">
-        {/* Panel Principal de Riesgo */}
+        {/* Main Risk Panel */}
         <div className="result-panel main-risk">
-          <h2>Nivel de Riesgo de Accidente Cerebrovascular</h2>
+          <h2>Stroke Risk Level</h2>
           <div className="risk-visualization">
             <div className="gauge-container">
               <ResponsiveContainer width="100%" height={400}>
@@ -96,7 +96,7 @@ export default function PredictionResults() {
                     dominantBaseline="middle"
                     className="risk-label-text"
                   >
-                    Nivel de Riesgo
+                    Risk Level
                   </text>
                 </RadialBarChart>
               </ResponsiveContainer>
@@ -105,36 +105,36 @@ export default function PredictionResults() {
               <div className="risk-indicator" style={{ backgroundColor: riskColor }}>
                 <div className="risk-header">
                   <span className="risk-icon">
-                    {riskLevel === 'Alto' && '⚠️'}
-                    {riskLevel === 'Moderado' && '⚡'}
-                    {riskLevel === 'Bajo' && '✅'}
+                    {riskLevel === 'High' && '⚠️'}
+                    {riskLevel === 'Moderate' && '⚡'}
+                    {riskLevel === 'Low' && '✅'}
                   </span>
-                  <span className="risk-text">Riesgo {riskLevel}</span>
+                  <span className="risk-text">{riskLevel} Risk</span>
                 </div>
                 <span className="risk-description">
-                  {riskLevel === 'Alto' && 'Se recomienda atención médica inmediata'}
-                  {riskLevel === 'Moderado' && 'Se sugiere consulta médica preventiva'}
-                  {riskLevel === 'Bajo' && 'Mantener hábitos saludables'}
+                  {riskLevel === 'High' && 'Immediate medical attention recommended'}
+                  {riskLevel === 'Moderate' && 'Preventive medical consultation suggested'}
+                  {riskLevel === 'Low' && 'Maintain healthy habits'}
                 </span>
               </div>
               <div className="risk-scale">
-                <div className="scale-item" style={{ backgroundColor: '#4caf50', opacity: riskLevel === 'Bajo' ? 1 : 0.3 }}>
-                  Bajo
+                <div className="scale-item" style={{ backgroundColor: '#4caf50', opacity: riskLevel === 'Low' ? 1 : 0.3 }}>
+                  Low
                 </div>
-                <div className="scale-item" style={{ backgroundColor: '#ffd700', opacity: riskLevel === 'Moderado' ? 1 : 0.3 }}>
-                  Moderado
+                <div className="scale-item" style={{ backgroundColor: '#ffd700', opacity: riskLevel === 'Moderate' ? 1 : 0.3 }}>
+                  Moderate
                 </div>
-                <div className="scale-item" style={{ backgroundColor: '#ff4d4d', opacity: riskLevel === 'Alto' ? 1 : 0.3 }}>
-                  Alto
+                <div className="scale-item" style={{ backgroundColor: '#ff4d4d', opacity: riskLevel === 'High' ? 1 : 0.3 }}>
+                  High
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Panel de Factores Contribuyentes */}
+        {/* Contributing Factors Panel */}
         <div className="result-panel factors-panel">
-          <h2>Factores Contribuyentes</h2>
+          <h2>Contributing Factors</h2>
           <div className="factors-visualization">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={contributionsData} layout="vertical">
@@ -151,47 +151,47 @@ export default function PredictionResults() {
           </div>
         </div>
 
-        {/* Panel de Datos del Paciente */}
+        {/* Patient Data Panel */}
         <div className="result-panel patient-data">
-          <h2>Datos del Paciente</h2>
+          <h2>Patient Data</h2>
           <div className="patient-grid">
             <div className="data-item">
-              <span className="label">Edad</span>
-              <span className="value">{formData.age} años</span>
+              <span className="label">Age</span>
+              <span className="value">{formData.age} years</span>
             </div>
             <div className="data-item">
-              <span className="label">Género</span>
-              <span className="value">{formData.gender === 'Male' ? 'Masculino' : 'Femenino'}</span>
+              <span className="label">Gender</span>
+              <span className="value">{formData.gender === 'Male' ? 'Male' : 'Female'}</span>
             </div>
             <div className="data-item">
-              <span className="label">IMC</span>
+              <span className="label">BMI</span>
               <span className="value">{parseFloat(formData.bmi).toFixed(1)} kg/m²</span>
             </div>
             <div className="data-item">
-              <span className="label">Glucosa</span>
+              <span className="label">Glucose</span>
               <span className="value">{parseFloat(formData.avg_glucose_level).toFixed(0)} mg/dL</span>
             </div>
             <div className="data-item">
-              <span className="label">Hipertensión</span>
-              <span className="value">{formData.hypertension === '1' ? 'Sí' : 'No'}</span>
+              <span className="label">Hypertension</span>
+              <span className="value">{formData.hypertension === '1' ? 'Yes' : 'No'}</span>
             </div>
             <div className="data-item">
-              <span className="label">Enf. Cardíaca</span>
-              <span className="value">{formData.heart_disease === '1' ? 'Sí' : 'No'}</span>
+              <span className="label">Heart Disease</span>
+              <span className="value">{formData.heart_disease === '1' ? 'Yes' : 'No'}</span>
             </div>
           </div>
         </div>
 
-        {/* Panel de Recomendaciones */}
+        {/* Recommendations Panel */}
         <div className="result-panel recommendations">
-          <h2>Recomendaciones</h2>
+          <h2>Recommendations</h2>
           <div className="recommendations-list">
             {formData.hypertension === '1' && (
               <div className="recommendation-item">
                 <div className="icon">🫀</div>
                 <div className="content">
-                  <h3>Control de Presión Arterial</h3>
-                  <p>Mantener un control regular de la presión arterial y seguir el tratamiento prescrito.</p>
+                  <h3>Blood Pressure Control</h3>
+                  <p>Maintain regular blood pressure monitoring and follow prescribed treatment.</p>
                 </div>
               </div>
             )}
@@ -199,8 +199,8 @@ export default function PredictionResults() {
               <div className="recommendation-item">
                 <div className="icon">⚖️</div>
                 <div className="content">
-                  <h3>Control de Peso</h3>
-                  <p>Mantener una dieta equilibrada y realizar actividad física regular.</p>
+                  <h3>Weight Management</h3>
+                  <p>Maintain a balanced diet and regular physical activity.</p>
                 </div>
               </div>
             )}
@@ -208,16 +208,16 @@ export default function PredictionResults() {
               <div className="recommendation-item">
                 <div className="icon">🩺</div>
                 <div className="content">
-                  <h3>Control de Glucosa</h3>
-                  <p>Monitorear los niveles de glucosa y mantener una dieta apropiada.</p>
+                  <h3>Glucose Control</h3>
+                  <p>Monitor glucose levels and maintain an appropriate diet.</p>
                 </div>
               </div>
             )}
             <div className="recommendation-item">
               <div className="icon">🏃</div>
               <div className="content">
-                <h3>Estilo de Vida Saludable</h3>
-                <p>Mantener actividad física regular, evitar el tabaco y limitar el consumo de alcohol.</p>
+                <h3>Healthy Lifestyle</h3>
+                <p>Maintain regular physical activity, avoid tobacco, and limit alcohol consumption.</p>
               </div>
             </div>
           </div>
@@ -226,8 +226,8 @@ export default function PredictionResults() {
 
       <div className="results-footer">
         <p className="disclaimer">
-          * Este análisis es una herramienta de apoyo y no sustituye el diagnóstico médico profesional.
-          Consulte con su médico para una evaluación completa.
+          * This analysis is a support tool and does not replace professional medical diagnosis.
+          Consult with your doctor for a complete evaluation.
         </p>
       </div>
     </div>

@@ -28,7 +28,7 @@ function PredictionHistory({ history }) {
   const displayHistory = history.length === 0 ? examplePredictions : history;
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleString('es-ES', {
+    return new Date(date).toLocaleString('en-US', {
       day: '2-digit',
       month: 'short',
       hour: '2-digit',
@@ -37,14 +37,14 @@ function PredictionHistory({ history }) {
   };
 
   const getRiskLevel = (prediction) => {
-    if (prediction > 0.7) return { text: 'Alto', color: '#ff4d4d' };
-    if (prediction > 0.3) return { text: 'Moderado', color: '#ffd700' };
-    return { text: 'Bajo', color: '#4caf50' };
+    if (prediction > 0.7) return { text: 'High', color: '#ff4d4d' };
+    if (prediction > 0.3) return { text: 'Moderate', color: '#ffd700' };
+    return { text: 'Low', color: '#4caf50' };
   };
 
   return (
     <div className="prediction-history">
-      <h2 className="history-title">Historial de Predicciones</h2>
+      <h2 className="history-title">Prediction History</h2>
       <div className="history-list">
         {displayHistory.map((item, index) => {
           const risk = getRiskLevel(item.prediction);
@@ -61,39 +61,39 @@ function PredictionHistory({ history }) {
               </div>
               <div className="history-details">
                 <p>
-                  <strong>Edad:</strong>
-                  <span>{item.age} años</span>
+                  <strong>Age:</strong>
+                  <span>{item.age} years</span>
                 </p>
                 <p>
-                  <strong>Género:</strong>
+                  <strong>Gender:</strong>
                   <span>{item.gender === 'Male' ? 'M' : 'F'}</span>
                 </p>
                 <p>
-                  <strong>IMC:</strong>
+                  <strong>BMI:</strong>
                   <span>{parseFloat(item.bmi).toFixed(1)}</span>
                 </p>
                 <p>
-                  <strong>Glucosa:</strong>
+                  <strong>Glucose:</strong>
                   <span>{parseFloat(item.avg_glucose_level).toFixed(0)} mg/dL</span>
                 </p>
                 <p>
-                  <strong>HTA:</strong>
-                  <span>{item.hypertension === '1' ? 'Sí' : 'No'}</span>
+                  <strong>HBP:</strong>
+                  <span>{item.hypertension === '1' ? 'Yes' : 'No'}</span>
                 </p>
                 <p>
-                  <strong>Card.:</strong>
-                  <span>{item.heart_disease === '1' ? 'Sí' : 'No'}</span>
+                  <strong>Heart:</strong>
+                  <span>{item.heart_disease === '1' ? 'Yes' : 'No'}</span>
                 </p>
               </div>
               <div className="prediction-percentage">
-                Riesgo: {(item.prediction * 100).toFixed(1)}%
+                Risk: {(item.prediction * 100).toFixed(1)}%
               </div>
             </div>
           );
         })}
         {history.length === 0 && (
           <div className="example-note">
-            * Estos son ejemplos. Tus predicciones aparecerán aquí.
+            * These are examples. Your predictions will appear here.
           </div>
         )}
       </div>

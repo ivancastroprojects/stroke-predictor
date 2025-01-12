@@ -17,61 +17,94 @@ function MainComponent() {
   return (
     <div className="main-container">
       <section className="header-section">
-        <div className="header-image-container">
-          <img 
-            src="https://www.sinakhan.com/media/photos/BrainAneurysm.jpg" 
-            alt="Brain Aneurysm Illustration" 
-            className="header-image"
-          />
-        </div>
         <div className="header-content">
-          <h1 className="header-title">Stroke Risk Assessment Tool</h1>
-          <div className="header-description">
-            <p className="main-description">
-              Esta herramienta utiliza inteligencia artificial para evaluar tu riesgo de sufrir un accidente cerebrovascular 
-              basándose en diversos factores de salud. La detección temprana y la prevención son cruciales para reducir el riesgo.
-            </p>
-            
-            <div className="info-grid">
-              <div className="info-card">
-                <h3>¿Qué es un Accidente Cerebrovascular?</h3>
-                <p>
-                  Es una emergencia médica que ocurre cuando se interrumpe o detiene el flujo de sangre al cerebro. 
-                  Puede ser isquémico (por bloqueo) o hemorrágico (por sangrado).
-                </p>
-              </div>
+          <div className="header-main">
+            <div className="header-image-container main-image">
+              <img 
+                src="https://img.freepik.com/free-photo/male-medical-figure-with-front-brain-highlighted_1048-11823.jpg?t=st=1736675548~exp=1736679148~hmac=4135fd45049d3154d538d5356d0da210b696c391acb614806777882b260b84e6&w=1380" 
+                alt="Stroke Awareness Illustration" 
+                className="header-image"
+              />
+            </div>
+            <div className="header-text">
+              <h1 className="header-title">Stroke Risk Assessment Tool</h1>
+              <p className="main-description">
+                This tool uses artificial intelligence to assess your risk of having a stroke 
+                based on various health factors. Early detection and prevention are crucial 
+                for reducing risk.
+              </p>
+            </div>
+          </div>
 
-              <div className="info-card warning-signs">
-                <h3>Señales de Advertencia (F.A.S.T)</h3>
-                <ul>
-                  <li><strong>F</strong>ace (Rostro): Caída o entumecimiento de un lado de la cara</li>
-                  <li><strong>A</strong>rm (Brazo): Debilidad o entumecimiento en un brazo</li>
-                  <li><strong>S</strong>peech (Habla): Dificultad para hablar o entender</li>
-                  <li><strong>T</strong>ime (Tiempo): Llame al 911 inmediatamente si nota estos síntomas</li>
-                </ul>
+          <div className="stroke-types-grid">
+            <div className="stroke-type-card">
+              <img 
+                src="https://img.freepik.com/free-vector/human-with-ischemic-stroke_1308-111399.jpg" 
+                alt="Ischemic Stroke" 
+                className="stroke-type-image"
+              />
+              <div className="stroke-type-content">
+                <h3>Ischemic Stroke</h3>
+                <p>Occurs when a blood clot blocks blood flow to the brain. This is the most common type, accounting for 87% of cases.</p>
               </div>
+            </div>
 
-              <div className="info-card">
-                <h3>Factores de Riesgo Principales</h3>
-                <ul>
-                  <li>Presión arterial alta</li>
-                  <li>Diabetes</li>
-                  <li>Enfermedades cardíacas</li>
-                  <li>Edad avanzada</li>
-                  <li>Historial familiar</li>
-                </ul>
+            <div className="stroke-type-card">
+              <img 
+                src="https://img.freepik.com/free-vector/human-anatomy-with-atherosclerosis-stroke_1308-112370.jpg" 
+                alt="Atherosclerotic Stroke" 
+                className="stroke-type-image"
+              />
+              <div className="stroke-type-content">
+                <h3>Cerebral Atherosclerosis</h3>
+                <p>The buildup of plaque in cerebral arteries gradually reduces blood flow, increasing the risk of clots forming.</p>
               </div>
+            </div>
 
-              <div className="info-card">
-                <h3>Prevención</h3>
-                <ul>
-                  <li>Control regular de la presión arterial</li>
-                  <li>Dieta saludable y ejercicio</li>
-                  <li>No fumar</li>
-                  <li>Limitar el consumo de alcohol</li>
-                  <li>Mantener niveles saludables de colesterol</li>
-                </ul>
+            <div className="stroke-type-card">
+              <img 
+                src="https://img.freepik.com/free-vector/human-with-hemorrhagic-stroke_1308-111966.jpg" 
+                alt="Hemorrhagic Stroke" 
+                className="stroke-type-image"
+              />
+              <div className="stroke-type-content">
+                <h3>Hemorrhagic Stroke</h3>
+                <p>Occurs when a blood vessel ruptures and bleeds into the brain. Although less common, it tends to be more severe.</p>
               </div>
+            </div>
+          </div>
+
+          <div className="info-grid">
+            <div className="info-card warning-signs">
+              <h3>Warning Signs (F.A.S.T)</h3>
+              <ul>
+                <li><strong>F</strong>ace: Drooping or numbness on one side</li>
+                <li><strong>A</strong>rm: Weakness or numbness in one arm</li>
+                <li><strong>S</strong>peech: Difficulty speaking or understanding</li>
+                <li><strong>T</strong>ime: Call emergency services immediately if you notice these symptoms</li>
+              </ul>
+            </div>
+
+            <div className="info-card">
+              <h3>Main Risk Factors</h3>
+              <ul>
+                <li>High blood pressure</li>
+                <li>Diabetes</li>
+                <li>Heart disease</li>
+                <li>Advanced age</li>
+                <li>Family history</li>
+              </ul>
+            </div>
+
+            <div className="info-card">
+              <h3>Prevention</h3>
+              <ul>
+                <li>Regular blood pressure monitoring</li>
+                <li>Healthy diet and exercise</li>
+                <li>No smoking</li>
+                <li>Limited alcohol consumption</li>
+                <li>Maintain healthy cholesterol levels</li>
+              </ul>
             </div>
           </div>
         </div>

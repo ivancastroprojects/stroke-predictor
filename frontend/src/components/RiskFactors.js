@@ -3,36 +3,36 @@ import './RiskFactors.css';
 
 const riskFactors = [
   {
-    name: 'Edad',
+    name: 'Age',
     importance: 58.5,
-    description: 'El riesgo aumenta significativamente con la edad.'
+    description: 'Risk increases significantly with age.'
   },
   {
-    name: 'Hipertensión',
+    name: 'Hypertension',
     importance: 11.4,
-    description: 'La presión arterial alta es un factor de riesgo importante.'
+    description: 'High blood pressure is a major risk factor.'
   },
   {
-    name: 'Residencia',
+    name: 'Residence',
     importance: 6.7,
-    description: 'El tipo de residencia puede influir en el acceso a atención médica.'
+    description: 'Type of residence can influence access to medical care.'
   },
   {
-    name: 'Nivel de glucosa',
+    name: 'Glucose Level',
     importance: 6.2,
-    description: 'Niveles elevados de glucosa aumentan el riesgo.'
+    description: 'Elevated glucose levels increase risk.'
   },
   {
-    name: 'IMC',
+    name: 'BMI',
     importance: 5.8,
-    description: 'El índice de masa corporal afecta el riesgo cardiovascular.'
+    description: 'Body Mass Index affects cardiovascular risk.'
   }
 ];
 
 function RiskFactors() {
   return (
     <div className="risk-factors">
-      <h2>Factores de Riesgo</h2>
+      <h2>Risk Factors</h2>
       <div className="risk-factors-list">
         {riskFactors.map((factor, index) => (
           <div key={index} className="risk-factor-item">
