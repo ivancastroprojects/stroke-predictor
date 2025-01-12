@@ -9,7 +9,10 @@ export default function BackgroundRays() {
           className={`run ${index % 2 === 0 ? 'left' : 'right'}`}
           style={{
             animationDelay: `${index * 0.3}s`,
-            opacity: 0
+            opacity: 0,
+            background: index % 2 === 0 
+              ? 'linear-gradient(90deg, transparent, rgba(0, 183, 255, 0.4))'
+              : 'linear-gradient(270deg, transparent, rgba(0, 255, 213, 0.4))'
           }}
         />
       ))}

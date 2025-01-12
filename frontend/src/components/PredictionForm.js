@@ -1,222 +1,280 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './PredictionForm.css';
 
-export default function PredictionForm({ onSubmit }) {
+const GLUCOSE_RANGES = {
+  low: '< 70 mg/dL',
+  normal: '70-140 mg/dL',
+  high: '> 140 mg/dL',
+  average: '106'
+};
+
+const BMI_RANGES = {
+  underweight: '< 18.5',
+  normal: '18.5-24.9',
+  overweight: '25-29.9',
+  obese: '≥ 30',
+  average: '28.5'
+};
+
+function PredictionForm({ onNewPrediction }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    gender: "",
-    age: "",
-    hypertension: "",
-    heart_disease: "",
-    ever_married: "",
-    work_type: "",
-    Residence_type: "",
-    avg_glucose_level: "",
-    bmi: "",
-    smoking_status: "",
+    age: '',
+    gender: '',
+    hypertension: '0',
+    heart_disease: '0',
+    ever_married: 'No',
+    work_type: 'Private',
+    residence_type: 'Urban',
+    avg_glucose_level: '',
+    bmi: '',
+    smoking_status: 'never smoked'
   });
 
-  const fieldRanges = {
-    avg_glucose_level: {
-      placeholder: "Ej: 106.15",
-      min: 55,
-      max: 271,
-      info: "Rango normal: 70-140 mg/dL"
-    },
-    bmi: {
-      placeholder: "Ej: 28.89",
-      min: 10,
-      max: 60,
-      info: "Rango saludable: 18.5-24.9"
-    },
-    age: {
-      placeholder: "Ej: 43",
-      min: 0,
-      max: 100,
-      info: "Edad en años"
-    }
-  };
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    try {
+      const response = await fetch('http://localhost:5000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const dataToSubmit = {
-      gender: formData.gender || "",
-      age: formData.age || "",
-      hypertension: formData.hypertension || "",
-      heart_disease: formData.heart_disease || "",
-      ever_married: formData.ever_married || "No",
-      work_type: formData.work_type || "",
-      Residence_type: formData.Residence_type || "Urban",
-      avg_glucose_level: formData.avg_glucose_level || 106.15,
-      bmi: formData.bmi || 28.89,
-      smoking_status: formData.smoking_status || "",
-    };
+      if (!response.ok) {
+        throw new Error('Error en la predicción');
+      }
 
-    if (!dataToSubmit.age || !dataToSubmit.gender || !dataToSubmit.hypertension || !dataToSubmit.heart_disease || !dataToSubmit.smoking_status || !dataToSubmit.work_type) {
-      alert("Por favor, complete todos los campos obligatorios.");
-      return;
+      const result = await response.json();
+      
+      const predictionData = {
+        ...formData,
+        prediction: result.prediction,
+        timestamp: new Date().toISOString()
+      };
+      
+      const history = JSON.parse(localStorage.getItem('predictionHistory') || '[]');
+      const newHistory = [predictionData, ...history];
+      localStorage.setItem('predictionHistory', JSON.stringify(newHistory));
+      
+      if (onNewPrediction) {
+        onNewPrediction(predictionData);
+      }
+
+      navigate('/results', { 
+        state: { 
+          prediction: result.prediction,
+          formData: formData,
+          featureContributions: result.feature_contributions,
+          riskFactors: result.risk_factors,
+          featureImportance: result.feature_importance
+        } 
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al realizar la predicción');
     }
-
-    onSubmit(dataToSubmit);
   };
 
   return (
-    <div className="form-container">
-      <h2>Predicción de Riesgo de Stroke</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Age */}
-        <div className="form-group">
-          <label>
-            Edad: <span className="required">*</span>
+    <div className="prediction-form-container">
+      <h2 className="form-title">Stroke Risk Assessment</h2>
+      <form className="prediction-form" onSubmit={handleSubmit}>
+        <div className="form-section">
+          <div className="form-group age">
+            <label htmlFor="age">
+              Age
+              <span className="required">*</span>
+            </label>
             <input
               type="number"
+              id="age"
               name="age"
+              value={formData.age}
               onChange={handleChange}
-              placeholder={fieldRanges.age.placeholder}
-              min={fieldRanges.age.min}
-              max={fieldRanges.age.max}
-              title={fieldRanges.age.info}
               required
+              min="0"
+              max="120"
+              placeholder="Enter age"
             />
-            <span className="field-info">{fieldRanges.age.info}</span>
-          </label>
-        </div>
+            <span className="field-info">Between 0 and 120 years</span>
+          </div>
 
-        {/* Gender */}
-        <div className="form-group">
-          <label>
-            Género: <span className="required">*</span>
-            <select name="gender" onChange={handleChange} required>
-              <option value="">Seleccionar Género</option>
-              <option value="Male">Masculino</option>
-              <option value="Female">Femenino</option>
-              <option value="Other">Otro</option>
+          <div className="form-group gender">
+            <label htmlFor="gender">
+              Gender
+              <span className="required">*</span>
+            </label>
+            <select
+              id="gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
-          </label>
-        </div>
+          </div>
 
-        {/* Hypertension */}
-        <div className="form-group">
-          <label>
-            Hipertensión: <span className="required">*</span>
-            <select name="hypertension" onChange={handleChange} required>
-              <option value="">Seleccionar</option>
-              <option value="1">Sí</option>
-              <option value="0">No</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Heart Disease */}
-        <div className="form-group">
-          <label>
-            Enfermedad Cardíaca: <span className="required">*</span>
-            <select name="heart_disease" onChange={handleChange} required>
-              <option value="">Seleccionar</option>
-              <option value="1">Sí</option>
-              <option value="0">No</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Smoking Status */}
-        <div className="form-group">
-          <label>
-            Hábito de Fumar: <span className="required">*</span>
-            <select name="smoking_status" onChange={handleChange} required>
-              <option value="">Seleccionar</option>
-              <option value="formerly smoked">Ex fumador</option>
-              <option value="never smoked">Nunca fumó</option>
-              <option value="smokes">Fumador actual</option>
-              <option value="Unknown">Desconocido</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Work Type */}
-        <div className="form-group">
-          <label>
-            Tipo de Trabajo: <span className="required">*</span>
-            <select name="work_type" onChange={handleChange} required>
-              <option value="">Seleccionar</option>
-              <option value="Private">Privado</option>
-              <option value="Self-employed">Autónomo</option>
-              <option value="Govt_job">Gobierno</option>
-              <option value="children">Estudiante</option>
-              <option value="Never_worked">Sin trabajo</option>
-            </select>
-          </label>
-        </div>
-
-        {/* Residence Type */}
-        <div className="form-group">
-          <label>
-            Tipo de Residencia:
-            <select name="Residence_type" onChange={handleChange}>
-              <option value="">Seleccionar</option>
-              <option value="Urban">Urbana</option>
+          <div className="form-group">
+            <label htmlFor="residence_type">Residence Type</label>
+            <select
+              id="residence_type"
+              name="residence_type"
+              value={formData.residence_type}
+              onChange={handleChange}
+            >
+              <option value="Urban">Urban</option>
               <option value="Rural">Rural</option>
             </select>
-          </label>
-        </div>
+          </div>
 
-        {/* Ever Married */}
-        <div className="form-group">
-          <label>
-            Estado Civil:
-            <select name="ever_married" onChange={handleChange} required>
-              <option value="">Seleccionar</option>
-              <option value="Yes">Casado/a</option>
-              <option value="No">Soltero/a</option>
+          <div className="form-group">
+            <label htmlFor="hypertension">
+              Hypertension
+              <span className="required">*</span>
+            </label>
+            <select
+              id="hypertension"
+              name="hypertension"
+              value={formData.hypertension}
+              onChange={handleChange}
+              required
+            >
+              <option value="0">No</option>
+              <option value="1">Yes</option>
             </select>
-          </label>
-        </div>
+            <span className="field-info">Have you been diagnosed with hypertension?</span>
+          </div>
 
-        {/* Glucose Level */}
-        <div className="form-group">
-          <label>
-            Nivel de Glucosa:
+          <div className="form-group">
+            <label htmlFor="heart_disease">
+              Heart Disease
+              <span className="required">*</span>
+            </label>
+            <select
+              id="heart_disease"
+              name="heart_disease"
+              value={formData.heart_disease}
+              onChange={handleChange}
+              required
+            >
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+            <span className="field-info">Have you been diagnosed with any heart disease?</span>
+          </div>
+
+          <div className="form-group glucose">
+            <label htmlFor="avg_glucose_level">Average Glucose Level (mg/dL)</label>
             <input
               type="number"
+              id="avg_glucose_level"
               name="avg_glucose_level"
+              className="form-control"
+              value={formData.avg_glucose_level}
               onChange={handleChange}
-              placeholder={fieldRanges.avg_glucose_level.placeholder}
-              min={fieldRanges.avg_glucose_level.min}
-              max={fieldRanges.avg_glucose_level.max}
-              step="0.01"
-              title={fieldRanges.avg_glucose_level.info}
+              placeholder={`Average: ${GLUCOSE_RANGES.average} mg/dL`}
               required
             />
-            <span className="field-info">{fieldRanges.avg_glucose_level.info}</span>
-          </label>
-        </div>
+            <div className="range-info">
+              <div className="range-item low">
+                <span className="range-dot low"></span>
+                <span>Low: {GLUCOSE_RANGES.low}</span>
+              </div>
+              <div className="range-item normal">
+                <span className="range-dot normal"></span>
+                <span>Normal: {GLUCOSE_RANGES.normal}</span>
+              </div>
+              <div className="range-item high">
+                <span className="range-dot high"></span>
+                <span>High: {GLUCOSE_RANGES.high}</span>
+              </div>
+            </div>
+          </div>
 
-        {/* BMI */}
-        <div className="form-group">
-          <label>
-            IMC:
+          <div className="form-group bmi">
+            <label htmlFor="bmi">Body Mass Index (BMI)</label>
             <input
               type="number"
+              id="bmi"
               name="bmi"
+              className="form-control"
+              value={formData.bmi}
               onChange={handleChange}
-              placeholder={fieldRanges.bmi.placeholder}
-              min={fieldRanges.bmi.min}
-              max={fieldRanges.bmi.max}
-              step="0.01"
-              title={fieldRanges.bmi.info}
+              placeholder={`Average: ${BMI_RANGES.average}`}
               required
             />
-            <span className="field-info">{fieldRanges.bmi.info}</span>
-          </label>
-        </div>
+            <div className="range-info">
+              <div className="range-item low">
+                <span className="range-dot low"></span>
+                <span>Underweight: {BMI_RANGES.underweight}</span>
+              </div>
+              <div className="range-item normal">
+                <span className="range-dot normal"></span>
+                <span>Normal: {BMI_RANGES.normal}</span>
+              </div>
+              <div className="range-item high">
+                <span className="range-dot high"></span>
+                <span>Overweight: {BMI_RANGES.overweight}</span>
+              </div>
+            </div>
+            <div className="helper-text">
+              BMI = weight(kg) / height²(m)
+            </div>
+          </div>
 
-        <button type="submit" className="submit-button">
-          Analizar Riesgo
-        </button>
+          <div className="form-group">
+            <label htmlFor="work_type">Work Type</label>
+            <select
+              id="work_type"
+              name="work_type"
+              value={formData.work_type}
+              onChange={handleChange}
+            >
+              <option value="Private">Private</option>
+              <option value="Self-employed">Self-employed</option>
+              <option value="Govt_job">Government</option>
+              <option value="children">Child</option>
+              <option value="Never_worked">Never worked</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="smoking_status">Smoking Status</label>
+            <select
+              id="smoking_status"
+              name="smoking_status"
+              value={formData.smoking_status}
+              onChange={handleChange}
+            >
+              <option value="never smoked">Never smoked</option>
+              <option value="formerly smoked">Former smoker</option>
+              <option value="smokes">Current smoker</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+          </div>
+
+          <button type="submit" className="submit-button">
+            Make Prediction
+          </button>
+        </div>
       </form>
     </div>
   );
-} 
+}
+
+export default PredictionForm; 

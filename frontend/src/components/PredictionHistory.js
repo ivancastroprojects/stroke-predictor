@@ -1,83 +1,104 @@
 import React from 'react';
+import './PredictionHistory.css';
 
-export default function PredictionHistory({ history }) {
-  // Función para formatear la fecha
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${day}/${month} - ${hours}:${minutes}`;
+const examplePredictions = [
+  {
+    age: 45,
+    gender: 'Male',
+    hypertension: '1',
+    heart_disease: '0',
+    avg_glucose_level: '120',
+    bmi: '28.5',
+    prediction: 0.35,
+    timestamp: new Date('2024-01-06T15:30:00').toISOString()
+  },
+  {
+    age: 62,
+    gender: 'Female',
+    hypertension: '1',
+    heart_disease: '1',
+    avg_glucose_level: '150',
+    bmi: '32.1',
+    prediction: 0.75,
+    timestamp: new Date('2024-01-05T10:15:00').toISOString()
+  }
+];
+
+function PredictionHistory({ history }) {
+  const displayHistory = history.length === 0 ? examplePredictions : history;
+
+  const formatDate = (date) => {
+    return new Date(date).toLocaleString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
-  // Función para formatear el género
-  const formatGender = (gender) => {
-    const genderMap = {
-      'Male': 'Hombre',
-      'Female': 'Mujer'
-    };
-    return genderMap[gender] || gender;
+  const getRiskLevel = (prediction) => {
+    if (prediction > 0.7) return { text: 'Alto', color: '#ff4d4d' };
+    if (prediction > 0.3) return { text: 'Moderado', color: '#ffd700' };
+    return { text: 'Bajo', color: '#4caf50' };
   };
 
   return (
-    <div className="history-container">
-      <h3>Historial de Predicciones</h3>
+    <div className="prediction-history">
+      <h2 className="history-title">Historial de Predicciones</h2>
       <div className="history-list">
-        {history.map((entry, index) => (
-          <div key={index} className="history-item">
-            <div className="history-header">
-              <div className="prediction-title">
-                <span className="patient-name">
-                  {formatGender(entry.gender)}, {entry.age} años
-                </span>
-                <span className="prediction-date">
-                  {formatDate(entry.timestamp)}
+        {displayHistory.map((item, index) => {
+          const risk = getRiskLevel(item.prediction);
+          return (
+            <div key={index} className="history-item">
+              <div className="history-header">
+                <span className="history-date">{formatDate(item.timestamp)}</span>
+                <span 
+                  className="risk-level"
+                  style={{ backgroundColor: risk.color }}
+                >
+                  {risk.text}
                 </span>
               </div>
-              <span className={`risk-badge ${entry.prediction > 0.5 ? 'high' : 'low'}`}>
-                Riesgo {entry.prediction > 0.5 ? 'Alto' : 'Bajo'}
-              </span>
-            </div>
-            <details>
-              <summary className="toggle-details">Ver detalles</summary>
               <div className="history-details">
-                {Object.entries(entry)
-                  .filter(([key]) => !['timestamp', 'prediction', 'gender', 'age'].includes(key))
-                  .map(([key, value]) => (
-                    <p key={key}>
-                      <span className="detail-label">{formatLabel(key)}</span>
-                      <span className="detail-value">{formatValue(value)}</span>
-                    </p>
-                  ))
-                }
+                <p>
+                  <strong>Edad:</strong>
+                  <span>{item.age} años</span>
+                </p>
+                <p>
+                  <strong>Género:</strong>
+                  <span>{item.gender === 'Male' ? 'M' : 'F'}</span>
+                </p>
+                <p>
+                  <strong>IMC:</strong>
+                  <span>{parseFloat(item.bmi).toFixed(1)}</span>
+                </p>
+                <p>
+                  <strong>Glucosa:</strong>
+                  <span>{parseFloat(item.avg_glucose_level).toFixed(0)} mg/dL</span>
+                </p>
+                <p>
+                  <strong>HTA:</strong>
+                  <span>{item.hypertension === '1' ? 'Sí' : 'No'}</span>
+                </p>
+                <p>
+                  <strong>Card.:</strong>
+                  <span>{item.heart_disease === '1' ? 'Sí' : 'No'}</span>
+                </p>
               </div>
-            </details>
+              <div className="prediction-percentage">
+                Riesgo: {(item.prediction * 100).toFixed(1)}%
+              </div>
+            </div>
+          );
+        })}
+        {history.length === 0 && (
+          <div className="example-note">
+            * Estos son ejemplos. Tus predicciones aparecerán aquí.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
 }
 
-// Función auxiliar para formatear etiquetas
-function formatLabel(key) {
-  const labels = {
-    hypertension: 'Hipertensión',
-    heart_disease: 'Enf. Cardíaca',
-    ever_married: 'Estado Civil',
-    work_type: 'Tipo de Trabajo',
-    Residence_type: 'Residencia',
-    avg_glucose_level: 'Nivel de Glucosa',
-    bmi: 'IMC',
-    smoking_status: 'Tabaquismo'
-  };
-  return labels[key] || key;
-}
-
-// Función auxiliar para formatear valores
-function formatValue(value) {
-  if (value === '1') return 'Sí';
-  if (value === '0') return 'No';
-  return value;
-} 
+export default PredictionHistory; 

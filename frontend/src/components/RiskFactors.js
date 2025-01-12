@@ -1,81 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AgeRiskChart from './AgeRiskChart';
+import React from 'react';
+import './RiskFactors.css';
 
-export default function RiskFactors() {
-  const [factors, setFactors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchImportance = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await axios.get('http://localhost:5000/feature-importance');
-        
-        const importanceData = response.data;
-        const factorsArray = Object.entries(importanceData)
-          .map(([name, weight]) => ({ 
-            name, 
-            weight: parseFloat(weight) 
-          }))
-          .sort((a, b) => b.weight - a.weight);
-        
-        setFactors(factorsArray);
-      } catch (error) {
-        console.error('Error:', error);
-        setError('Error al cargar los factores de riesgo');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchImportance();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="risk-factors">
-        <h3>IMPORTANCIA DE FACTORES</h3>
-        <div className="loading">Cargando factores...</div>
-      </div>
-    );
+const riskFactors = [
+  {
+    name: 'Edad',
+    importance: 58.5,
+    description: 'El riesgo aumenta significativamente con la edad.'
+  },
+  {
+    name: 'Hipertensión',
+    importance: 11.4,
+    description: 'La presión arterial alta es un factor de riesgo importante.'
+  },
+  {
+    name: 'Residencia',
+    importance: 6.7,
+    description: 'El tipo de residencia puede influir en el acceso a atención médica.'
+  },
+  {
+    name: 'Nivel de glucosa',
+    importance: 6.2,
+    description: 'Niveles elevados de glucosa aumentan el riesgo.'
+  },
+  {
+    name: 'IMC',
+    importance: 5.8,
+    description: 'El índice de masa corporal afecta el riesgo cardiovascular.'
   }
+];
 
-  if (error) {
-    return (
-      <div className="risk-factors">
-        <h3>IMPORTANCIA DE FACTORES</h3>
-        <div className="error">{error}</div>
-      </div>
-    );
-  }
-
+function RiskFactors() {
   return (
     <div className="risk-factors">
-      <h3>IMPORTANCIA DE FACTORES</h3>
-      {factors.map(factor => (
-        <div key={factor.name} className="risk-factor-item">
-          <div className="factor-label">
-            {factor.name}
-            <span className="factor-percentage">
-              {factor.weight.toFixed(1)}%
-            </span>
+      <h2>Factores de Riesgo</h2>
+      <div className="risk-factors-list">
+        {riskFactors.map((factor, index) => (
+          <div key={index} className="risk-factor-item">
+            <div className="risk-factor-header">
+              <h3>{factor.name}</h3>
+              <span className="importance">{factor.importance}%</span>
+            </div>
+            <p>{factor.description}</p>
+            <div className="importance-bar">
+              <div 
+                className="importance-fill"
+                style={{ width: `${factor.importance}%` }}
+              />
+            </div>
           </div>
-          <div className="factor-bar">
-            <div 
-              className="factor-fill"
-              style={{ 
-                '--width': `${factor.weight}%`,
-                width: `${factor.weight}%`
-              }}
-            />
-          </div>
-        </div>
-      ))}
-      
-      <AgeRiskChart />
+        ))}
+      </div>
     </div>
   );
 }
+
+export default RiskFactors;

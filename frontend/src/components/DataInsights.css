@@ -1,0 +1,258 @@
+.data-insights {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(20px);
+  border-radius: 1.2rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.insights-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.insights-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #7c00ff, #ff00d3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.insights-header .subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.medical-alert {
+  background: linear-gradient(145deg, rgba(124, 0, 255, 0.2), rgba(255, 0, 211, 0.1));
+  border: 1px solid rgba(124, 0, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.alert-icon {
+  font-size: 2rem;
+  color: #7c00ff;
+  text-shadow: 0 0 10px rgba(124, 0, 255, 0.4);
+}
+
+.alert-content h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.alert-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.chart-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+  height: auto;
+}
+
+.chart-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(124, 0, 255, 0.2);
+}
+
+.chart-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-box {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(124, 0, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.info-box h3 {
+  color: #7c00ff;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px rgba(124, 0, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.info-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-box li {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.info-box li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #7c00ff;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.recommendation-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.recommendation-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(124, 0, 255, 0.2);
+}
+
+.recommendation-icon {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.recommendation-item h4 {
+  color: #7c00ff;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.recommendation-item p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.medical-disclaimer {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.medical-disclaimer p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Estilos para los tooltips de los gráficos */
+.recharts-tooltip-wrapper {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem !important;
+}
+
+.recharts-default-tooltip {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1400px) {
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1200px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-container,
+  .info-box {
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .data-insights {
+    padding: 1rem;
+  }
+  
+  .insights-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .medical-alert {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .chart-container,
+  .info-box {
+    padding: 1rem;
+  }
+  
+  .chart-container h3,
+  .info-box h3 {
+    font-size: 1rem;
+  }
+  
+  .info-box li {
+    font-size: 0.85rem;
+  }
+  
+  .recommendation-item {
+    padding: 1rem;
+  }
+} 

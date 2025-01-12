@@ -1,0 +1,242 @@
+.main-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.header-section {
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.8), rgba(0, 45, 98, 0.6));
+  border-radius: 1.2rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
+  display: flex;
+  gap: 2rem;
+}
+
+.header-image-container {
+  flex-shrink: 0;
+}
+
+.header-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 1rem;
+  object-fit: cover;
+  border: 2px solid rgba(0, 183, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 183, 255, 0.3);
+}
+
+.header-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #00b7ff, #00ffd5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 183, 255, 0.4);
+}
+
+.main-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: rgba(0, 64, 77, 0.3);
+  border-radius: 1rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 183, 255, 0.2);
+}
+
+.info-card h3 {
+  color: #00ffd5;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 213, 0.3);
+}
+
+.info-card p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card li {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.info-card li::before {
+  content: "•";
+  color: #00ffd5;
+  position: absolute;
+  left: 0;
+  font-size: 1.2rem;
+}
+
+.warning-signs li {
+  padding-left: 2rem;
+}
+
+.warning-signs li::before {
+  content: none;
+}
+
+.warning-signs strong {
+  color: #00ffd5;
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.three-panel-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 350px;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.panel {
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.8), rgba(0, 45, 98, 0.6));
+  backdrop-filter: blur(20px);
+  border-radius: 1.2rem;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
+  overflow: hidden;
+  height: 100%;
+  min-height: 600px;
+}
+
+.left-panel, .right-panel {
+  overflow-y: auto;
+}
+
+.insights-section {
+  margin-top: 2rem;
+}
+
+/* Personalizar scrollbar */
+.panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel::-webkit-scrollbar-track {
+  background: rgba(0, 64, 77, 0.2);
+  border-radius: 3px;
+}
+
+.panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 183, 255, 0.3);
+  border-radius: 3px;
+}
+
+.panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 183, 255, 0.5);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1400px) {
+  .three-panel-layout {
+    grid-template-columns: 250px 1fr 300px;
+  }
+  
+  .header-title {
+    font-size: 2.2rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-container {
+    padding: 1rem;
+  }
+
+  .three-panel-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .panel {
+    min-height: auto;
+    max-height: 500px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .header-image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .header-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .info-grid {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0.5rem;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+  }
+
+  .main-description {
+    font-size: 1rem;
+  }
+
+  .info-card {
+    padding: 1rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .panel {
+    max-height: 400px;
+  }
+} 

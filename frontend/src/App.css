@@ -7,28 +7,36 @@
 /* General body styles */
 body {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to bottom right, #220046, #001944, #000);
+  background: linear-gradient(to bottom right, #002b36, #004052, #001f3f);
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  color: #fff;
 }
 
-/* App container - Layout ajustado */
+.App {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
 .app-container {
   display: grid;
   grid-template-columns: 300px minmax(auto, 1000px) 300px;
   gap: 3rem;
   width: 100%;
-  max-width: 100%; /* Cambiado para usar todo el ancho */
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem 4rem; /* Aumentado el padding horizontal */
+  padding: 2rem 4rem;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 /* Panel de factores de riesgo */
 .risk-factors-panel {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.8), rgba(0, 45, 98, 0.6));
+  backdrop-filter: blur(20px);
   border-radius: 1.2rem;
   padding: 1.5rem;
   height: calc(100vh - 4rem);
@@ -36,12 +44,14 @@ body {
   top: 2rem;
   width: 300px;
   overflow: hidden;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
 }
 
 /* Panel de historial */
 .history-panel {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.8), rgba(0, 45, 98, 0.6));
+  backdrop-filter: blur(20px);
   border-radius: 1.2rem;
   padding: 1.8rem;
   height: calc(100vh - 4rem);
@@ -50,15 +60,18 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   width: 300px;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
 }
 
 /* Contenido principal */
 .main-content {
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.7), rgba(0, 45, 98, 0.4));
   border-radius: 1.5rem;
   padding: 3rem 4rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -67,7 +80,7 @@ body {
   margin: 0 auto;
 }
 
-/* Media queries ajustadas */
+/* Media queries */
 @media (max-width: 1800px) {
   .app-container {
     gap: 2.5rem;
@@ -115,49 +128,34 @@ body {
   }
 }
 
-/* Scrollbar customization */
-form::-webkit-scrollbar {
+/* Custom scrollbar */
+*::-webkit-scrollbar {
   width: 6px;
 }
 
-form::-webkit-scrollbar-track {
-  background: #111;
-}
-
-form::-webkit-scrollbar-thumb {
-  background: #333;
+*::-webkit-scrollbar-track {
+  background: rgba(0, 64, 77, 0.2);
   border-radius: 3px;
 }
 
-form::-webkit-scrollbar-thumb:hover {
-  background: #444;
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 183, 255, 0.3);
+  border-radius: 3px;
 }
 
-/* Title and background animations */
-.title {
-  color: white;
-  font-size: 3rem;
-  text-align: center;
-  margin: 20px;
-  position: relative;
-  z-index: 1;
-  height: 100px;
-  display: flex;
-  width: max-content;
-  padding: 5px;
-  background-color: black;
-  border-radius: 13px;
-  border: -3px solid transparent;
-  background-image: linear-gradient(#000000cc, #000000c2),
-    linear-gradient(45deg, #830883, #0046bc, #7c00ff);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 183, 255, 0.5);
 }
 
-.title span {
-  padding: 20px;
-  display: flex;
-  align-items: center;
+/* Background animations */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
 }
 
 .run {
@@ -165,60 +163,63 @@ form::-webkit-scrollbar-thumb:hover {
   height: 3px;
   position: absolute;
   left: 0;
-  transform: translateX(-100%);
 }
 
-.run-left {
-  background: linear-gradient(90deg, transparent, #ff00d3);
-  animation: animate1 4s infinite;
+.run.left {
+  animation: animate1 4s linear infinite;
 }
 
-.run-right {
-  background: linear-gradient(270deg, transparent, #7c00ff);
-  animation: animate2 4s infinite;
+.run.right {
+  animation: animate2 4s linear infinite;
 }
 
 @keyframes animate1 {
   0% {
     transform: translateX(-150%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
     transform: translateX(150%);
+    opacity: 0;
   }
 }
 
 @keyframes animate2 {
   0% {
     transform: translateX(150%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
     transform: translateX(-150%);
+    opacity: 0;
   }
 }
 
 /* Run positions */
-.run:nth-child(1) { top: 0%; }
-.run:nth-child(2) { top: 5%; }
-.run:nth-child(3) { top: 10%; }
-.run:nth-child(4) { top: 15%; }
-.run:nth-child(5) { top: 20%; }
-.run:nth-child(6) { top: 25%; }
-.run:nth-child(7) { top: 30%; }
-.run:nth-child(8) { top: 35%; }
-.run:nth-child(9) { top: 40%; }
-.run:nth-child(10) { top: 45%; }
-.run:nth-child(11) { top: 50%; }
-.run:nth-child(12) { top: 55%; }
-.run:nth-child(13) { top: 60%; }
-.run:nth-child(14) { top: 65%; }
-.run:nth-child(15) { top: 70%; }
-.run:nth-child(16) { top: 75%; }
-.run:nth-child(17) { top: 80%; }
-.run:nth-child(18) { top: 85%; }
-.run:nth-child(19) { top: 90%; }
-.run:nth-child(20) { top: 95%; }
-.run:nth-child(21) { top: 100%; }
-.run:nth-child(22) { top: 105%; }
+.run:nth-child(1) { top: 2%; }
+.run:nth-child(2) { top: 6%; }
+.run:nth-child(3) { top: 12%; }
+.run:nth-child(4) { top: 18%; }
+.run:nth-child(5) { top: 24%; }
+.run:nth-child(6) { top: 30%; }
+.run:nth-child(7) { top: 36%; }
+.run:nth-child(8) { top: 42%; }
+.run:nth-child(9) { top: 48%; }
+.run:nth-child(10) { top: 54%; }
+.run:nth-child(11) { top: 60%; }
+.run:nth-child(12) { top: 66%; }
+.run:nth-child(13) { top: 72%; }
+.run:nth-child(14) { top: 78%; }
+.run:nth-child(15) { top: 84%; }
+.run:nth-child(16) { top: 90%; }
+.run:nth-child(17) { top: 96%; }
+.run:nth-child(18) { top: 98%; }
 
 /* Global styles */
 *,
@@ -250,35 +251,47 @@ form::-webkit-scrollbar-thumb:hover {
 
 /* Estilos para el panel de factores de riesgo */
 .risk-factors {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 1rem;
-  border-radius: 0.8rem;
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.8), rgba(0, 45, 98, 0.5));
+  padding: 1.5rem;
+  border-radius: 1rem;
   color: white;
   width: 100%;
   max-width: 100%;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
 }
 
 .risk-factor-item {
-  margin: 0.8rem 0;
+  background: linear-gradient(145deg, rgba(0, 183, 255, 0.05), rgba(0, 255, 213, 0.02));
+  border-radius: 0.8rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(0, 183, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.risk-factor-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 183, 255, 0.2);
 }
 
 .factor-label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
-  margin-bottom: 0.3rem;
-  color: #b8b8b8;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
 }
 
 .factor-bar {
   width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  height: 6px;
+  background: rgba(0, 64, 77, 0.2);
   border-radius: 3px;
   overflow: hidden;
   position: relative;
-  margin: 0.3rem 0;
+  margin: 0.5rem 0;
 }
 
 .factor-fill {
@@ -286,16 +299,17 @@ form::-webkit-scrollbar-thumb:hover {
   height: 100%;
   left: 0;
   top: 0;
-  background: linear-gradient(90deg, #7c00ff, #ff00d3);
+  background: linear-gradient(90deg, #00b7ff, #00ffd5);
   border-radius: 3px;
   transition: width 1s ease-out;
 }
 
 .factor-percentage {
-  font-size: 0.8rem;
-  color: #ff00d3;
+  font-size: 0.9rem;
+  color: #00ffd5;
   margin-left: 0.5rem;
   font-weight: 500;
+  text-shadow: 0 0 10px rgba(0, 255, 213, 0.3);
 }
 
 /* Animación de carga de las barras */
@@ -324,16 +338,13 @@ form::-webkit-scrollbar-thumb:hover {
   height: 3px;
   position: absolute;
   left: 0;
-  background: linear-gradient(90deg, transparent, #ff00d3);
 }
 
 .run.left {
-  background: linear-gradient(90deg, transparent, #ff00d3);
   animation: animate1 4s linear infinite;
 }
 
 .run.right {
-  background: linear-gradient(270deg, transparent, #7c00ff);
   animation: animate2 4s linear infinite;
 }
 
@@ -404,17 +415,17 @@ details[open] summary {
 }
 
 .history-panel::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 64, 77, 0.2);
   border-radius: 3px;
 }
 
 .history-panel::-webkit-scrollbar-thumb {
-  background: rgba(124, 0, 255, 0.3);
+  background: rgba(0, 183, 255, 0.3);
   border-radius: 3px;
 }
 
 .history-panel::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 0, 255, 0.5);
+  background: rgba(0, 183, 255, 0.5);
 }
 
 /* Título de la predicción */
@@ -431,26 +442,28 @@ details[open] summary {
 }
 
 .prediction-date {
-  color: #aaa;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.8rem;
 }
 
 /* Gráfico de riesgo por edad */
 .age-risk-chart {
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, rgba(0, 64, 77, 0.3), rgba(0, 45, 98, 0.2));
   border-radius: 1rem;
   padding: 1.4rem;
   margin-top: 2rem;
-  border: 1px solid rgba(124, 0, 255, 0.2);
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 183, 255, 0.15);
 }
 
 .age-risk-chart h3 {
-  color: #ff00d3;
+  color: #00ffd5;
   font-size: 0.8rem;
   margin-bottom: 2.5rem;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(0, 255, 213, 0.3);
 }
 
 .age-groups {
@@ -558,5 +571,31 @@ details[open] summary {
 
 .risk-factors-panel::-webkit-scrollbar-thumb:hover {
   background: rgba(124, 0, 255, 0.5);
+}
+
+/* Estilos para el fondo animado */
+.background-rays {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background: linear-gradient(45deg, #f1f3f5 25%, transparent 25%),
+              linear-gradient(-45deg, #f1f3f5 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #f1f3f5 75%),
+              linear-gradient(-45deg, transparent 75%, #f1f3f5 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  animation: backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove {
+  0% {
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+  100% {
+    background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px;
+  }
 }
 
