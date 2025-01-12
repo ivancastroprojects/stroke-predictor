@@ -1,15 +1,13 @@
 .results-container {
-  max-width: 1400px;
+  max-width: 1800px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 4rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .results-header {
@@ -18,6 +16,7 @@
   gap: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+  max-width: 1800px;
 }
 
 .back-button {
@@ -57,6 +56,7 @@
   gap: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+  max-width: 1800px;
 }
 
 .result-panel {
@@ -352,13 +352,13 @@
 /* Media queries */
 @media (max-width: 1600px) {
   .results-container {
-    max-width: 1200px;
+    padding: 2rem;
   }
 }
 
 @media (max-width: 1200px) {
   .results-container {
-    max-width: 90%;
+    padding: 1.5rem;
   }
   
   .results-grid {
