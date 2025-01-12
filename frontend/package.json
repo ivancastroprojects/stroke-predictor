@@ -19,8 +19,7 @@
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "vercel-build": "npm install && CI=false npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
