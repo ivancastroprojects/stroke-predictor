@@ -15,9 +15,10 @@ body {
 }
 
 .App {
+  text-align: center;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .app-container {
@@ -596,6 +597,96 @@ details[open] summary {
   }
   100% {
     background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px;
+  }
+}
+
+/* Estilos para el componente de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos para el componente de error y 404 */
+.error-container,
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 20px;
+}
+
+.error-container h1,
+.not-found-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ff4444;
+}
+
+.error-container p,
+.not-found-container p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.error-container button,
+.not-found-container button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  background: linear-gradient(45deg, #2196F3, #00BCD4);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.error-container button:hover,
+.not-found-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .error-container h1,
+  .not-found-container h1 {
+    font-size: 2rem;
+  }
+
+  .error-container p,
+  .not-found-container p {
+    font-size: 1rem;
+  }
+
+  .error-container button,
+  .not-found-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
   }
 }
 

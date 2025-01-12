@@ -5,7 +5,8 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "build",
+        "buildCommand": "cd frontend && npm install && npm run build"
       }
     },
     {
@@ -19,8 +20,12 @@
       "dest": "/backend/app.py"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/static/(.*)",
-      "dest": "/build/static/$1"
+      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "continue": true
     },
     {
       "src": "/favicon.ico",
@@ -31,7 +36,16 @@
       "dest": "/build/manifest.json"
     },
     {
+      "src": "/logo(.*).png",
+      "dest": "/build/logo$1.png"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/build/robots.txt"
+    },
+    {
       "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=1, stale-while-revalidate" },
       "dest": "/build/index.html"
     }
   ]
