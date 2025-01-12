@@ -18,15 +18,35 @@
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/frontend/build/static/$1"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/backend/app.py"
     },
     {
-      "handle": "filesystem"
+      "src": "/favicon.ico",
+      "dest": "/frontend/build/favicon.ico"
+    },
+    {
+      "src": "/asset-manifest.json",
+      "dest": "/frontend/build/asset-manifest.json"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/build/manifest.json"
+    },
+    {
+      "src": "/(.*)\\.(?:json|css|js|jpg|jpeg|png|gif|ico|svg)",
+      "dest": "/frontend/build/$1.$2"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
+      "dest": "/frontend/build/index.html",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
     }
   ]
 } 
