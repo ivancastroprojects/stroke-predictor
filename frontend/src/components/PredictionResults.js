@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-
   PieChart,
   Pie,
   Cell,
   ResponsiveContainer,
   Tooltip,
-  Legend,
   BarChart,
   Bar,
   XAxis,
@@ -18,7 +16,11 @@ import './PredictionResults.css';
 export default function PredictionResults() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { prediction, formData, featureContributions, riskFactors, featureImportance } = location.state || {};
+  const { prediction, formData, featureContributions } = location.state || {};
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   const riskLevel = prediction > 0.7 ? 'High' : prediction > 0.3 ? 'Moderate' : 'Low';
   const riskColor = {
@@ -27,34 +29,18 @@ export default function PredictionResults() {
     'Low': '#4caf50'
   }[riskLevel];
 
-  // Datos para el gráfico radial de riesgo
-  const riskData = [{
-    name: 'Risk',
-    value: prediction * 100,
-    fill: riskColor
-  }];
-
-  // Configuración del arco para el medidor de riesgo
-  const startAngle = 180;
-  const endAngle = 0;
-  const riskEndAngle = startAngle - ((prediction * 100) * (startAngle - endAngle) / 100);
-
-  // Datos para el arco de fondo y el arco de riesgo
-  const gaugeData = [
-    { value: 100, fill: 'rgba(255, 255, 255, 0.1)' },  // Fondo
-    { value: prediction * 100, fill: riskColor }        // Riesgo
+  // Datos para el gráfico semicircular
+  const riskData = [
+    { name: 'Risk', value: prediction * 100 },
+    { name: 'Remaining', value: 100 - (prediction * 100) }
   ];
 
-  // Marcas de graduación para el medidor
-  const ticks = [0, 25, 50, 75, 100];
-
-  // Datos para el gráfico de contribuciones
-  const contributionsData = Object.entries(featureContributions || {})
-    .map(([name, value]) => ({
+  // Procesar los datos de contribución de características
+  const processedFeatureContributions = featureContributions ? 
+    Object.entries(featureContributions).map(([name, value]) => ({
       name,
-      value: parseFloat(value.toFixed(1))
-    }))
-    .sort((a, b) => b.value - a.value);
+      value: parseFloat((value * 100).toFixed(1))
+    })).sort((a, b) => b.value - a.value) : [];
 
   const COLORS = ['#00b7ff', '#00ffd5', '#7cffb2', '#ffd700', '#ff6b6b'];
 
@@ -77,49 +63,44 @@ export default function PredictionResults() {
           <h2>Stroke Risk Level</h2>
           <div className="risk-visualization">
             <div className="gauge-container">
-              <ResponsiveContainer width="100%" height={250}>
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
-                  {/* Arco de fondo */}
                   <Pie
-                    data={[gaugeData[0]]}
-                    dataKey="value"
+                    data={riskData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={80}
-                    outerRadius={95}
-                    startAngle={startAngle}
-                    endAngle={endAngle}
-                    stroke="none"
-                  />
-                  {/* Arco de riesgo */}
-                  <Pie
-                    data={[gaugeData[1]]}
+                    startAngle={180}
+                    endAngle={0}
+                    innerRadius={85}
+                    outerRadius={110}
+                    fill={riskColor}
+                    paddingAngle={0}
                     dataKey="value"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={80}
-                    outerRadius={95}
-                    startAngle={startAngle}
-                    endAngle={riskEndAngle}
-                    stroke="none"
-                  />
-                  {/* Valor central */}
+                    blendStroke
+                  >
+                    {riskData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`}
+                        fill={index === 0 ? riskColor : 'rgba(0, 64, 77, 0.3)'}
+                        strokeWidth={0}
+                      />
+                    ))}
+                  </Pie>
                   <text
                     x="50%"
                     y="45%"
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize="36"
-                    fontWeight="bold"
+                    className="risk-value-label"
                   >
                     {`${(prediction * 100).toFixed(1)}%`}
                   </text>
                   <text
                     x="50%"
-                    y="60%"
+                    y="65%"
                     textAnchor="middle"
                     fill="rgba(255, 255, 255, 0.7)"
-                    fontSize="14"
+                    className="risk-label-text"
                   >
                     Risk Level
                   </text>
@@ -127,7 +108,7 @@ export default function PredictionResults() {
               </ResponsiveContainer>
             </div>
             <div className="risk-details">
-              <div className="risk-indicator" style={{ backgroundColor: riskColor }}>
+              <div className="risk-indicator" style={{ backgroundColor: `${riskColor}20` }}>
                 <div className="risk-header">
                   <span className="risk-icon">
                     {riskLevel === 'High' && '⚠️'}
@@ -143,13 +124,34 @@ export default function PredictionResults() {
                 </span>
               </div>
               <div className="risk-scale">
-                <div className="scale-item" style={{ backgroundColor: '#4caf50', opacity: riskLevel === 'Low' ? 1 : 0.3 }}>
+                <div 
+                  className="scale-item" 
+                  style={{ 
+                    backgroundColor: riskLevel === 'Low' ? '#4caf50' : '#4caf5020',
+                    color: '#4caf50',
+                    opacity: 1
+                  }}
+                >
                   Low
                 </div>
-                <div className="scale-item" style={{ backgroundColor: '#ffd700', opacity: riskLevel === 'Moderate' ? 1 : 0.3 }}>
+                <div 
+                  className="scale-item" 
+                  style={{ 
+                    backgroundColor: riskLevel === 'Moderate' ? '#ffd700' : '#ffd70020',
+                    color: '#ffd700',
+                    opacity: 1
+                  }}
+                >
                   Moderate
                 </div>
-                <div className="scale-item" style={{ backgroundColor: '#ff4d4d', opacity: riskLevel === 'High' ? 1 : 0.3 }}>
+                <div 
+                  className="scale-item" 
+                  style={{ 
+                    backgroundColor: riskLevel === 'High' ? '#ff4d4d' : '#ff4d4d20',
+                    color: '#ff4d4d',
+                    opacity: 1
+                  }}
+                >
                   High
                 </div>
               </div>
@@ -162,12 +164,12 @@ export default function PredictionResults() {
           <h2>Contributing Factors</h2>
           <div className="factors-visualization">
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={contributionsData} layout="vertical">
+              <BarChart data={processedFeatureContributions} layout="vertical">
                 <XAxis type="number" domain={[0, 100]} />
                 <YAxis dataKey="name" type="category" width={150} />
                 <Tooltip />
                 <Bar dataKey="value" fill="#00b7ff">
-                  {contributionsData.map((entry, index) => (
+                  {processedFeatureContributions.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Bar>
@@ -204,6 +206,31 @@ export default function PredictionResults() {
               <span className="label">Heart Disease</span>
               <span className="value">{formData.heart_disease === '1' ? 'Yes' : 'No'}</span>
             </div>
+          </div>
+        </div>
+
+        {/* Key Factors Explanation Panel */}
+        <div className="result-panel factors-explanation-panel">
+          <h2>Key Factors in Your Risk Assessment</h2>
+          <div className="factors-list">
+            {processedFeatureContributions.slice(0, 3).map((factor, index) => (
+              <div key={index} className="factor-item">
+                <div className="factor-header">
+                  <div className="factor-icon" style={{ backgroundColor: `${COLORS[index]}20`, color: COLORS[index] }}>
+                    {index + 1}
+                  </div>
+                  <h4>{factor.name}</h4>
+                  <span className="factor-value">{factor.value.toFixed(1)}%</span>
+                </div>
+                <p className="factor-description">
+                  {factor.name === 'age' && 'Age is a significant risk factor for stroke. Risk tends to increase with age.'}
+                  {factor.name === 'avg_glucose_level' && 'High blood glucose levels can damage blood vessels and nerves that control your heart.'}
+                  {factor.name === 'bmi' && 'BMI outside the normal range can increase the risk of stroke through various mechanisms.'}
+                  {factor.name === 'hypertension' && 'High blood pressure is one of the most important controllable risk factors for stroke.'}
+                  {factor.name === 'heart_disease' && 'Heart conditions can lead to blood clots that may cause a stroke.'}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
