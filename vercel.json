@@ -2,41 +2,37 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/app.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "buildCommand": "cd frontend && npm install && npm run build && cp -r build ../"
+        "distDir": "build"
       }
-    }
-  ],
-  "rewrites": [
-    { 
-      "source": "/api/(.*)", 
-      "destination": "/backend/app.py"
     },
     {
-      "source": "/static/(.*)",
-      "destination": "/build/static/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/build/index.html"
+      "src": "backend/app.py",
+      "use": "@vercel/python"
     }
   ],
-  "headers": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
+      "src": "/api/(.*)",
+      "dest": "/backend/app.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 } 
