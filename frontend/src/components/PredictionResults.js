@@ -1,8 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  RadialBarChart,
-  RadialBar,
+
   PieChart,
   Pie,
   Cell,
@@ -30,10 +29,24 @@ export default function PredictionResults() {
 
   // Datos para el gráfico radial de riesgo
   const riskData = [{
-    name: 'Riesgo',
+    name: 'Risk',
     value: prediction * 100,
     fill: riskColor
   }];
+
+  // Configuración del arco para el medidor de riesgo
+  const startAngle = 180;
+  const endAngle = 0;
+  const riskEndAngle = startAngle - ((prediction * 100) * (startAngle - endAngle) / 100);
+
+  // Datos para el arco de fondo y el arco de riesgo
+  const gaugeData = [
+    { value: 100, fill: 'rgba(255, 255, 255, 0.1)' },  // Fondo
+    { value: prediction * 100, fill: riskColor }        // Riesgo
+  ];
+
+  // Marcas de graduación para el medidor
+  const ticks = [0, 25, 50, 75, 100];
 
   // Datos para el gráfico de contribuciones
   const contributionsData = Object.entries(featureContributions || {})
@@ -64,41 +77,53 @@ export default function PredictionResults() {
           <h2>Stroke Risk Level</h2>
           <div className="risk-visualization">
             <div className="gauge-container">
-              <ResponsiveContainer width="100%" height={400}>
-                <RadialBarChart 
-                  cx="50%" 
-                  cy="50%" 
-                  innerRadius="65%" 
-                  outerRadius="85%" 
-                  barSize={30}
-                  data={riskData} 
-                  startAngle={180} 
-                  endAngle={0}
-                >
-                  <RadialBar
-                    background={{ fill: 'rgba(255, 255, 255, 0.1)' }}
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  {/* Arco de fondo */}
+                  <Pie
+                    data={[gaugeData[0]]}
                     dataKey="value"
-                    cornerRadius={30}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={95}
+                    startAngle={startAngle}
+                    endAngle={endAngle}
+                    stroke="none"
                   />
+                  {/* Arco de riesgo */}
+                  <Pie
+                    data={[gaugeData[1]]}
+                    dataKey="value"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={95}
+                    startAngle={startAngle}
+                    endAngle={riskEndAngle}
+                    stroke="none"
+                  />
+                  {/* Valor central */}
                   <text
                     x="50%"
                     y="45%"
                     textAnchor="middle"
-                    dominantBaseline="middle"
-                    className="risk-value-label"
+                    fill="#fff"
+                    fontSize="36"
+                    fontWeight="bold"
                   >
                     {`${(prediction * 100).toFixed(1)}%`}
                   </text>
                   <text
                     x="50%"
-                    y="55%"
+                    y="60%"
                     textAnchor="middle"
-                    dominantBaseline="middle"
-                    className="risk-label-text"
+                    fill="rgba(255, 255, 255, 0.7)"
+                    fontSize="14"
                   >
                     Risk Level
                   </text>
-                </RadialBarChart>
+                </PieChart>
               </ResponsiveContainer>
             </div>
             <div className="risk-details">

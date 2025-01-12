@@ -143,7 +143,7 @@ const DataInsights = () => {
         </div>
 
         <div className="info-box">
-          <h3>Key Findings</h3>
+          <h3>KEY FINDINGS</h3>
           <ul>
             <li>Age is the most significant factor, with a 58.5% impact on risk</li>
             <li>Hypertension is the main modifiable factor (11.4%)</li>
@@ -151,32 +151,6 @@ const DataInsights = () => {
             <li>Modifiable factors account for ~23% of total risk</li>
             <li>Strong correlation between age and stroke risk observed</li>
           </ul>
-        </div>
-
-        <div className="info-box recommendations">
-          <h3>Preventive Recommendations</h3>
-          <div className="recommendations-grid">
-            <div className="recommendation-item">
-              <div className="recommendation-icon">🩺</div>
-              <h4>Regular Check-ups</h4>
-              <p>Periodic medical evaluations, especially after age 40</p>
-            </div>
-            <div className="recommendation-item">
-              <div className="recommendation-icon">❤️</div>
-              <h4>Blood Pressure</h4>
-              <p>Regular monitoring and medication if needed</p>
-            </div>
-            <div className="recommendation-item">
-              <div className="recommendation-icon">🏃</div>
-              <h4>Lifestyle</h4>
-              <p>Regular exercise and balanced diet</p>
-            </div>
-            <div className="recommendation-item">
-              <div className="recommendation-icon">🚭</div>
-              <h4>Healthy Habits</h4>
-              <p>Avoid smoking and moderate alcohol consumption</p>
-            </div>
-          </div>
         </div>
       </div>
 
