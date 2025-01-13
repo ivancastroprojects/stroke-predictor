@@ -1,7 +1,8 @@
 @echo off
 echo [%date% %time%] Iniciando script de desarrollo > dev.log
 
-echo [%date% %time%] === Instalando dependencias del frontend === >> dev.log
+echo [%date% %time%] === Simulando Vercel Build === >> dev.log
+echo [%date% %time%] Instalando dependencias del frontend... >> dev.log
 cd frontend
 echo [%date% %time%] Directorio actual: %cd% >> ..\dev.log
 call npm install >> ..\dev.log 2>&1
@@ -11,6 +12,7 @@ if %errorlevel% neq 0 (
 )
 
 echo [%date% %time%] === Construyendo el frontend === >> ..\dev.log
+set "CI=false"
 call npm run build >> ..\dev.log 2>&1
 if %errorlevel% neq 0 (
     echo [%date% %time%] Error construyendo el frontend >> ..\dev.log
