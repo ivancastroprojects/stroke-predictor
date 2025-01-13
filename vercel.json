@@ -15,7 +15,7 @@
       "config": {
         "maxLambdaSize": "15mb",
         "runtime": "python3.9",
-        "installCommand": "python -m pip install --upgrade pip && pip install -r requirements.txt --only-binary=:all:"
+        "installCommand": "python3.9 -m pip install --no-cache-dir -r requirements.txt"
       }
     }
   ],
