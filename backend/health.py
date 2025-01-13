@@ -9,4 +9,4 @@ def health():
     return jsonify({"status": "healthy"})
 
 # Vercel requires a handler
-handler = app 
+handler = app
