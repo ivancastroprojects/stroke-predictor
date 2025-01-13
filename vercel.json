@@ -5,13 +5,17 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
+        "distDir": "frontend/build",
         "buildCommand": "cd frontend && npm install && npm run build"
       }
     },
     {
       "src": "backend/app.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
@@ -20,33 +24,12 @@
       "dest": "/backend/app.py"
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/static/(.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" },
-      "continue": true
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/build/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/build/manifest.json"
-    },
-    {
-      "src": "/logo(.*).png",
-      "dest": "/build/logo$1.png"
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "/build/robots.txt"
+      "dest": "/frontend/build/static/$1"
     },
     {
       "src": "/(.*)",
-      "headers": { "cache-control": "s-maxage=1, stale-while-revalidate" },
-      "dest": "/build/index.html"
+      "dest": "/frontend/build/index.html"
     }
   ]
 } 
