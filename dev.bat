@@ -37,10 +37,8 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-echo [%date% %time%] Actualizando pip... >> ..\dev.log
-python -m pip install --upgrade pip >> ..\dev.log 2>&1
-
 echo [%date% %time%] Instalando dependencias del backend... >> ..\dev.log
+python -m pip install --upgrade pip >> ..\dev.log 2>&1
 pip install -r requirements.txt >> ..\dev.log 2>&1
 if %errorlevel% neq 0 (
     echo [%date% %time%] Error instalando dependencias del backend >> ..\dev.log
