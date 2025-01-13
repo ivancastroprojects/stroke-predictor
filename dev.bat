@@ -49,7 +49,7 @@ if %errorlevel% neq 0 (
 
 echo [%date% %time%] === Iniciando servicios === >> ..\dev.log
 echo [%date% %time%] Iniciando servidor frontend... >> ..\dev.log
-start cmd /k "cd ../frontend && echo [%date% %time%] Servidor frontend iniciado >> ..\dev.log && npx serve -s build -l 3000 >> ..\dev.log 2>&1"
+start cmd /k "cd .. && echo [%date% %time%] Servidor frontend iniciado >> dev.log && npx serve -s build -l 3000 >> dev.log 2>&1"
 
 echo [%date% %time%] Iniciando servidor backend... >> ..\dev.log
 start cmd /k "cd ../backend && echo [%date% %time%] Servidor backend iniciado >> ..\dev.log && python app.py >> ..\dev.log 2>&1"
