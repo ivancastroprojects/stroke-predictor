@@ -1,0 +1,4 @@
+[13/01/2025  1:03:26,04] === Servicios iniciados === 
+[13/01/2025  1:03:26,04] Frontend: http://localhost:3000 
+[13/01/2025  1:03:26,04] Backend: http://localhost:8000/api 
+[13/01/2025  1:03:26,04] Logs disponibles en dev.log 
