@@ -6,17 +6,16 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build",
-        "buildCommand": "cd frontend && npm install && npm run build"
+        "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build"
       }
     },
     {
       "src": "backend/app.py",
-      "use": "@vercel/python",
+      "use": "@vercel/python@3.1.30",
       "config": {
         "maxLambdaSize": "250mb",
-        "includeFiles": [
-          "backend/models/**"
-        ]
+        "runtime": "python3.9",
+        "installCommand": "pip install setuptools wheel && pip install --no-cache-dir -r requirements.txt"
       }
     }
   ],
@@ -30,12 +29,15 @@
       "src": "/static/(.*)",
       "dest": "/build/static/$1",
       "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
+        "cache-control": "s-maxage=31536000, immutable"
       }
     },
     {
       "src": "/(.*)",
-      "dest": "/build/index.html"
+      "dest": "/build/index.html",
+      "headers": {
+        "cache-control": "s-maxage=1, stale-while-revalidate"
+      }
     }
   ]
 } 
