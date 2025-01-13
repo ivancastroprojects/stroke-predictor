@@ -11,43 +11,33 @@
     },
     {
       "src": "backend/app.py",
-      "use": "@vercel/python@3.1.30",
+      "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
-        "runtime": "python3.9",
-        "installCommand": "pip install pipenv && pipenv install --deploy --system"
+        "runtime": "python3.9"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.py",
-      "methods": ["GET", "POST", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
+      "dest": "/backend/app.py"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/frontend/build/static/$1",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
+      "src": "^/static/(.*)",
+      "dest": "/frontend/build/static/$1"
     },
     {
-      "handle": "filesystem"
+      "src": "^/favicon.ico",
+      "dest": "/frontend/build/favicon.ico"
     },
     {
-      "src": "/(.*)",
-      "dest": "/frontend/build/index.html",
-      "headers": {
-        "cache-control": "public, max-age=0, must-revalidate"
-      }
+      "src": "^/manifest.json",
+      "dest": "/frontend/build/manifest.json"
+    },
+    {
+      "src": "^/(.*)",
+      "dest": "/frontend/build/index.html"
     }
-  ],
-  "env": {
-    "PYTHONPATH": "/var/task"
-  }
+  ]
 } 
