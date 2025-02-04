@@ -1,0 +1,217 @@
+from flask import Flask, request, jsonify, Blueprint
+from flask_cors import CORS, cross_origin
+import joblib
+import numpy as np
+import pandas as pd
+import os
+import sys
+import logging
+from pathlib import Path
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Crear Blueprint
+predict_bp = Blueprint('predict', __name__)
+
+# Cargar el modelo solo cuando se necesite (lazy loading)
+model = None
+
+def load_model():
+    global model
+    if model is None:
+        try:
+            # Construir la ruta al modelo
+            backend_dir = Path(__file__).parent.parent
+            model_path = backend_dir / 'models' / 'stroke_prediction_model.joblib'
+            logger.info(f"Buscando modelo en: {model_path}")
+
+            if model_path.exists():
+                model = joblib.load(str(model_path))
+                logger.info(f"Modelo cargado exitosamente desde: {model_path}")
+                return True
+            else:
+                logger.error(f"El archivo del modelo no existe en: {model_path}")
+                return False
+        except Exception as e:
+            logger.error(f"Error cargando el modelo: {str(e)}")
+            return False
+    return True
+
+def validate_input(data):
+    required_fields = [
+        'gender', 'age', 'hypertension', 'heart_disease', 'ever_married',
+        'work_type', 'Residence_type', 'avg_glucose_level', 'bmi', 'smoking_status'
+    ]
+    errors = []
+    
+    for field in required_fields:
+        if field not in data:
+            errors.append(f"Campo requerido: {field}")
+            continue
+        
+        try:
+            if field in ['age', 'avg_glucose_level', 'bmi']:
+                value = float(data[field])
+                if field == 'age' and (value < 0 or value > 120):
+                    errors.append("La edad debe estar entre 0 y 120 años")
+                elif field == 'avg_glucose_level' and (value < 0 or value > 500):
+                    errors.append("El nivel de glucosa debe estar entre 0 y 500")
+                elif field == 'bmi' and (value < 10 or value > 100):
+                    errors.append("El BMI debe estar entre 10 y 100")
+            elif field in ['hypertension', 'heart_disease']:
+                value = int(data[field])
+                if value not in [0, 1]:
+                    errors.append(f"{field} debe ser 0 o 1")
+            elif field == 'gender':
+                if data[field] not in ['Male', 'Female', 'Other']:
+                    errors.append("Género debe ser 'Male', 'Female' u 'Other'")
+            elif field == 'ever_married':
+                if data[field] not in ['Yes', 'No']:
+                    errors.append("ever_married debe ser 'Yes' o 'No'")
+            elif field == 'work_type':
+                if data[field] not in ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']:
+                    errors.append("work_type inválido")
+            elif field == 'Residence_type':
+                if data[field] not in ['Urban', 'Rural']:
+                    errors.append("Residence_type debe ser 'Urban' o 'Rural'")
+            elif field == 'smoking_status':
+                if data[field] not in ['formerly smoked', 'never smoked', 'smokes', 'Unknown']:
+                    errors.append("smoking_status inválido")
+        except ValueError:
+            errors.append(f"Valor inválido para {field}")
+    
+    return errors
+
+@predict_bp.route('/api/predict', methods=['POST', 'OPTIONS'])
+@cross_origin()
+def predict():
+    if request.method == 'OPTIONS':
+        # Manejar la solicitud preflight
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        return response
+
+    if not load_model():
+        return jsonify({
+            'error': 'Error al cargar el modelo',
+            'status': 503
+        }), 503
+    
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({
+                'error': 'No se proporcionaron datos',
+                'status': 400
+            }), 400
+
+        # Validar input
+        errors = validate_input(data)
+        if errors:
+            return jsonify({
+                'error': 'Datos inválidos',
+                'details': errors,
+                'status': 400
+            }), 400
+
+        # Preparar datos para predicción
+        features_df = pd.DataFrame([{
+            'gender': data['gender'],
+            'age': float(data['age']),
+            'hypertension': float(data['hypertension']),
+            'heart_disease': float(data['heart_disease']),
+            'ever_married': data['ever_married'],
+            'work_type': data['work_type'],
+            'Residence_type': data['Residence_type'],
+            'avg_glucose_level': float(data['avg_glucose_level']),
+            'bmi': float(data['bmi']),
+            'smoking_status': data['smoking_status']
+        }])
+
+        # Realizar predicción
+        prediction = model.predict(features_df)
+        probability = model.predict_proba(features_df)[0][1]
+
+        logger.info(f"Predicción exitosa: {prediction[0]}, probabilidad: {probability:.2f}")
+        
+        return jsonify({
+            'prediction': int(prediction[0]),
+            'probability': float(probability),
+            'status': 'success'
+        })
+
+    except Exception as e:
+        logger.error(f"Error en la predicción: {e}")
+        return jsonify({
+            'error': 'Error interno del servidor',
+            'status': 500
+        }), 500
+
+@predict_bp.route('/api/predict/test', methods=['GET'])
+@cross_origin()
+def test_predict():
+    """Endpoint de prueba con datos de ejemplo"""
+    if not load_model():
+        return jsonify({
+            'error': 'Servicio no disponible temporalmente',
+            'status': 503
+        }), 503
+
+    test_data = {
+        'gender': 'Male',
+        'age': 65,
+        'hypertension': 1,
+        'heart_disease': 1,
+        'ever_married': 'Yes',
+        'work_type': 'Private',
+        'Residence_type': 'Urban',
+        'avg_glucose_level': 169.5,
+        'bmi': 35.5,
+        'smoking_status': 'formerly smoked'
+    }
+
+    try:
+        features_df = pd.DataFrame([{
+            'gender': test_data['gender'],
+            'age': float(test_data['age']),
+            'hypertension': float(test_data['hypertension']),
+            'heart_disease': float(test_data['heart_disease']),
+            'ever_married': test_data['ever_married'],
+            'work_type': test_data['work_type'],
+            'Residence_type': test_data['Residence_type'],
+            'avg_glucose_level': float(test_data['avg_glucose_level']),
+            'bmi': float(test_data['bmi']),
+            'smoking_status': test_data['smoking_status']
+        }])
+
+        prediction = model.predict(features_df)
+        probability = model.predict_proba(features_df)[0][1]
+
+        return jsonify({
+            'test_data': test_data,
+            'prediction': int(prediction[0]),
+            'probability': float(probability),
+            'status': 'success'
+        })
+
+    except Exception as e:
+        logger.error(f"Error en la predicción de prueba: {e}")
+        return jsonify({
+            'error': 'Error en la predicción de prueba',
+            'status': 500
+        }), 500
+
+if __name__ == '__main__':
+    # Crear la aplicación Flask solo si se ejecuta directamente este archivo
+    app = Flask(__name__)
+    CORS(app)
+    app.register_blueprint(predict_bp)
+    
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    
+    logger.info(f'Iniciando servidor en puerto {port}, debug={debug}')
+    app.run(host='0.0.0.0', port=port, debug=debug) 

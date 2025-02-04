@@ -5,13 +5,12 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
-        "nodeVersion": "18.x"
+        "distDir": "frontend/build",
+        "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build"
       }
     },
     {
-      "src": "backend/*.py",
+      "src": "backend/api/*.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "50mb",
@@ -19,21 +18,46 @@
       }
     }
   ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Credentials", "value": "true" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+      ]
+    }
+  ],
   "routes": [
     {
       "src": "/api/predict",
-      "dest": "/backend/predict.py"
+      "dest": "/backend/api/predict.py",
+      "methods": ["GET", "POST", "OPTIONS"]
     },
     {
       "src": "/api/health",
-      "dest": "/backend/health.py"
+      "dest": "/backend/api/health.py",
+      "methods": ["GET", "OPTIONS"]
     },
     {
-      "src": "/static/(.*)",
+      "src": "^/static/(.*)",
       "dest": "/frontend/build/static/$1",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
       }
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/frontend/build/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/build/manifest.json"
+    },
+    {
+      "src": "/logo192.png",
+      "dest": "/frontend/build/logo192.png"
     },
     {
       "handle": "filesystem"
@@ -44,9 +68,12 @@
     }
   ],
   "functions": {
-    "backend/*.py": {
+    "backend/api/*.py": {
       "memory": 1024,
       "maxDuration": 10
     }
+  },
+  "env": {
+    "PYTHONPATH": "/var/task/backend"
   }
 } 

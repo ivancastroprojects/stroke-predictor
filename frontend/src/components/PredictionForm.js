@@ -2,21 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PredictionForm.css';
 
-const GLUCOSE_RANGES = {
-  low: '< 70 mg/dL',
-  normal: '70-140 mg/dL',
-  high: '> 140 mg/dL',
-  average: '106'
-};
-
-const BMI_RANGES = {
-  underweight: '< 18.5',
-  normal: '18.5-24.9',
-  overweight: '25-29.9',
-  obese: '≥ 30',
-  average: '28.5'
-};
-
 function PredictionForm({ onNewPrediction }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

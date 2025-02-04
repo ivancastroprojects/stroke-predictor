@@ -49,6 +49,7 @@
   font-weight: 600;
   background: linear-gradient(45deg, #00b7ff, #00ffd5);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
   text-shadow: 0 0 10px rgba(0, 183, 255, 0.4);
