@@ -11,7 +11,7 @@ function PredictionForm({ onNewPrediction }) {
     heart_disease: '0',
     ever_married: 'No',
     work_type: 'Private',
-    residence_type: 'Urban',
+    Residence_type: 'Urban',
     avg_glucose_level: '',
     bmi: '',
     smoking_status: 'never smoked'
@@ -29,7 +29,7 @@ function PredictionForm({ onNewPrediction }) {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/predict', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,6 +142,75 @@ function PredictionForm({ onNewPrediction }) {
               <option value="0">No</option>
             </select>
             <div className="field-info">History of heart conditions</div>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Ever Married <span className="required">*</span>
+            </label>
+            <select
+              name="ever_married"
+              value={formData.ever_married}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select option</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Work Type <span className="required">*</span>
+            </label>
+            <select
+              name="work_type"
+              value={formData.work_type}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select work type</option>
+              <option value="Private">Private</option>
+              <option value="Self-employed">Self-employed</option>
+              <option value="Govt_job">Government Job</option>
+              <option value="children">Children</option>
+              <option value="Never_worked">Never worked</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Residence Type <span className="required">*</span>
+            </label>
+            <select
+              name="Residence_type"
+              value={formData.Residence_type}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select residence type</option>
+              <option value="Urban">Urban</option>
+              <option value="Rural">Rural</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Smoking Status <span className="required">*</span>
+            </label>
+            <select
+              name="smoking_status"
+              value={formData.smoking_status}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select smoking status</option>
+              <option value="formerly smoked">Formerly smoked</option>
+              <option value="never smoked">Never smoked</option>
+              <option value="smokes">Currently smokes</option>
+              <option value="Unknown">Unknown</option>
+            </select>
           </div>
 
           <div className="form-group">
