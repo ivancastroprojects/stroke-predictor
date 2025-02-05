@@ -15,6 +15,17 @@ logger = logging.getLogger(__name__)
 # Crear Blueprint
 predict_bp = Blueprint('predict', __name__)
 
+# Configurar CORS para el blueprint
+CORS(predict_bp, resources={
+    r"/api/predict": {
+        "origins": ["http://localhost:3000", "https://*.vercel.app"],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "expose_headers": ["Content-Type"],
+        "supports_credentials": True
+    }
+})
+
 # Cargar el modelo solo cuando se necesite (lazy loading)
 model = None
 

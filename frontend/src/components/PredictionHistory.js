@@ -3,22 +3,30 @@ import './PredictionHistory.css';
 
 const examplePredictions = [
   {
-    age: 45,
+    age: 55,
     gender: 'Male',
     hypertension: '1',
     heart_disease: '0',
+    ever_married: 'Yes',
+    work_type: 'Private',
+    Residence_type: 'Urban',
     avg_glucose_level: '120',
     bmi: '28.5',
+    smoking_status: 'formerly smoked',
     prediction: 0.35,
     timestamp: new Date('2024-01-06T15:30:00').toISOString()
   },
   {
-    age: 62,
+    age: 68,
     gender: 'Female',
     hypertension: '1',
     heart_disease: '1',
+    ever_married: 'Yes',
+    work_type: 'Retired',
+    Residence_type: 'Rural',
     avg_glucose_level: '150',
     bmi: '32.1',
+    smoking_status: 'never smoked',
     prediction: 0.75,
     timestamp: new Date('2024-01-05T10:15:00').toISOString()
   }
@@ -60,32 +68,44 @@ function PredictionHistory({ history }) {
                 </span>
               </div>
               <div className="history-details">
-                <p>
-                  <strong>Age:</strong>
-                  <span>{item.age} years</span>
-                </p>
-                <p>
-                  <strong>Gender:</strong>
-                  <span>{item.gender === 'Male' ? 'M' : 'F'}</span>
-                </p>
-                <p>
-                  <strong>BMI:</strong>
-                  <span>{parseFloat(item.bmi).toFixed(1)}</span>
-                </p>
-                <p>
-                  <strong>Glucose:</strong>
-                  <span>{parseFloat(item.avg_glucose_level).toFixed(0)} mg/dL</span>
-                </p>
-                <p>
-                  <strong>HBP:</strong>
-                  <span>{item.hypertension === '1' ? 'Yes' : 'No'}</span>
-                </p>
-                <p>
-                  <strong>Heart:</strong>
-                  <span>{item.heart_disease === '1' ? 'Yes' : 'No'}</span>
-                </p>
+                <div className="details-column">
+                  <p>
+                    <strong>Age:</strong>
+                    <span>{item.age} years</span>
+                  </p>
+                  <p>
+                    <strong>Gender:</strong>
+                    <span>{item.gender}</span>
+                  </p>
+                  <p>
+                    <strong>BMI:</strong>
+                    <span>{parseFloat(item.bmi).toFixed(1)}</span>
+                  </p>
+                  <p>
+                    <strong>Glucose:</strong>
+                    <span>{parseFloat(item.avg_glucose_level).toFixed(0)} mg/dL</span>
+                  </p>
+                </div>
+                <div className="details-column">
+                  <p>
+                    <strong>HBP:</strong>
+                    <span>{item.hypertension === '1' ? 'Yes' : 'No'}</span>
+                  </p>
+                  <p>
+                    <strong>Heart:</strong>
+                    <span>{item.heart_disease === '1' ? 'Yes' : 'No'}</span>
+                  </p>
+                  <p>
+                    <strong>Smoking:</strong>
+                    <span>{item.smoking_status}</span>
+                  </p>
+                  <p>
+                    <strong>Work:</strong>
+                    <span>{item.work_type}</span>
+                  </p>
+                </div>
               </div>
-              <div className="prediction-percentage">
+              <div className="prediction-percentage" style={{ color: risk.color }}>
                 Risk: {(item.prediction * 100).toFixed(1)}%
               </div>
             </div>
@@ -93,7 +113,7 @@ function PredictionHistory({ history }) {
         })}
         {history.length === 0 && (
           <div className="example-note">
-            * These are examples. Your predictions will appear here.
+            * Estos son ejemplos. Tus predicciones aparecerán aquí.
           </div>
         )}
       </div>

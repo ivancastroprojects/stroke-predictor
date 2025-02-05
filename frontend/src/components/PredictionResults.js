@@ -188,7 +188,7 @@ export default function PredictionResults() {
             </div>
             <div className="data-item">
               <span className="label">Gender</span>
-              <span className="value">{formData.gender === 'Male' ? 'Male' : 'Female'}</span>
+              <span className="value">{formData.gender}</span>
             </div>
             <div className="data-item">
               <span className="label">BMI</span>
@@ -205,6 +205,22 @@ export default function PredictionResults() {
             <div className="data-item">
               <span className="label">Heart Disease</span>
               <span className="value">{formData.heart_disease === '1' ? 'Yes' : 'No'}</span>
+            </div>
+            <div className="data-item">
+              <span className="label">Marital Status</span>
+              <span className="value">{formData.ever_married}</span>
+            </div>
+            <div className="data-item">
+              <span className="label">Work Type</span>
+              <span className="value">{formData.work_type.replace('_', ' ')}</span>
+            </div>
+            <div className="data-item">
+              <span className="label">Residence</span>
+              <span className="value">{formData.Residence_type}</span>
+            </div>
+            <div className="data-item">
+              <span className="label">Smoking</span>
+              <span className="value">{formData.smoking_status}</span>
             </div>
           </div>
         </div>

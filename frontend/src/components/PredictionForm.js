@@ -37,11 +37,11 @@ function PredictionForm({ onNewPrediction }) {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error('Error en la predicción');
-      }
-
       const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || result.details?.join(', ') || 'Error en la predicción');
+      }
       
       const predictionData = {
         ...formData,
@@ -68,7 +68,7 @@ function PredictionForm({ onNewPrediction }) {
       });
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al realizar la predicción');
+      alert(`Error: ${error.message}`);
     }
   };
 

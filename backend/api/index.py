@@ -25,13 +25,28 @@ sys.path.append(model_path)
 # Crear la aplicación Flask
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
-CORS(app)
+
+# Configuración de CORS
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:3000", "https://*.vercel.app"],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "expose_headers": ["Content-Type"],
+        "supports_credentials": True
+    }
+})
 
 # Importar blueprints después de crear la aplicación
 from api.predict import predict_bp
 
 # Registrar blueprints
 app.register_blueprint(predict_bp)
+
+# Manejador específico para OPTIONS
+@app.route('/api/predict', methods=['OPTIONS'])
+def handle_options():
+    return '', 204
 
 @app.route('/api/health')
 def health():
