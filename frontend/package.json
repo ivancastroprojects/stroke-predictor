@@ -26,8 +26,7 @@
     "start": "react-scripts start",
     "build": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "vercel-build": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
