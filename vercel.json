@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "frontend/build",
   "builds": [
     {
       "src": "frontend/package.json",
@@ -31,17 +33,11 @@
   ],
   "routes": [
     {
-      "src": "/api/predict",
-      "dest": "/backend/api/predict.py",
-      "methods": ["GET", "POST", "OPTIONS"]
+      "src": "/api/(.*)",
+      "dest": "/backend/api/$1.py"
     },
     {
-      "src": "/api/health",
-      "dest": "/backend/api/health.py",
-      "methods": ["GET", "OPTIONS"]
-    },
-    {
-      "src": "^/static/(.*)",
+      "src": "/static/(.*)",
       "dest": "/frontend/build/static/$1",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
@@ -74,6 +70,7 @@
     }
   },
   "env": {
-    "PYTHONPATH": "/var/task/backend"
+    "PYTHONPATH": "/var/task/backend",
+    "FLASK_ENV": "production"
   }
 } 

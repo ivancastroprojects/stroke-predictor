@@ -16,13 +16,23 @@ import './PredictionResults.css';
 export default function PredictionResults() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { prediction, formData, featureContributions } = location.state || {};
+  const { prediction, formData, featureContributions, riskFactors } = location.state || {};
   
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    console.log('Estado recibido:', location.state);
+    console.log('Feature Contributions:', featureContributions);
+    console.log('Risk Factors:', riskFactors);
+  }, [location.state, featureContributions, riskFactors]);
+
+  if (!location.state) {
+    navigate('/');
+    return null;
+  }
   
-  const riskLevel = prediction > 0.7 ? 'High' : prediction > 0.3 ? 'Moderate' : 'Low';
+  // Convertir la probabilidad a porcentaje
+  const riskPercentage = prediction * 100;
+  const riskLevel = riskPercentage > 70 ? 'High' : riskPercentage > 30 ? 'Moderate' : 'Low';
   const riskColor = {
     'High': '#ff4d4d',
     'Moderate': '#ffd700',
@@ -31,8 +41,8 @@ export default function PredictionResults() {
 
   // Datos para el gráfico semicircular
   const riskData = [
-    { name: 'Risk', value: prediction * 100 },
-    { name: 'Remaining', value: 100 - (prediction * 100) }
+    { name: 'Risk', value: riskPercentage },
+    { name: 'Remaining', value: 100 - riskPercentage }
   ];
 
   // Procesar los datos de contribución de características
@@ -93,7 +103,7 @@ export default function PredictionResults() {
                     fill="#fff"
                     className="risk-value-label"
                   >
-                    {`${(prediction * 100).toFixed(1)}%`}
+                    {`${riskPercentage.toFixed(1)}%`}
                   </text>
                   <text
                     x="50%"
@@ -164,17 +174,45 @@ export default function PredictionResults() {
           <h2>Contributing Factors</h2>
           <div className="factors-visualization">
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={processedFeatureContributions} layout="vertical">
+              <BarChart data={Object.entries(featureContributions || {}).map(([name, value]) => ({
+                name: name.replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+                value: parseFloat((value * 100).toFixed(1))
+              })).sort((a, b) => b.value - a.value)} layout="vertical">
                 <XAxis type="number" domain={[0, 100]} />
                 <YAxis dataKey="name" type="category" width={150} />
-                <Tooltip />
+                <Tooltip formatter={(value) => `${value.toFixed(1)}%`} />
                 <Bar dataKey="value" fill="#00b7ff">
-                  {processedFeatureContributions.map((entry, index) => (
+                  {Object.entries(featureContributions || {}).map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Key Factors Panel */}
+        <div className="result-panel factors-explanation-panel">
+          <h2>Key Risk Factors</h2>
+          <div className="factors-list">
+            {(riskFactors || []).map((factor, index) => (
+              <div key={index} className="factor-item">
+                <div className="factor-header">
+                  <div className="factor-icon" style={{ backgroundColor: `${COLORS[index]}20`, color: COLORS[index] }}>
+                    {index + 1}
+                  </div>
+                  <h4>{factor.factor}</h4>
+                </div>
+                <p className="factor-description">
+                  {factor.message}
+                </p>
+              </div>
+            ))}
+            {(!riskFactors || riskFactors.length === 0) && (
+              <div className="no-factors-message">
+                No significant risk factors identified. Continue maintaining healthy habits.
+              </div>
+            )}
           </div>
         </div>
 
@@ -222,31 +260,6 @@ export default function PredictionResults() {
               <span className="label">Smoking</span>
               <span className="value">{formData.smoking_status}</span>
             </div>
-          </div>
-        </div>
-
-        {/* Key Factors Explanation Panel */}
-        <div className="result-panel factors-explanation-panel">
-          <h2>Key Factors in Your Risk Assessment</h2>
-          <div className="factors-list">
-            {processedFeatureContributions.slice(0, 3).map((factor, index) => (
-              <div key={index} className="factor-item">
-                <div className="factor-header">
-                  <div className="factor-icon" style={{ backgroundColor: `${COLORS[index]}20`, color: COLORS[index] }}>
-                    {index + 1}
-                  </div>
-                  <h4>{factor.name}</h4>
-                  <span className="factor-value">{factor.value.toFixed(1)}%</span>
-                </div>
-                <p className="factor-description">
-                  {factor.name === 'age' && 'Age is a significant risk factor for stroke. Risk tends to increase with age.'}
-                  {factor.name === 'avg_glucose_level' && 'High blood glucose levels can damage blood vessels and nerves that control your heart.'}
-                  {factor.name === 'bmi' && 'BMI outside the normal range can increase the risk of stroke through various mechanisms.'}
-                  {factor.name === 'hypertension' && 'High blood pressure is one of the most important controllable risk factors for stroke.'}
-                  {factor.name === 'heart_disease' && 'Heart conditions can lead to blood clots that may cause a stroke.'}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
 

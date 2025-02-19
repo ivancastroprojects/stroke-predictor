@@ -43,9 +43,11 @@ function PredictionForm({ onNewPrediction }) {
         throw new Error(result.error || result.details?.join(', ') || 'Error en la predicción');
       }
       
+      console.log('Respuesta del backend:', result);
+      
       const predictionData = {
         ...formData,
-        prediction: result.prediction,
+        prediction: result.probability,
         timestamp: new Date().toISOString()
       };
       
@@ -59,7 +61,7 @@ function PredictionForm({ onNewPrediction }) {
 
       navigate('/results', { 
         state: { 
-          prediction: result.prediction,
+          prediction: result.probability,
           formData: formData,
           featureContributions: result.feature_contributions,
           riskFactors: result.risk_factors,

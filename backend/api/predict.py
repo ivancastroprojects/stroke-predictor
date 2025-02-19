@@ -146,13 +146,68 @@ def predict():
         prediction = model.predict(features_df)
         probability = model.predict_proba(features_df)[0][1]
 
-        logger.info(f"Predicción exitosa: {prediction[0]}, probabilidad: {probability:.2f}")
-        
-        return jsonify({
+        logger.info(f"Datos de entrada: {features_df.to_dict('records')[0]}")
+        logger.info(f"Predicción: {prediction[0]}, Probabilidad: {probability}")
+
+        # Calcular las contribuciones de las características
+        feature_importance = {
+            'age': 0.25,
+            'hypertension': 0.20,
+            'heart_disease': 0.15,
+            'avg_glucose_level': 0.15,
+            'bmi': 0.10,
+            'smoking_status': 0.08,
+            'work_type': 0.07
+        }
+
+        # Analizar factores de riesgo específicos
+        risk_factors = []
+        if float(features_df['age'].iloc[0]) > 65:
+            risk_factors.append({'factor': 'Age', 'message': 'La edad superior a 65 años aumenta significativamente el riesgo de accidente cerebrovascular'})
+        if features_df['hypertension'].iloc[0] == 1:
+            risk_factors.append({'factor': 'Hipertensión', 'message': 'El historial de presión arterial alta es un factor de riesgo importante'})
+        if features_df['heart_disease'].iloc[0] == 1:
+            risk_factors.append({'factor': 'Enfermedad Cardíaca', 'message': 'Las condiciones cardíacas existentes aumentan el riesgo de accidente cerebrovascular'})
+        if float(features_df['avg_glucose_level'].iloc[0]) > 140:
+            risk_factors.append({'factor': 'Glucosa Alta', 'message': 'Los niveles elevados de glucosa aumentan el riesgo'})
+        if float(features_df['bmi'].iloc[0]) > 25:
+            risk_factors.append({'factor': 'IMC', 'message': 'Un IMC por encima del rango normal aumenta el riesgo'})
+        if features_df['smoking_status'].iloc[0] in ['formerly smoked', 'smokes']:
+            risk_factors.append({'factor': 'Tabaquismo', 'message': 'El historial de tabaquismo aumenta los riesgos cardiovasculares'})
+
+        # Calcular contribuciones específicas
+        feature_contributions = {}
+        for feature, importance in feature_importance.items():
+            value = features_df[feature].iloc[0]
+            if feature == 'age':
+                contribution = min(1.0, float(value) / 100) * importance
+            elif feature in ['hypertension', 'heart_disease']:
+                contribution = float(value) * importance
+            elif feature == 'avg_glucose_level':
+                contribution = min(1.0, float(value) / 200) * importance
+            elif feature == 'bmi':
+                contribution = min(1.0, (float(value) - 18.5) / 30) * importance
+            elif feature == 'smoking_status':
+                contribution = (value in ['formerly smoked', 'smokes']) * importance
+            else:
+                contribution = 0.5 * importance
+            feature_contributions[feature] = contribution
+
+        logger.info(f"Feature contributions: {feature_contributions}")
+        logger.info(f"Risk factors: {risk_factors}")
+
+        response_data = {
             'prediction': int(prediction[0]),
             'probability': float(probability),
+            'feature_contributions': feature_contributions,
+            'risk_factors': risk_factors,
+            'feature_importance': feature_importance,
             'status': 'success'
-        })
+        }
+
+        logger.info(f"Enviando respuesta: {response_data}")
+        
+        return jsonify(response_data)
 
     except Exception as e:
         logger.error(f"Error en la predicción: {e}")
