@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "frontend/build",
   "builds": [
     {
       "src": "frontend/package.json",
@@ -34,7 +32,8 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/api/$1.py"
+      "dest": "/backend/api/$1.py",
+      "methods": ["GET", "POST", "OPTIONS"]
     },
     {
       "src": "/static/(.*)",
@@ -63,12 +62,6 @@
       "dest": "/frontend/build/index.html"
     }
   ],
-  "functions": {
-    "backend/api/*.py": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "env": {
     "PYTHONPATH": "/var/task/backend",
     "FLASK_ENV": "production"
