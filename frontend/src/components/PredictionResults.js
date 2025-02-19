@@ -45,13 +45,7 @@ export default function PredictionResults() {
     { name: 'Remaining', value: 100 - riskPercentage }
   ];
 
-  // Procesar los datos de contribución de características
-  const processedFeatureContributions = featureContributions ? 
-    Object.entries(featureContributions).map(([name, value]) => ({
-      name,
-      value: parseFloat((value * 100).toFixed(1))
-    })).sort((a, b) => b.value - a.value) : [];
-
+  // Procesar los datos de contribución de características directamente en el BarChart
   const COLORS = ['#00b7ff', '#00ffd5', '#7cffb2', '#ffd700', '#ff6b6b'];
 
   const handleBack = () => {

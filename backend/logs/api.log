@@ -1,0 +1,4 @@
+2025-02-19 19:48:31 - __main__ - INFO - Iniciando servidor en puerto 5000, debug=False
+2025-02-19 19:48:32 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-02-19 19:48:32 - werkzeug - INFO -  * Running on http://10.0.5.210:5000/ (Press CTRL+C to quit)
