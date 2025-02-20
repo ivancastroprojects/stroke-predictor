@@ -16,15 +16,7 @@ logger = logging.getLogger(__name__)
 predict_bp = Blueprint('predict', __name__)
 
 # Configurar CORS para el blueprint
-CORS(predict_bp, resources={
-    r"/api/predict": {
-        "origins": ["http://localhost:3000", "https://*.vercel.app"],
-        "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"],
-        "expose_headers": ["Content-Type"],
-        "supports_credentials": True
-    }
-})
+CORS(predict_bp)
 
 # Cargar el modelo solo cuando se necesite (lazy loading)
 model = None
@@ -95,14 +87,18 @@ def validate_input(data):
     
     return errors
 
-@predict_bp.route('/api/predict', methods=['POST', 'OPTIONS'])
-@cross_origin()
+@predict_bp.route('/predict', methods=['POST', 'OPTIONS'])
+@cross_origin(origins=["http://localhost:3000", "https://*.vercel.app"], 
+             methods=['GET', 'POST', 'OPTIONS'],
+             allow_headers=['Content-Type'],
+             supports_credentials=True)
 def predict():
     if request.method == 'OPTIONS':
         # Manejar la solicitud preflight
         response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
         return response
 
     if not load_model():

@@ -25,26 +25,63 @@ body {
   width: 100%;
 }
 
-.app-container {
+/* Main container styles */
+.main-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
-  padding: 2rem;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem;
+  padding: 2rem;
 }
 
-/* Media queries */
+/* Three-panel layout */
+.app-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  gap: 2rem;
+  align-items: start;
+  padding: 0 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1600px) {
+  .app-container {
+    grid-template-columns: 30% 40% 30%;
+    padding: 0 1.5rem;
+  }
+  
+  .main-container {
+    padding: 1.5rem;
+  }
+}
+
 @media (max-width: 1200px) {
   .app-container {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+
+  .main-container {
     padding: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .app-container {
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+  
+  .main-container {
     padding: 0.5rem;
   }
 }

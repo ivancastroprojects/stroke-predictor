@@ -8,6 +8,41 @@
   overflow-y: auto;
 }
 
+
+.risk-factors-panel {
+  background: rgba(0, 43, 54, 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  height: calc(100vh - 8rem);
+  overflow-y: auto;
+  position: sticky;
+  top: 2rem;
+}
+
+.prediction-form-container {
+  background: rgba(0, 43, 54, 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  min-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+.prediction-history-panel {
+  background: rgba(0, 43, 54, 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  height: calc(100vh - 8rem);
+  overflow-y: auto;
+  position: sticky;
+  top: 2rem;
+}
+
 .risk-factors-title {
   color: #fff;
   font-size: 1.4rem;
@@ -22,7 +57,6 @@
 .risk-factor {
   background: linear-gradient(145deg, rgba(0, 64, 77, 0.3), rgba(0, 45, 98, 0.2));
   border-radius: 1rem;
-  padding: 1.2rem;
   margin-bottom: 1rem;
   border: 1px solid rgba(0, 183, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;

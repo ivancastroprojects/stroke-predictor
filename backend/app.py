@@ -3,6 +3,9 @@ from flask_cors import CORS
 from api.predict import predict_bp
 import os
 import logging
+import sys
+from pathlib import Path
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Configurar logging
 logging.basicConfig(
@@ -11,14 +14,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Asegurarse de que el modelo esté en el PYTHONPATH
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+model_path = os.path.join(current_dir, 'models')
+sys.path.append(model_path)
+
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Configuración de CORS
 CORS(app, resources={
-    r"/api/*": {
+    r"/*": {
         "origins": ["http://localhost:3000", "https://*.vercel.app"],
         "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
+        "allow_headers": ["Content-Type"],
+        "supports_credentials": True
     }
 })
 
@@ -30,7 +41,7 @@ app.config.update(
 )
 
 # Registrar el blueprint de predicción
-app.register_blueprint(predict_bp)
+app.register_blueprint(predict_bp, url_prefix='/api')
 
 @app.route('/api', methods=['GET'])
 def home():
@@ -38,7 +49,23 @@ def home():
 
 @app.route('/api/health', methods=['GET'])
 def health():
-    return jsonify({"status": "healthy"})
+    return jsonify({
+        "status": "healthy",
+        "version": "1.0.0",
+        "endpoints": {
+            "/api/health": "Estado del servicio",
+            "/api/predict": "Predicción de stroke (POST)"
+        }
+    })
+
+# Manejador específico para OPTIONS
+@app.route('/api/predict', methods=['OPTIONS'])
+def handle_options():
+    response = jsonify({'status': 'ok'})
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+    return response
 
 # Manejador de errores global
 @app.errorhandler(Exception)
@@ -61,4 +88,7 @@ if __name__ == "__main__":
     debug = os.environ.get('FLASK_ENV') == 'development'
     
     logger.info(f'Iniciando servidor en puerto {port}, debug={debug}')
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    try:
+        app.run(host='0.0.0.0', port=port, debug=debug)
+    except Exception as e:
+        logger.error(f'Error al iniciar el servidor: {e}')
