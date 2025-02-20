@@ -87,12 +87,12 @@ export default function PredictionResults() {
       .sort((a, b) => b.value - a.value);
   }, [featureContributions]);
 
-  // Generar recomendaciones basadas en los datos del paciente
-  const patientSpecificRecommendations = useMemo(() => {
-    const recommendations = [];
+  // Generar recomendaciones específicas basadas en los datos del paciente
+  const recommendations = useMemo(() => {
+    const recs = [];
 
     if (formData.hypertension === '1') {
-      recommendations.push({
+      recs.push({
         icon: '🫀',
         title: 'Control de Presión Arterial',
         text: 'Mantener monitoreo regular de la presión arterial y seguir el tratamiento prescrito.'
@@ -100,7 +100,7 @@ export default function PredictionResults() {
     }
 
     if (parseFloat(formData.bmi) > 25) {
-      recommendations.push({
+      recs.push({
         icon: '⚖️',
         title: 'Control de Peso',
         text: 'Mantener una dieta equilibrada y actividad física regular para alcanzar un peso saludable.'
@@ -108,7 +108,7 @@ export default function PredictionResults() {
     }
 
     if (parseFloat(formData.avg_glucose_level) > 125) {
-      recommendations.push({
+      recs.push({
         icon: '🩺',
         title: 'Control de Glucosa',
         text: 'Monitorear niveles de glucosa y mantener una dieta apropiada.'
@@ -116,14 +116,14 @@ export default function PredictionResults() {
     }
 
     if (formData.smoking_status === 'smokes') {
-      recommendations.push({
+      recs.push({
         icon: '🚭',
         title: 'Cesación de Tabaco',
         text: 'Considerar programas para dejar de fumar y buscar apoyo profesional.'
       });
     }
 
-    return recommendations;
+    return recs;
   }, [formData]);
 
   const handleBack = () => {
@@ -213,59 +213,25 @@ export default function PredictionResults() {
             <div className="medical-recommendations">
               <h3>Recomendaciones Médicas</h3>
               <div className="recommendation-list">
-                {riskLevel === 'High' && (
-                  <>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">🏥</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Evaluación Neurológica</div>
-                        <div className="recommendation-text">Programar una evaluación neurológica completa para valorar factores de riesgo específicos.</div>
+                {recommendations.map((rec, index) => (
+                  <div key={index} className="recommendation-item">
+                    <span className="recommendation-icon">{rec.icon}</span>
+                    <div className="recommendation-content">
+                      <div className="recommendation-title">{rec.title}</div>
+                      <div className="recommendation-text">{rec.text}</div>
+                    </div>
+                  </div>
+                ))}
+                {recommendations.length === 0 && (
+                  <div className="recommendation-item">
+                    <span className="recommendation-icon">✅</span>
+                    <div className="recommendation-content">
+                      <div className="recommendation-title">Mantener Hábitos Saludables</div>
+                      <div className="recommendation-text">
+                        Continuar con los buenos hábitos de salud actuales y realizar chequeos regulares.
                       </div>
                     </div>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">💊</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Control de Medicación</div>
-                        <div className="recommendation-text">Revisión y ajuste de medicamentos actuales bajo supervisión médica.</div>
-                      </div>
-                    </div>
-                  </>
-                )}
-                {riskLevel === 'Moderate' && (
-                  <>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">🩺</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Chequeo Preventivo</div>
-                        <div className="recommendation-text">Realizar exámenes preventivos y monitoreo de factores de riesgo.</div>
-                      </div>
-                    </div>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">📊</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Control Regular</div>
-                        <div className="recommendation-text">Seguimiento periódico de presión arterial y niveles de glucosa.</div>
-                      </div>
-                    </div>
-                  </>
-                )}
-                {riskLevel === 'Low' && (
-                  <>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">🏃</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Mantener Actividad</div>
-                        <div className="recommendation-text">Continuar con actividad física regular y dieta saludable.</div>
-                      </div>
-                    </div>
-                    <div className="recommendation-item">
-                      <span className="recommendation-icon">🍎</span>
-                      <div className="recommendation-content">
-                        <div className="recommendation-title">Hábitos Saludables</div>
-                        <div className="recommendation-text">Mantener una dieta equilibrada y evitar el tabaco.</div>
-                      </div>
-                    </div>
-                  </>
+                  </div>
                 )}
               </div>
             </div>

@@ -17,9 +17,8 @@ function PredictionForm({ onNewPrediction }) {
     bmi: '',
     smoking_status: 'never smoked'
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,11 +30,10 @@ function PredictionForm({ onNewPrediction }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    setError(null);
+    setIsSubmitting(true);
+    setSubmitError(null);
     
     try {
-        // Construir la URL de la API según el entorno
         const apiUrl = process.env.NODE_ENV === 'production' 
             ? '/api/predict'
             : `${process.env.REACT_APP_API_URL}/api/predict`;
@@ -60,7 +58,6 @@ function PredictionForm({ onNewPrediction }) {
         const data = await response.json();
         console.log('Respuesta recibida:', data);
 
-        // Guardar en el historial
         const predictionData = {
             ...formData,
             prediction: data.probability,
@@ -71,12 +68,10 @@ function PredictionForm({ onNewPrediction }) {
         const newHistory = [predictionData, ...history];
         localStorage.setItem('predictionHistory', JSON.stringify(newHistory));
 
-        // Notificar al componente padre si existe la función
         if (onNewPrediction) {
             onNewPrediction(predictionData);
         }
 
-        // Navegar a la página de resultados con los datos
         navigate('/results', {
             state: {
                 prediction: data.probability,
@@ -88,9 +83,9 @@ function PredictionForm({ onNewPrediction }) {
         });
     } catch (err) {
         console.error('Error al hacer la predicción:', err);
-        setError(err.message);
+        setSubmitError(err.message);
     } finally {
-        setIsLoading(false);
+        setIsSubmitting(false);
     }
   };
 
