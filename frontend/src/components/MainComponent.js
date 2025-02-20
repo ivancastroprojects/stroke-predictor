@@ -3,6 +3,7 @@ import PredictionForm from './PredictionForm';
 import RiskFactors from './RiskFactors';
 import PredictionHistory from './PredictionHistory';
 import DataInsights from './DataInsights';
+import DataHighlights from './DataHighlights';
 import './MainComponent.css';
 
 function MainComponent() {
@@ -124,6 +125,7 @@ function MainComponent() {
 
       <div className="insights-section">
         <DataInsights />
+        <DataHighlights />
       </div>
     </div>
   );
