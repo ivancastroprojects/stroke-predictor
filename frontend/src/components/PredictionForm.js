@@ -94,6 +94,11 @@ function PredictionForm({ onNewPrediction }) {
       <BackgroundRays />
       <div className="prediction-form-container">
         <h2 className="form-title">Stroke Risk Assessment</h2>
+        {submitError && (
+          <div className="error-message">
+            Error: {submitError}
+          </div>
+        )}
         <form className="prediction-form" onSubmit={handleSubmit}>
           <div className="form-section">
             <div className="form-group">
@@ -296,8 +301,12 @@ function PredictionForm({ onNewPrediction }) {
               <div className="field-info">Body Mass Index (kg/m²)</div>
             </div>
 
-            <button type="submit" className="submit-button">
-              Calculate Risk
+            <button 
+              type="submit" 
+              className={`submit-button ${isSubmitting ? 'submitting' : ''}`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Calculando...' : 'Calculate Risk'}
             </button>
           </div>
         </form>
