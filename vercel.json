@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "frontend/build",
   "builds": [
     {
       "src": "frontend/package.json",
@@ -20,21 +18,16 @@
       }
     }
   ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
-      ]
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/api/$1.py"
+      "dest": "/backend/api/$1.py",
+      "headers": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+      }
     },
     {
       "src": "/static/(.*)",
@@ -63,12 +56,6 @@
       "dest": "/frontend/build/index.html"
     }
   ],
-  "functions": {
-    "backend/api/*.py": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "env": {
     "PYTHONPATH": "/var/task/backend",
     "FLASK_ENV": "production"
