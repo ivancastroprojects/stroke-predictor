@@ -14,15 +14,9 @@
     }
   ],
   "rewrites": [
-    { 
-      "source": "/api/(.*)",
-      "destination": "/api" 
-    }
-  ],
-  "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/api/index.py",
+      "source": "/api/(.*)",
+      "destination": "/backend/api/index.py",
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
@@ -31,11 +25,8 @@
       }
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
+      "source": "/(.*)",
+      "destination": "/frontend/build/index.html"
     }
   ],
   "env": {
