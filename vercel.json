@@ -2,26 +2,27 @@
   "version": 2,
   "builds": [
     {
+      "src": "backend/api/index.py",
+      "use": "@vercel/python"
+    },
+    {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build"
+        "distDir": "build"
       }
-    },
-    {
-      "src": "backend/api/*.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb",
-        "runtime": "python3.9"
-      }
+    }
+  ],
+  "rewrites": [
+    { 
+      "source": "/api/(.*)",
+      "destination": "/api" 
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/api/$1.py",
+      "dest": "/backend/api/index.py",
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
@@ -33,24 +34,8 @@
       "handle": "filesystem"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/build/static/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/build/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/build/manifest.json"
-    },
-    {
-      "src": "/logo192.png",
-      "dest": "/build/logo192.png"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/build/index.html"
+      "dest": "/frontend/build/index.html"
     }
   ],
   "env": {
