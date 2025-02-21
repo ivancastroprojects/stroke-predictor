@@ -3,6 +3,7 @@ import PredictionForm from './PredictionForm';
 import RiskFactors from './RiskFactors';
 import PredictionHistory from './PredictionHistory';
 import DataInsights from './DataInsights';
+import DataHighlights from './DataHighlights';
 import './MainComponent.css';
 
 function MainComponent() {
@@ -110,20 +111,21 @@ function MainComponent() {
         </div>
       </section>
 
-      <div className="three-panel-layout">
-        <div className="panel left-panel">
+      <div className="app-container">
+        <div className="side-panel">
           <RiskFactors />
         </div>
-        <div className="panel center-panel">
+        <div className="main-panel">
           <PredictionForm onNewPrediction={handleNewPrediction} />
         </div>
-        <div className="panel right-panel">
+        <div className="side-panel">
           <PredictionHistory history={predictionHistory} />
         </div>
       </div>
 
       <div className="insights-section">
         <DataInsights />
+        <DataHighlights />
       </div>
     </div>
   );

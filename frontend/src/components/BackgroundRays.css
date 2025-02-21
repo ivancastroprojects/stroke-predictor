@@ -1,0 +1,109 @@
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, rgba(0, 43, 54, 0.95), rgba(0, 64, 82, 0.95), rgba(0, 31, 63, 0.95));
+}
+
+.run {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  animation: run 8s linear infinite;
+  transform-origin: left;
+  backdrop-filter: blur(8px);
+}
+
+.run.left {
+  transform: rotate(0deg);
+  animation: runLeft 12s linear infinite;
+}
+
+.run.right {
+  transform: rotate(0deg);
+  animation: runRight 12s linear infinite;
+}
+
+@keyframes runLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes runRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  20% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+/* Distribución uniforme de los rayos */
+.run:nth-child(1) { top: 0%; }
+.run:nth-child(2) { top: 3%; }
+.run:nth-child(3) { top: 6%; }
+.run:nth-child(4) { top: 9%; }
+.run:nth-child(5) { top: 12%; }
+.run:nth-child(6) { top: 15%; }
+.run:nth-child(7) { top: 18%; }
+.run:nth-child(8) { top: 21%; }
+.run:nth-child(9) { top: 24%; }
+.run:nth-child(10) { top: 27%; }
+.run:nth-child(11) { top: 30%; }
+.run:nth-child(12) { top: 33%; }
+.run:nth-child(13) { top: 36%; }
+.run:nth-child(14) { top: 39%; }
+.run:nth-child(15) { top: 42%; }
+.run:nth-child(16) { top: 45%; }
+.run:nth-child(17) { top: 48%; }
+.run:nth-child(18) { top: 51%; }
+.run:nth-child(19) { top: 54%; }
+.run:nth-child(20) { top: 57%; }
+.run:nth-child(21) { top: 60%; }
+.run:nth-child(22) { top: 63%; }
+.run:nth-child(23) { top: 66%; }
+.run:nth-child(24) { top: 69%; }
+.run:nth-child(25) { top: 72%; }
+.run:nth-child(26) { top: 75%; }
+.run:nth-child(27) { top: 78%; }
+.run:nth-child(28) { top: 81%; }
+.run:nth-child(29) { top: 84%; }
+.run:nth-child(30) { top: 87%; }
+.run:nth-child(31) { top: 90%; }
+.run:nth-child(32) { top: 93%; }
+.run:nth-child(33) { top: 96%; }
+.run:nth-child(34) { top: 99%; }
+
+/* Ajuste de opacidad para rayos específicos */
+.run:nth-child(odd) { opacity: 0.4; }
+.run:nth-child(even) { opacity: 0.3; } 

@@ -1,0 +1,193 @@
+.data-highlights {
+  padding: 1.5rem;
+  background: rgba(0, 64, 77, 0.2);
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+}
+
+.highlights-title {
+  color: #00ffd5;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.highlight-card {
+  background: rgba(0, 64, 77, 0.3);
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+  display: flex;
+  gap: 1rem;
+  border: 1px solid rgba(0, 183, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-2px);
+}
+
+.highlight-icon {
+  font-size: 1.5rem;
+  background: rgba(0, 183, 255, 0.1);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.6rem;
+}
+
+.highlight-content {
+  flex: 1;
+}
+
+.highlight-content h4 {
+  color: #fff;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+/* Estilos para la barra de estadísticas */
+.stat-bar {
+  height: 2rem;
+  background: rgba(0, 64, 77, 0.3);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+}
+
+.stat-fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.85rem;
+  transition: width 0.3s ease;
+}
+
+/* Estilos para grupos de estadísticas */
+.stat-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(0, 64, 77, 0.2);
+  border-radius: 0.5rem;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  color: #00ffd5;
+  font-weight: 500;
+}
+
+/* Estilos para barras de riesgo */
+.risk-percentages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.risk-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.risk-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+}
+
+.risk-progress {
+  height: 0.5rem;
+  background: rgba(0, 64, 77, 0.3);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.risk-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00b7ff, #00ffd5);
+  transition: width 0.3s ease;
+}
+
+.risk-value {
+  color: #00ffd5;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Estilos para correlaciones */
+.correlation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.correlation-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.correlation-item span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+}
+
+.correlation-bar {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.correlation-bar.high {
+  background: linear-gradient(90deg, #00ff87, #60efff);
+  width: 80%;
+}
+
+.correlation-bar.medium {
+  background: linear-gradient(90deg, #ffd000, #ff6bcb);
+  width: 60%;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .highlights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .data-highlights {
+    padding: 1rem;
+  }
+
+  .highlight-card {
+    padding: 1rem;
+  }
+
+  .highlight-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+} 
