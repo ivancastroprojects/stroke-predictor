@@ -48,7 +48,7 @@ La aplicación sigue una arquitectura cliente-servidor desacoplada, facilitando 
 graph TD
     A[Usuario en Navegador] -- Ingresa Datos --> B(Frontend - React App);
     B -- HTTP POST /api/predict --> C{Backend - Flask API};
-    C -- Carga Modelo --> D[Modelo ML (scikit-learn)];
+    C -- Carga Modelo --> D[Modelo ML scikit-learn];
     C -- Procesa Datos y Predice --> D;
     D -- Resultado Predicción --> C;
     C -- HTTP Response (JSON) --> B;
