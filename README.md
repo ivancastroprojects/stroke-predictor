@@ -1,51 +1,159 @@
-# 🧠 Stroke Risk Prediction Web App
+# 🧠 Aplicación Web de Predicción de Riesgo de Ictus (ACV)
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org)
-[![Flask](https://img.shields.io/badge/Flask-2.0.1-green.svg)](https://flask.palletsprojects.com/)
-[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.2+-green.svg)](https://flask.palletsprojects.com/)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg?logo=react)](https://reactjs.org/)
+[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.0+-F7931E.svg?logo=scikit-learn)](https://scikit-learn.org/stable/)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black.svg?logo=vercel)](https://vercel.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Una aplicación web moderna que utiliza Machine Learning para predecir el riesgo de accidentes cerebrovasculares, proporcionando insights médicos personalizados y recomendaciones de salud.
+**Una herramienta innovadora de salud digital que utiliza Machine Learning para evaluar el riesgo de accidente cerebrovascular (ACV), ofreciendo información médica personalizada y recomendaciones proactivas de salud.**
 
-![Stroke Risk Assessment Tool](https://img.freepik.com/free-photo/male-medical-figure-with-front-brain-highlighted_1048-11823.jpg)
+Este proyecto nace de la necesidad de proporcionar una forma accesible y temprana de identificar factores de riesgo asociados a los ACV, permitiendo a los usuarios y profesionales de la salud tomar decisiones informadas para la prevención.
 
-## 🌟 Características Principales
+<p align="center">
+  <img src="stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
+</p>
+<p align="center">
+  <img src="frontend/public/stroke.gif" alt="Demostración de la App en Funcionamiento" width="750"/>
+</p>
 
-- **Predicción de Riesgo en Tiempo Real**: Análisis instantáneo basado en múltiples factores de salud
-- **Visualización Interactiva**: Gráficos detallados de factores contribuyentes y niveles de riesgo
-- **Recomendaciones Personalizadas**: Sugerencias médicas basadas en el perfil individual
-- **Historial de Predicciones**: Seguimiento temporal de evaluaciones previas
-- **Interfaz Médica Profesional**: Diseño moderno orientado al sector salud
-- **Responsive Design**: Adaptable a cualquier dispositivo
+## 🌟 Características Destacadas
 
-## 🚀 Tecnologías Utilizadas
+La aplicación ofrece un conjunto de funcionalidades robustas diseñadas para una experiencia de usuario intuitiva y médicamente relevante:
+
+-   **🧠 Predicción de Riesgo en Tiempo Real**: Introduce tus datos de salud y obtén un análisis instantáneo de tu riesgo de ACV, impulsado por un modelo de Machine Learning entrenado.
+-   **📊 Visualización Interactiva de Datos**: Comprende los factores que más contribuyen a tu riesgo mediante gráficos dinámicos e interpretables generados con Recharts.
+-   **💡 Recomendaciones Personalizadas**: Recibe sugerencias y consejos de salud adaptados a tu perfil de riesgo individual para fomentar hábitos preventivos.
+-   **📜 Historial de Predicciones**: Realiza un seguimiento de tus evaluaciones a lo largo del tiempo, observando la evolución de tu riesgo (Funcionalidad potencial o existente).
+-   **🖥️ Interfaz Profesional y Moderna**: Disfruta de un diseño limpio, atractivo y orientado al sector salud, con animaciones fluidas y transiciones suaves.
+-   **📱 Diseño Responsivo (Mobile-First)**: Accede a la aplicación desde cualquier dispositivo (escritorio, tablet, móvil) con una experiencia de usuario optimizada.
+-   **🌐 Soporte Multilenguaje**: Interfaz disponible en varios idiomas para mayor accesibilidad (detectado por `translations.js`).
+
+## 🏗️ Arquitectura del Proyecto
+
+La aplicación sigue una arquitectura cliente-servidor desacoplada, facilitando la escalabilidad y el mantenimiento:
+
+1.  **Frontend (React)**: El usuario interactúa con la interfaz construida en React. Ingresa sus datos en un formulario (`PredictionForm.js`).
+2.  **Solicitud API (HTTP POST)**: Al enviar el formulario, el frontend realiza una solicitud POST a la API del backend, enviando los datos del usuario en formato JSON.
+3.  **Backend (Flask API)**:
+    *   El servidor Flask recibe la solicitud en el endpoint `/api/predict`.
+    *   Valida los datos de entrada.
+    *   Utiliza el modelo de Machine Learning (`stroke_prediction_model.joblib`) cargado para procesar los datos y generar una predicción de riesgo.
+    *   El modelo utiliza factores como edad, hipertensión, enfermedades cardíacas, nivel de glucosa, IMC, etc. (inferido de un dataset de stroke).
+4.  **Respuesta API (JSON)**: El backend devuelve la predicción y cualquier insight adicional (ej. importancia de características) al frontend en formato JSON.
+5.  **Visualización de Resultados (React)**: El frontend (`PredictionResults.js`) recibe la respuesta y presenta el resultado de la predicción, las visualizaciones y las recomendaciones al usuario.
+
+```mermaid
+graph TD
+    A[Usuario en Navegador] -- Ingresa Datos --> B(Frontend - React App);
+    B -- HTTP POST /api/predict --> C{Backend - Flask API};
+    C -- Carga Modelo --> D[Modelo ML (scikit-learn)];
+    C -- Procesa Datos y Predice --> D;
+    D -- Resultado Predicción --> C;
+    C -- HTTP Response (JSON) --> B;
+    B -- Muestra Resultados y Gráficos --> A;
+```
+
+## 🚀 Tecnologías y Justificación
+
+La selección de tecnologías se ha centrado en la eficiencia, escalabilidad y una excelente experiencia de desarrollo y usuario:
 
 ### Frontend
-- React 18
-- Recharts para visualizaciones
-- CSS Moderno con diseño responsivo
-- Animaciones fluidas y transiciones suaves
+-   **React 18**:
+    -   *Por qué*: Biblioteca líder para construir interfaces de usuario interactivas y dinámicas con un enfoque basado en componentes. Su amplio ecosistema y la gestión eficiente del estado la hacen ideal para aplicaciones complejas.
+    -   *Características*: Uso de `React Router` para navegación, `Suspense` para carga optimizada, y `ErrorBoundary` para manejo robusto de errores.
+-   **Recharts**:
+    -   *Por qué*: Para la creación de gráficos y visualizaciones de datos claras e interactivas, esenciales para presentar los resultados del modelo de forma comprensible.
+-   **CSS Moderno**:
+    -   *Por qué*: Enfoque en diseño responsivo (mobile-first), estilizado modular y animaciones fluidas para una UI/UX profesional y agradable.
+-   **Internacionalización (i18n)**:
+    -   *Por qué*: Archivo `translations.js` indica preparación para soportar múltiples idiomas, ampliando el alcance de la aplicación.
 
 ### Backend
-- Flask (Python)
-- Scikit-learn para ML
-- NumPy y Pandas para procesamiento de datos
-- Joblib para serialización del modelo
+-   **Flask (Python)**:
+    -   *Por qué*: Microframework ligero y flexible para Python, perfecto para desarrollar APIs RESTful de forma rápida y eficiente. Su simplicidad es ideal para servir modelos de Machine Learning.
+    -   *Características*: Uso de `Blueprints` para organización modular, `CORS` para comunicación segura con el frontend, y `ProxyFix` para despliegues robustos.
+-   **Scikit-learn**:
+    -   *Por qué*: Biblioteca fundamental en Python para Machine Learning. Utilizada para entrenar, evaluar y serializar (`joblib`) el modelo de predicción de riesgo de ACV.
+-   **NumPy y Pandas**:
+    -   *Por qué*: Esenciales para la manipulación y preprocesamiento eficiente de datos numéricos y tabulares, respectivamente, antes de alimentar el modelo de ML.
+-   **Joblib**:
+    -   *Por qué*: Para la serialización y deserialización eficiente de los objetos Python, especialmente los modelos de Scikit-learn, permitiendo su persistencia y carga rápida.
 
-### ML/AI
-- Modelo de predicción entrenado con datos médicos
-- Análisis de factores de riesgo en tiempo real
-- Cálculo de contribuciones de características
+### Machine Learning / IA
+-   **Modelo de Predicción Entrenado**:
+    -   *Detalles*: El modelo (`stroke_prediction_model.joblib`) ha sido entrenado con datos médicos (posiblemente del archivo `healthcare-dataset-stroke-data.csv`). Se dispone de métricas del modelo (`model_metrics.txt`) y análisis de importancia de características (`feature_importance.joblib`).
+    -   *Impacto*: Permite un análisis de factores de riesgo basado en evidencia y el cálculo de la contribución individual de cada factor al riesgo general.
 
-## 🛠️ Instalación
+### Despliegue
+-   **Vercel**:
+    -   *Por qué*: La configuración del backend (`handler` en `app.py`) y las políticas de CORS sugieren compatibilidad y posible despliegue en Vercel, una plataforma optimizada para frontends modernos y backends serverless.
+
+## 🛠️ Instalación y Uso
 
 ### Requisitos Previos
-- Python 3.8+
-- Node.js 14+
-- npm 6+
+-   Python 3.8+
+-   Node.js 14+ y npm 6+ (o Yarn)
+-   (Opcional pero recomendado) Git para clonar el repositorio.
 
-### Instalación Rápida
+### Pasos de Instalación
 
+1.  **Clonar el Repositorio (si aplica)**
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
+    ```
+
+2.  **Configurar Backend (Python)**
+    ```bash
+    cd backend
+
+    # Crear y activar entorno virtual
+    python -m venv .venv 
+    # En Windows:
+    # .venv\Scripts\activate
+    # En Linux/Mac:
+    source .venv/bin/activate
+
+    # Instalar dependencias
+    pip install -r requirements.txt
+    ```
+
+3.  **Configurar Frontend (React)**
+    ```bash
+    cd ../frontend 
+    # (Asegúrate de estar en el directorio raíz del frontend)
+
+    # Instalar dependencias
+    npm install 
+    # o si usas Yarn:
+    # yarn install
+    ```
+
+### Ejecutar la Aplicación
+
+Se necesitan dos terminales:
+
+1.  **Terminal 1: Iniciar Backend**
+    ```bash
+    cd backend
+    # (Asegúrate que el entorno virtual esté activado)
+    python app.py
+    ```
+    *El backend estará disponible en `http://localhost:5000` (o el puerto configurado).*
+
+2.  **Terminal 2: Iniciar Frontend**
+    ```bash
+    cd frontend
+    npm start
+    # o si usas Yarn:
+    # yarn start
+    ```
+    *El frontend se abrirá automáticamente en `http://localhost:3000`.*
+
+### Scripts de Configuración Rápida
+El proyecto incluye scripts para automatizar parte de la instalación (revisar su contenido y adaptar si es necesario):
 ```bash
 # Windows
 setup.bat
@@ -55,80 +163,66 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Instalación Manual
+## 📊 Características Técnicas Adicionales
 
-1. **Configurar Backend**
-```bash
-# Crear y activar entorno virtual
-python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate     # Windows
+-   **API RESTful Optimizada**: Endpoints bien definidos para predicciones y estado del servicio.
+-   **Validación Rigurosa de Datos**: Tanto en frontend como en backend para asegurar la integridad de los datos.
+-   **Carga Eficiente del Modelo ML**: El modelo de ML se carga bajo demanda o al inicio del servidor para respuestas rápidas.
+-   **Manejo Comprensivo de Errores**: Logging en backend y Error Boundaries en frontend para una depuración más sencilla.
+-   **Potencial de Caché Inteligente**: Considerar estrategias de caché para predicciones recurrentes o datos estáticos.
 
-# Instalar dependencias
-cd backend
-pip install -r requirements.txt
-```
+## 🔒 Consideraciones de Seguridad
 
-2. **Configurar Frontend**
-```bash
-cd frontend
-npm install
-```
+-   **Validación de Entradas**: Fundamental para prevenir inyecciones o datos malformados.
+-   **Sanitización de Parámetros**: Evitar XSS y otros ataques relacionados con la entrada del usuario.
+-   **Headers de Seguridad HTTP**: Configurados para protección básica (ej. a través de Flask-Talisman o configuraciones del proxy).
+-   **Variables de Entorno**: Para claves secretas o configuraciones sensibles (ej. `.env` para frontend).
 
-3. **Iniciar Servicios**
-```bash
-# Terminal 1 - Backend
-cd backend
-python app.py
+## 📱 Diseño Responsivo y UX
 
-# Terminal 2 - Frontend
-cd frontend
-npm start
-```
+-   **Mobile-First Approach**: Diseñado pensando primero en dispositivos móviles.
+-   **Breakpoints Optimizados**: Para una correcta visualización en diversos tamaños de pantalla.
+-   **UI/UX Adaptativa e Intuitiva**: Facilitando la navegación y el ingreso de datos.
+-   **Rendimiento Optimizado**: Tiempos de carga rápidos y interacciones fluidas.
 
-## 📊 Características Técnicas
+## ⚡ Rendimiento Esperado
 
-- **API RESTful**: Endpoints optimizados para predicciones y análisis
-- **Validación de Datos**: Sistema robusto de validación de inputs
-- **Carga Diferida**: Modelo ML cargado bajo demanda
-- **CORS Configurado**: Seguridad para peticiones cross-origin
-- **Manejo de Errores**: Sistema comprensivo de logging y debugging
-- **Caché Inteligente**: Almacenamiento local de predicciones
+-   **Tiempo de Respuesta API**: Idealmente < 200-500ms para predicciones.
+-   **Puntuación Lighthouse**: Objetivo > 90 en Performance, Accesibilidad, Best Practices y SEO.
+-   **Web Vitals Optimizados**: LCP, FID, CLS dentro de los umbrales recomendados.
+-   **Carga Progresiva de Assets**: Para mejorar la percepción de velocidad.
 
-## 🔒 Seguridad
+## 🛣️ Posibles Mejoras Futuras (Roadmap)
 
-- Validación robusta de datos de entrada
-- Sanitización de parámetros
-- Headers de seguridad configurados
-- Protección contra ataques comunes
-
-## 📱 Responsive Design
-
-- Mobile-first approach
-- Breakpoints optimizados
-- UI/UX adaptativa
-- Rendimiento optimizado
+-   Integración con sistemas de autenticación de usuarios para guardar historiales de forma segura.
+-   Panel de administración para profesionales de la salud.
+-   Ampliación del modelo con más datos o características.
+-   Despliegue en contenedores (Docker) para mayor portabilidad.
+-   Pruebas unitarias y de integración más exhaustivas.
+-   Internacionalización completa de todos los textos.
 
 ## 🤝 Contribuir
 
-Las contribuciones son bienvenidas. Por favor, lee las guías de contribución antes de enviar un PR.
+¡Las contribuciones son muy bienvenidas! Si deseas mejorar esta aplicación:
+
+1.  Realiza un Fork del proyecto.
+2.  Crea tu Feature Branch (`git checkout -b feature/AmazingFeature`).
+3.  Realiza tus cambios (Commit your Changes: `git commit -m 'Add some AmazingFeature'`).
+4.  Haz Push a la Branch (`git push origin feature/AmazingFeature`).
+5.  Abre un Pull Request.
+
+Por favor, lee las guías de contribución (si existen `CONTRIBUTING.md`) antes de enviar un PR.
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
 
-## ⚡ Rendimiento
+## 🔗 Enlaces Útiles (Ejemplos)
 
-- Tiempo de respuesta API < 200ms
-- Lighthouse Score > 90
-- Web Vitals optimizados
-- Carga progresiva de assets
-
-## 🔗 Enlaces Útiles
-
-- [Documentación API](docs/api.md)
-- [Guía de Desarrollo](docs/development.md)
-- [Changelog](CHANGELOG.md)
+-   [Documentación API (Placeholder)](docs/api.md) - *Crear o detallar este archivo*
+-   [Guía de Desarrollo (Placeholder)](docs/development.md) - *Crear o detallar este archivo*
+-   [Changelog (Placeholder)](CHANGELOG.md) - *Crear o mantener este archivo*
 
 ---
-Desarrollado con ❤️ para la comunidad médica y de ML
+Desarrollado con ❤️ y 🧠 para la comunidad médica, pacientes y entusiastas del Machine Learning.
+¡Esperamos que esta herramienta sea de gran utilidad!
