@@ -12,10 +12,10 @@
 Este proyecto nace de la necesidad de proporcionar una forma accesible y temprana de identificar factores de riesgo asociados a los ACV, permitiendo a los usuarios y profesionales de la salud tomar decisiones informadas para la prevención.
 
 <p align="center">
-  <img src="stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
+  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
 </p>
 <p align="center">
-  <img src="frontend/public/stroke.gif" alt="Demostración de la App en Funcionamiento" width="750"/>
+  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/frontend/public/stroke.gif" alt="Demostración de la App en Funcionamiento" width="750"/>
 </p>
 
 ## 🌟 Características Destacadas
@@ -101,8 +101,8 @@ La selección de tecnologías se ha centrado en la eficiencia, escalabilidad y u
 
 1.  **Clonar el Repositorio (si aplica)**
     ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
+    git clone https://github.com/ivancastroprojects/stroke-predictor.git
+    cd stroke-predictor
     ```
 
 2.  **Configurar Backend (Python)**
@@ -205,7 +205,7 @@ chmod +x setup.sh
 
 ¡Las contribuciones son muy bienvenidas! Si deseas mejorar esta aplicación:
 
-1.  Realiza un Fork del proyecto.
+1.  Realiza un Fork del proyecto: `https://github.com/ivancastroprojects/stroke-predictor/fork`
 2.  Crea tu Feature Branch (`git checkout -b feature/AmazingFeature`).
 3.  Realiza tus cambios (Commit your Changes: `git commit -m 'Add some AmazingFeature'`).
 4.  Haz Push a la Branch (`git push origin feature/AmazingFeature`).
@@ -216,12 +216,6 @@ Por favor, lee las guías de contribución (si existen `CONTRIBUTING.md`) antes 
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
-
-## 🔗 Enlaces Útiles (Ejemplos)
-
--   [Documentación API (Placeholder)](docs/api.md) - *Crear o detallar este archivo*
--   [Guía de Desarrollo (Placeholder)](docs/development.md) - *Crear o detallar este archivo*
--   [Changelog (Placeholder)](CHANGELOG.md) - *Crear o mantener este archivo*
 
 ---
 Desarrollado con ❤️ y 🧠 para la comunidad médica, pacientes y entusiastas del Machine Learning.
