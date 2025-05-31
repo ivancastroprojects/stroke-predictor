@@ -12,10 +12,14 @@
 Este proyecto nace de la necesidad de proporcionar una forma accesible y temprana de identificar factores de riesgo asociados a los ACV, permitiendo a los usuarios y profesionales de la salud tomar decisiones informadas para la prevención.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
-</p>
-<p align="center">
   <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/frontend/public/stroke.gif" alt="Demostración de la App en Funcionamiento" width="750"/>
+</p>
+
+*A short video of the application in action*
+
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
 </p>
 
 ## 🌟 Características Destacadas
