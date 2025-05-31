@@ -1,4 +1,4 @@
-# 🧠 Aplicación Web de Predicción de Riesgo de Ictus (ACV)
+# 🧠 Stroke Risk Prediction Web Application
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org)
 [![Flask](https://img.shields.io/badge/Flask-2.2+-green.svg)](https://flask.palletsprojects.com/)
@@ -7,157 +7,154 @@
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black.svg?logo=vercel)](https://vercel.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Una herramienta innovadora de salud digital que utiliza Machine Learning para evaluar el riesgo de accidente cerebrovascular (ACV), ofreciendo información médica personalizada y recomendaciones proactivas de salud.**
+**An innovative digital health tool that leverages Machine Learning to assess stroke (CVA) risk, providing personalized medical insights and proactive health recommendations.**
 
-Este proyecto nace de la necesidad de proporcionar una forma accesible y temprana de identificar factores de riesgo asociados a los ACV, permitiendo a los usuarios y profesionales de la salud tomar decisiones informadas para la prevención.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/frontend/public/stroke.gif" alt="Demostración de la App en Funcionamiento" width="750"/>
-</p>
-
-*A short video of the application in action*
-
+This project was born from the need to provide an accessible and early way to identify risk factors associated with strokes, enabling users and healthcare professionals to make informed decisions for prevention.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/stroke-prediction-preview.png" alt="Vista Previa de la Aplicación de Predicción de Ictus" width="750"/>
+  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/frontend/public/stroke.gif" alt="App Demo" width="800"/>
 </p>
 
-## 🌟 Características Destacadas
+## 🌟 Key Features
 
-La aplicación ofrece un conjunto de funcionalidades robustas diseñadas para una experiencia de usuario intuitiva y médicamente relevante:
+The application offers a robust set of features designed for an intuitive and medically relevant user experience:
 
--   **🧠 Predicción de Riesgo en Tiempo Real**: Introduce tus datos de salud y obtén un análisis instantáneo de tu riesgo de ACV, impulsado por un modelo de Machine Learning entrenado.
--   **📊 Visualización Interactiva de Datos**: Comprende los factores que más contribuyen a tu riesgo mediante gráficos dinámicos e interpretables generados con Recharts.
--   **💡 Recomendaciones Personalizadas**: Recibe sugerencias y consejos de salud adaptados a tu perfil de riesgo individual para fomentar hábitos preventivos.
--   **📜 Historial de Predicciones**: Realiza un seguimiento de tus evaluaciones a lo largo del tiempo, observando la evolución de tu riesgo (Funcionalidad potencial o existente).
--   **🖥️ Interfaz Profesional y Moderna**: Disfruta de un diseño limpio, atractivo y orientado al sector salud, con animaciones fluidas y transiciones suaves.
--   **📱 Diseño Responsivo (Mobile-First)**: Accede a la aplicación desde cualquier dispositivo (escritorio, tablet, móvil) con una experiencia de usuario optimizada.
--   **🌐 Soporte Multilenguaje**: Interfaz disponible en varios idiomas para mayor accesibilidad (detectado por `translations.js`).
+-   **🧠 Real-Time Risk Prediction**: Enter your health data and instantly receive a stroke risk analysis powered by a trained Machine Learning model.
+-   **📊 Interactive Data Visualization**: Understand the most influential factors in your risk through dynamic, interpretable charts generated with Recharts.
+-   **💡 Personalized Recommendations**: Get health tips and suggestions tailored to your individual risk profile to encourage preventive habits.
+-   **📜 Prediction History**: Track your assessments over time and observe the evolution of your risk (potential or existing feature).
+-   **🖥️ Professional & Modern Interface**: Enjoy a clean, attractive, health-oriented design with smooth animations and transitions.
+-   **📱 Responsive Design (Mobile-First)**: Access the app from any device (desktop, tablet, mobile) with an optimized user experience.
+-   **🌐 Multilanguage Support**: Interface available in multiple languages for greater accessibility (enabled by `translations.js`).
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Project Architecture
 
-La aplicación sigue una arquitectura cliente-servidor desacoplada, facilitando la escalabilidad y el mantenimiento:
+The application follows a decoupled client-server architecture, facilitating scalability and maintainability:
 
-1.  **Frontend (React)**: El usuario interactúa con la interfaz construida en React. Ingresa sus datos en un formulario (`PredictionForm.js`).
-2.  **Solicitud API (HTTP POST)**: Al enviar el formulario, el frontend realiza una solicitud POST a la API del backend, enviando los datos del usuario en formato JSON.
+1.  **Frontend (React)**: The user interacts with the React-based interface, entering their data in a form (`PredictionForm.js`).
+2.  **API Request (HTTP POST)**: Upon submitting the form, the frontend sends a POST request to the backend API, sending user data in JSON format.
 3.  **Backend (Flask API)**:
-    *   El servidor Flask recibe la solicitud en el endpoint `/api/predict`.
-    *   Valida los datos de entrada.
-    *   Utiliza el modelo de Machine Learning (`stroke_prediction_model.joblib`) cargado para procesar los datos y generar una predicción de riesgo.
-    *   El modelo utiliza factores como edad, hipertensión, enfermedades cardíacas, nivel de glucosa, IMC, etc. (inferido de un dataset de stroke).
-4.  **Respuesta API (JSON)**: El backend devuelve la predicción y cualquier insight adicional (ej. importancia de características) al frontend en formato JSON.
-5.  **Visualización de Resultados (React)**: El frontend (`PredictionResults.js`) recibe la respuesta y presenta el resultado de la predicción, las visualizaciones y las recomendaciones al usuario.
+    *   The Flask server receives the request at the `/api/predict` endpoint.
+    *   Validates the input data.
+    *   Uses the loaded Machine Learning model (`stroke_prediction_model.joblib`) to process the data and generate a risk prediction.
+    *   The model uses factors such as age, hypertension, heart disease, glucose level, BMI, etc. (inferred from a stroke dataset).
+4.  **API Response (JSON)**: The backend returns the prediction and any additional insights (e.g., feature importance) to the frontend in JSON format.
+5.  **Results Visualization (React)**: The frontend (`PredictionResults.js`) receives the response and displays the prediction result, visualizations, and recommendations to the user.
 
 ```mermaid
 graph TD
-    A[Usuario en Navegador] -- Ingresa Datos --> B(Frontend - React App);
+    A[User in Browser] -- Enters Data --> B(Frontend - React App);
     B -- HTTP POST /api/predict --> C{Backend - Flask API};
-    C -- Carga Modelo --> D[Modelo ML scikit-learn];
-    C -- Procesa Datos y Predice --> D;
-    D -- Resultado Predicción --> C;
+    C -- Loads Model --> D[ML Model scikit-learn];
+    C -- Processes Data & Predicts --> D;
+    D -- Prediction Result --> C;
     C -- HTTP Response (JSON) --> B;
-    B -- Muestra Resultados y Gráficos --> A;
+    B -- Displays Results & Charts --> A;
 ```
 
-## 🚀 Tecnologías y Justificación
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ivancastroprojects/stroke-predictor/main/stroke-predictionIMG.png" alt="Stroke Prediction App Preview" width="800"/>
+</p>
 
-La selección de tecnologías se ha centrado en la eficiencia, escalabilidad y una excelente experiencia de desarrollo y usuario:
+## 🚀 Technologies & Rationale
+
+Technology choices focus on efficiency, scalability, and an excellent developer and user experience:
 
 ### Frontend
 -   **React 18**:
-    -   *Por qué*: Biblioteca líder para construir interfaces de usuario interactivas y dinámicas con un enfoque basado en componentes. Su amplio ecosistema y la gestión eficiente del estado la hacen ideal para aplicaciones complejas.
-    -   *Características*: Uso de `React Router` para navegación, `Suspense` para carga optimizada, y `ErrorBoundary` para manejo robusto de errores.
+    -   *Why*: Leading library for building interactive, dynamic UIs with a component-based approach. Its vast ecosystem and efficient state management make it ideal for complex apps.
+    -   *Features*: Uses `React Router` for navigation, `Suspense` for optimized loading, and `ErrorBoundary` for robust error handling.
 -   **Recharts**:
-    -   *Por qué*: Para la creación de gráficos y visualizaciones de datos claras e interactivas, esenciales para presentar los resultados del modelo de forma comprensible.
--   **CSS Moderno**:
-    -   *Por qué*: Enfoque en diseño responsivo (mobile-first), estilizado modular y animaciones fluidas para una UI/UX profesional y agradable.
--   **Internacionalización (i18n)**:
-    -   *Por qué*: Archivo `translations.js` indica preparación para soportar múltiples idiomas, ampliando el alcance de la aplicación.
+    -   *Why*: For creating clear, interactive data visualizations, essential for presenting model results in an understandable way.
+-   **Modern CSS**:
+    -   *Why*: Focus on responsive (mobile-first) design, modular styling, and smooth animations for a professional and pleasant UI/UX.
+-   **Internationalization (i18n)**:
+    -   *Why*: The `translations.js` file indicates readiness for multiple languages, broadening the app's reach.
 
 ### Backend
 -   **Flask (Python)**:
-    -   *Por qué*: Microframework ligero y flexible para Python, perfecto para desarrollar APIs RESTful de forma rápida y eficiente. Su simplicidad es ideal para servir modelos de Machine Learning.
-    -   *Características*: Uso de `Blueprints` para organización modular, `CORS` para comunicación segura con el frontend, y `ProxyFix` para despliegues robustos.
+    -   *Why*: Lightweight, flexible Python microframework, perfect for quickly and efficiently developing RESTful APIs. Its simplicity is ideal for serving ML models.
+    -   *Features*: Uses `Blueprints` for modular organization, `CORS` for secure frontend-backend communication, and `ProxyFix` for robust deployments.
 -   **Scikit-learn**:
-    -   *Por qué*: Biblioteca fundamental en Python para Machine Learning. Utilizada para entrenar, evaluar y serializar (`joblib`) el modelo de predicción de riesgo de ACV.
--   **NumPy y Pandas**:
-    -   *Por qué*: Esenciales para la manipulación y preprocesamiento eficiente de datos numéricos y tabulares, respectivamente, antes de alimentar el modelo de ML.
+    -   *Why*: Core Python library for Machine Learning. Used to train, evaluate, and serialize (`joblib`) the stroke risk prediction model.
+-   **NumPy & Pandas**:
+    -   *Why*: Essential for efficient manipulation and preprocessing of numerical and tabular data before feeding the ML model.
 -   **Joblib**:
-    -   *Por qué*: Para la serialización y deserialización eficiente de los objetos Python, especialmente los modelos de Scikit-learn, permitiendo su persistencia y carga rápida.
+    -   *Why*: For efficient serialization/deserialization of Python objects, especially scikit-learn models, enabling fast persistence and loading.
 
-### Machine Learning / IA
--   **Modelo de Predicción Entrenado**:
-    -   *Detalles*: El modelo (`stroke_prediction_model.joblib`) ha sido entrenado con datos médicos (posiblemente del archivo `healthcare-dataset-stroke-data.csv`). Se dispone de métricas del modelo (`model_metrics.txt`) y análisis de importancia de características (`feature_importance.joblib`).
-    -   *Impacto*: Permite un análisis de factores de riesgo basado en evidencia y el cálculo de la contribución individual de cada factor al riesgo general.
+### Machine Learning / AI
+-   **Trained Prediction Model**:
+    -   *Details*: The model (`stroke_prediction_model.joblib`) was trained on medical data (possibly from `healthcare-dataset-stroke-data.csv`). Model metrics (`model_metrics.txt`) and feature importance analysis (`feature_importance.joblib`) are available.
+    -   *Impact*: Enables evidence-based risk factor analysis and calculation of each factor's individual contribution to overall risk.
 
-### Despliegue
+### Deployment
 -   **Vercel**:
-    -   *Por qué*: La configuración del backend (`handler` en `app.py`) y las políticas de CORS sugieren compatibilidad y posible despliegue en Vercel, una plataforma optimizada para frontends modernos y backends serverless.
+    -   *Why*: Backend configuration (`handler` in `app.py`) and CORS policies suggest compatibility and possible deployment on Vercel, a platform optimized for modern frontends and serverless backends.
 
-## 🛠️ Instalación y Uso
+## 🛠️ Installation & Usage
 
-### Requisitos Previos
+### Prerequisites
 -   Python 3.8+
--   Node.js 14+ y npm 6+ (o Yarn)
--   (Opcional pero recomendado) Git para clonar el repositorio.
+-   Node.js 14+ and npm 6+ (or Yarn)
+-   (Optional but recommended) Git to clone the repository.
 
-### Pasos de Instalación
+### Installation Steps
 
-1.  **Clonar el Repositorio (si aplica)**
+1.  **Clone the Repository (if applicable)**
     ```bash
     git clone https://github.com/ivancastroprojects/stroke-predictor.git
     cd stroke-predictor
     ```
 
-2.  **Configurar Backend (Python)**
+2.  **Set Up Backend (Python)**
     ```bash
     cd backend
 
-    # Crear y activar entorno virtual
+    # Create and activate virtual environment
     python -m venv .venv 
-    # En Windows:
+    # On Windows:
     # .venv\Scripts\activate
-    # En Linux/Mac:
+    # On Linux/Mac:
     source .venv/bin/activate
 
-    # Instalar dependencias
+    # Install dependencies
     pip install -r requirements.txt
     ```
 
-3.  **Configurar Frontend (React)**
+3.  **Set Up Frontend (React)**
     ```bash
     cd ../frontend 
-    # (Asegúrate de estar en el directorio raíz del frontend)
+    # (Make sure you're in the frontend root directory)
 
-    # Instalar dependencias
+    # Install dependencies
     npm install 
-    # o si usas Yarn:
+    # or if you use Yarn:
     # yarn install
     ```
 
-### Ejecutar la Aplicación
+### Running the Application
 
-Se necesitan dos terminales:
+You need two terminals:
 
-1.  **Terminal 1: Iniciar Backend**
+1.  **Terminal 1: Start Backend**
     ```bash
     cd backend
-    # (Asegúrate que el entorno virtual esté activado)
+    # (Make sure the virtual environment is activated)
     python app.py
     ```
-    *El backend estará disponible en `http://localhost:5000` (o el puerto configurado).*
+    *The backend will be available at `http://localhost:5000` (or the configured port).*
 
-2.  **Terminal 2: Iniciar Frontend**
+2.  **Terminal 2: Start Frontend**
     ```bash
     cd frontend
     npm start
-    # o si usas Yarn:
+    # or if you use Yarn:
     # yarn start
     ```
-    *El frontend se abrirá automáticamente en `http://localhost:3000`.*
+    *The frontend will automatically open at `http://localhost:3000`.*
 
-### Scripts de Configuración Rápida
-El proyecto incluye scripts para automatizar parte de la instalación (revisar su contenido y adaptar si es necesario):
+### Quick Setup Scripts
+The project includes scripts to automate part of the setup (review and adapt as needed):
 ```bash
 # Windows
 setup.bat
@@ -167,60 +164,60 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-## 📊 Características Técnicas Adicionales
+## 📊 Additional Technical Features
 
--   **API RESTful Optimizada**: Endpoints bien definidos para predicciones y estado del servicio.
--   **Validación Rigurosa de Datos**: Tanto en frontend como en backend para asegurar la integridad de los datos.
--   **Carga Eficiente del Modelo ML**: El modelo de ML se carga bajo demanda o al inicio del servidor para respuestas rápidas.
--   **Manejo Comprensivo de Errores**: Logging en backend y Error Boundaries en frontend para una depuración más sencilla.
--   **Potencial de Caché Inteligente**: Considerar estrategias de caché para predicciones recurrentes o datos estáticos.
+-   **Optimized RESTful API**: Well-defined endpoints for predictions and service status.
+-   **Rigorous Data Validation**: Both frontend and backend ensure data integrity.
+-   **Efficient ML Model Loading**: The ML model loads on demand or at server startup for fast responses.
+-   **Comprehensive Error Handling**: Backend logging and frontend Error Boundaries for easier debugging.
+-   **Potential for Smart Caching**: Consider caching strategies for recurring predictions or static data.
 
-## 🔒 Consideraciones de Seguridad
+## 🔒 Security Considerations
 
--   **Validación de Entradas**: Fundamental para prevenir inyecciones o datos malformados.
--   **Sanitización de Parámetros**: Evitar XSS y otros ataques relacionados con la entrada del usuario.
--   **Headers de Seguridad HTTP**: Configurados para protección básica (ej. a través de Flask-Talisman o configuraciones del proxy).
--   **Variables de Entorno**: Para claves secretas o configuraciones sensibles (ej. `.env` para frontend).
+-   **Input Validation**: Essential to prevent injections or malformed data.
+-   **Parameter Sanitization**: Prevent XSS and other user input-related attacks.
+-   **HTTP Security Headers**: Configured for basic protection (e.g., via Flask-Talisman or proxy settings).
+-   **Environment Variables**: For secrets or sensitive configs (e.g., `.env` for frontend).
 
-## 📱 Diseño Responsivo y UX
+## 📱 Responsive Design & UX
 
--   **Mobile-First Approach**: Diseñado pensando primero en dispositivos móviles.
--   **Breakpoints Optimizados**: Para una correcta visualización en diversos tamaños de pantalla.
--   **UI/UX Adaptativa e Intuitiva**: Facilitando la navegación y el ingreso de datos.
--   **Rendimiento Optimizado**: Tiempos de carga rápidos y interacciones fluidas.
+-   **Mobile-First Approach**: Designed with mobile devices in mind first.
+-   **Optimized Breakpoints**: For proper display on various screen sizes.
+-   **Adaptive & Intuitive UI/UX**: Facilitates navigation and data entry.
+-   **Optimized Performance**: Fast load times and smooth interactions.
 
-## ⚡ Rendimiento Esperado
+## ⚡ Expected Performance
 
--   **Tiempo de Respuesta API**: Idealmente < 200-500ms para predicciones.
--   **Puntuación Lighthouse**: Objetivo > 90 en Performance, Accesibilidad, Best Practices y SEO.
--   **Web Vitals Optimizados**: LCP, FID, CLS dentro de los umbrales recomendados.
--   **Carga Progresiva de Assets**: Para mejorar la percepción de velocidad.
+-   **API Response Time**: Ideally < 200-500ms for predictions.
+-   **Lighthouse Score**: Target > 90 in Performance, Accessibility, Best Practices, and SEO.
+-   **Optimized Web Vitals**: LCP, FID, CLS within recommended thresholds.
+-   **Progressive Asset Loading**: To improve perceived speed.
 
-## 🛣️ Posibles Mejoras Futuras (Roadmap)
+## 🛣️ Possible Future Improvements (Roadmap)
 
--   Integración con sistemas de autenticación de usuarios para guardar historiales de forma segura.
--   Panel de administración para profesionales de la salud.
--   Ampliación del modelo con más datos o características.
--   Despliegue en contenedores (Docker) para mayor portabilidad.
--   Pruebas unitarias y de integración más exhaustivas.
--   Internacionalización completa de todos los textos.
+-   Integration with user authentication systems to securely save histories.
+-   Admin panel for healthcare professionals.
+-   Expand the model with more data or features.
+-   Containerized deployment (Docker) for greater portability.
+-   More comprehensive unit and integration testing.
+-   Full internationalization of all texts.
 
-## 🤝 Contribuir
+## 🤝 Contributing
 
-¡Las contribuciones son muy bienvenidas! Si deseas mejorar esta aplicación:
+Contributions are very welcome! If you want to improve this app:
 
-1.  Realiza un Fork del proyecto: `https://github.com/ivancastroprojects/stroke-predictor/fork`
-2.  Crea tu Feature Branch (`git checkout -b feature/AmazingFeature`).
-3.  Realiza tus cambios (Commit your Changes: `git commit -m 'Add some AmazingFeature'`).
-4.  Haz Push a la Branch (`git push origin feature/AmazingFeature`).
-5.  Abre un Pull Request.
+1.  Fork the project: `https://github.com/ivancastroprojects/stroke-predictor/fork`
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
-Por favor, lee las guías de contribución (si existen `CONTRIBUTING.md`) antes de enviar un PR.
+Please read the contribution guidelines (if `CONTRIBUTING.md` exists) before submitting a PR.
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+This project is under the MIT License. See the `LICENSE` file for details.
 
 ---
-Desarrollado con ❤️ y 🧠 para la comunidad médica, pacientes y entusiastas del Machine Learning.
-¡Esperamos que esta herramienta sea de gran utilidad!
+Developed with ❤️ and 🧠 for the medical community, patients, and Machine Learning enthusiasts.
+We hope this tool is of great use!
